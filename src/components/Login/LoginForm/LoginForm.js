@@ -15,14 +15,14 @@ const LoginForm = ({ handleSubmit, error }) => {
   const [errorMessage, setErrorMessage] = useState(error);
 
   useEffect(() => {
-    if (error) setErrorMessage(error)
+    if (error) setErrorMessage(error);
   }, [error, setErrorMessage]);
 
   return (
     <Form onSubmit={handleSubmit}>
       {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       <EmailInput name="email"
-        validators={[required, isEmail, minLength6, maxLength50]} />
+        validators={[required, isEmail, maxLength50]} />
       <PasswordInput name="password"
         validators={[required, minLength6, maxLength50]} />
       <RememberMeCheckbox name="rememberMe" />
@@ -30,7 +30,7 @@ const LoginForm = ({ handleSubmit, error }) => {
         Log In
     </Button>
     </Form>
-  )
+  );
 };
 
 export default compose(
