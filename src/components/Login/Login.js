@@ -17,7 +17,7 @@ const Login = ({ userId, login }) => {
         <LoginForm onSubmit={login} />
       </Card.Body>
     </Card>
-  )
+  );
 };
 
 const mapStateToProps = ({ auth: { userId } }) => ({ userId });

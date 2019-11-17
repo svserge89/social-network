@@ -26,9 +26,7 @@ const LoginForm = ({ handleSubmit, error }) => {
       <PasswordInput name="password"
         validators={[required, minLength6, maxLength50]} />
       <RememberMeCheckbox name="rememberMe" />
-      <Button variant="primary" type="submit">
-        Log In
-    </Button>
+      <Button variant="primary" type="submit">Log In</Button>
     </Form>
   );
 };

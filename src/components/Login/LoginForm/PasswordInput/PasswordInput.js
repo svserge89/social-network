@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 
 import InputField from '../../../common/InputField/InputField';
 
-const PasswordInput = ({ name, validators, error }) => (
+const PasswordInput = ({ name, validators }) => (
   <Form.Group controlId="formBasicPassword">
     <Form.Label>Password</Form.Label>
     <Field type="password"

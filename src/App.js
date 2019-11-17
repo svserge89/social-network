@@ -30,10 +30,10 @@ const App = ({ initialized, initialization }) => {
         </Switch>
       </Layout>
     </>
-  )
+  );
 };
 
-const mapStateToProps = ({ init: { initialized } }) => ({ initialized })
+const mapStateToProps = ({ init: { initialized } }) => ({ initialized });
 
 export default compose(
   connect(mapStateToProps, { initialization }),
