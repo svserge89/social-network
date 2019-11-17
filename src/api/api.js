@@ -17,7 +17,7 @@ const instance = axios.create({
   baseURL: BASE_URL
 });
 
-const responseData = response => response.data;
+const responseData = ({ data }) => data;
 
 export const authAPI = {
   getCurrentUser: () => instance.get(AUTH_ME).then(responseData),
@@ -44,7 +44,7 @@ export const profileAPI = {
 
   getStatus: (userId) =>
     instance.get(`${PROFILE_STATUS}/${userId}`).then(responseData),
-    
+
   updateStatus: (status) =>
     instance.put(PROFILE_STATUS, { status }).then(responseData)
 };
