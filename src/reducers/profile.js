@@ -47,7 +47,7 @@ export const updateStatus = (status) => async (dispatch) => {
   if (resultCode) return;
 
   dispatch(setStatus(status));
-}
+};
 
 // Utils
 const changeProfile = (state, profile) => ({

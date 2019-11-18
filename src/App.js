@@ -11,11 +11,16 @@ import Profile from './components/Profile/Profile';
 import Users from './components/Users/Users';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
+import PageLoader from './components/common/PageLoader/PageLoader';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = ({ initialized, initialization }) => {
   useEffect(() => { initialization() }, [initialization]);
+
+  if (!initialized) {
+    return (<PageLoader />);
+  }
 
   return (
     <>
