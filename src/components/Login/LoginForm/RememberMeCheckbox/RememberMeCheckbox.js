@@ -4,10 +4,12 @@ import { Field } from 'redux-form';
 
 const RememberMeCheckbox = ({ name }) => (
   <Form.Group controlId="formBasicCheckbox">
-    <Field type="checkbox"
+    <Field
+      type="checkbox"
       label="Remember me"
       name={name}
-      component={Form.Check} />
+      component={Form.Check}
+    />
   </Form.Group>
 );
 

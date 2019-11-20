@@ -22,29 +22,35 @@ const responseData = ({ data }) => data;
 export const authAPI = {
   getCurrentUser: () => instance.get(AUTH_ME).then(responseData),
 
-  login: (email, password, rememberMe, captcha) =>
-    instance.post(AUTH_LOGIN, { email, password, rememberMe, captcha })
-      .then(responseData),
+  login: (email, password, rememberMe, captcha) => (
+    instance
+      .post(AUTH_LOGIN, { email, password, rememberMe, captcha })
+      .then(responseData)
+  ),
 
   logout: () => instance.delete(AUTH_LOGIN).then(responseData)
 };
 
 export const usersAPI = {
-  get: (count, page) =>
-    instance.get(USERS, { params: { count, page } }).then(responseData),
+  get: (count, page) => (
+    instance.get(USERS, { params: { count, page } }).then(responseData)
+  ),
 
   follow: (userId) => instance.post(`${FOLLOW}/${userId}`).then(responseData),
 
-  unFollow: (userId) =>
+  unFollow: (userId) => (
     instance.delete(`${FOLLOW}/${userId}`).then(responseData)
+  )
 };
 
 export const profileAPI = {
   get: (userId) => instance.get(`${PROFILE}/${userId}`).then(responseData),
 
-  getStatus: (userId) =>
-    instance.get(`${PROFILE_STATUS}/${userId}`).then(responseData),
+  getStatus: (userId) => (
+    instance.get(`${PROFILE_STATUS}/${userId}`).then(responseData)
+  ),
 
-  updateStatus: (status) =>
+  updateStatus: (status) => (
     instance.put(PROFILE_STATUS, { status }).then(responseData)
+  )
 };

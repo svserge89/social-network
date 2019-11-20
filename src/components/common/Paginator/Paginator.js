@@ -13,39 +13,44 @@ const Paginator = ({
   const onClick = page => () => setPage(page);
 
   const createItem = (page, active = false) => (
-    <Pagination.Item onClick={onClick(page)} active={active}>
+    <Pagination.Item key={page} onClick={onClick(page)} active={active}>
       {page}
     </Pagination.Item>
   );
 
   const createEllipsis = (page) => (
-    <Pagination.Ellipsis onClick={onClick(page)} />
+    <Pagination.Ellipsis key={page} onClick={onClick(page)} />
   );
 
   const createFirst = () => (
-    <Pagination.First onClick={onClick(1)}
-      disabled={currentPage <= 1} />
+    <Pagination.First
+      onClick={onClick(1)}
+      disabled={currentPage <= 1}
+    />
   );
 
   const createPrev = () => (
-    <Pagination.Prev onClick={onClick(currentPage - 1)}
-      disabled={currentPage <= 1} />
+    <Pagination.Prev
+      onClick={onClick(currentPage - 1)}
+      disabled={currentPage <= 1}
+    />
   );
 
   const createNext = () => (
-    <Pagination.Next onClick={onClick(currentPage + 1)}
-        disabled={currentPage >= pagesCount - 1} />
+    <Pagination.Next
+      onClick={onClick(currentPage + 1)}
+      disabled={currentPage >= pagesCount}
+    />
   );
 
   const createLast = () => (
-    <Pagination.Last onClick={onClick(pagesCount - 1)}
-        disabled={currentPage >= pagesCount - 1} />
+    <Pagination.Last
+      onClick={onClick(pagesCount)}
+      disabled={currentPage >= pagesCount}
+    />
   );
 
   const pageItemsGenerator = function* () {
-    yield createFirst();
-    yield createPrev();
-
     let firstPage = 1;
 
     if (currentPage > sideLength + 1) {
@@ -53,19 +58,28 @@ const Paginator = ({
       firstPage = currentPage - sideLength;
     }
 
-    for (let i = firstPage; i < currentPage + sideLength + 1 && i < pagesCount; ++i) {
+    for (
+      let i = firstPage;
+      i < currentPage + sideLength + 1 && i <= pagesCount;
+      ++i
+    ) {
       yield createItem(i, i === currentPage);
     }
 
-    if (currentPage < pagesCount - sideLength - 1) {
+    if (currentPage < pagesCount - sideLength) {
       yield createEllipsis(currentPage + sideLength + 1);
     }
-
-    yield createNext();
-    yield createLast();
   };
 
-  return (<Pagination>{[...pageItemsGenerator()]}</Pagination>);
+  return (
+    <Pagination>
+      {createFirst()}
+      {createPrev()}
+      {[...pageItemsGenerator()]}
+      {createNext()}
+      {createLast()}
+    </Pagination>
+  );
 };
 
 export default Paginator;

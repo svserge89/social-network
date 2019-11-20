@@ -1,0 +1,9 @@
+.cardHorizontal {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.cardHorizontal img {
+  width: 100px;
+  height: 100px;
+}
