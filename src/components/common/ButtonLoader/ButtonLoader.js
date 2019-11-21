@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 
-const ButtonLoader = () => (
-  <Button variant="secondary" disabled>
+const ButtonLoader = ({ size }) => (
+  <Button variant="info" disabled size={size}>
     <Spinner
       as="span"
       animation="border"
@@ -10,7 +10,7 @@ const ButtonLoader = () => (
       role="status"
       aria-hidden="true"
     />
-    <span>Loading...</span>
+    <span className="text-white ml-1">Loading...</span>
   </Button>
 );
 

@@ -42,19 +42,21 @@ const UserCard = ({
     );
   };
 
+  const imageSrc = image ? image : smallAvatar;
+
   return (
-    <Card className="col-12 p-1">
-      <div className={style.cardHorizontal}>
-        <LinkContainer to={`/profile/${userId}`}>
+    <Card className="p-1">
+      <div className="d-flex">
+        <LinkContainer to={`/profile/${userId}`} className="flex-shrink-0">
           <Card.Link>
-            <Image src={image ? image : smallAvatar} thumbnail />
+            <Image src={imageSrc} thumbnail className="bg-light" />
           </Card.Link>
         </LinkContainer>
-        <Card.Body>
-          <Card.Title>{name}</Card.Title>
-          <Card.Text>{status}</Card.Text>
+        <Card.Body className={style.cardBody}>
+          <Card.Title className="text-nowrap text-truncate">{name}</Card.Title>
+          <Card.Text className="text-nowrap text-truncate">{status}</Card.Text>
         </Card.Body>
-        <div className="my-auto">{showButton()}</div>
+        <div className="flex-shrink-0 align-self-center">{showButton()}</div>
       </div>
     </Card>
   );

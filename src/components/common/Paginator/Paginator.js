@@ -6,47 +6,58 @@ const Paginator = ({
   pageSize,
   currentPage,
   setPage,
-  sideLength = 3
+  disabled,
+  sideLength = 3,
+  size = "sm"
 }) => {
   const pagesCount = Math.ceil(totalItems / pageSize);
 
   const onClick = page => () => setPage(page);
 
   const createItem = (page, active = false) => (
-    <Pagination.Item key={page} onClick={onClick(page)} active={active}>
+    <Pagination.Item
+      key={page}
+      onClick={onClick(page)}
+      active={active}
+      disabled={!active && disabled}
+    >
       {page}
     </Pagination.Item>
   );
 
   const createEllipsis = (page) => (
-    <Pagination.Ellipsis key={page} onClick={onClick(page)} />
+    <Pagination.Ellipsis
+      key={page}
+      onClick={onClick(page)}
+      disabled={disabled}
+    />
   );
 
   const createFirst = () => (
     <Pagination.First
       onClick={onClick(1)}
-      disabled={currentPage <= 1}
+      disabled={disabled || currentPage <= 1}
     />
   );
 
   const createPrev = () => (
     <Pagination.Prev
       onClick={onClick(currentPage - 1)}
-      disabled={currentPage <= 1}
+      disabled={disabled || currentPage <= 1}
     />
   );
 
   const createNext = () => (
     <Pagination.Next
       onClick={onClick(currentPage + 1)}
-      disabled={currentPage >= pagesCount}
+      disabled={disabled || currentPage >= pagesCount}
     />
   );
 
   const createLast = () => (
     <Pagination.Last
       onClick={onClick(pagesCount)}
-      disabled={currentPage >= pagesCount}
+      disabled={disabled || currentPage >= pagesCount}
     />
   );
 
@@ -72,7 +83,7 @@ const Paginator = ({
   };
 
   return (
-    <Pagination>
+    <Pagination size={size} className="m-0">
       {createFirst()}
       {createPrev()}
       {[...pageItemsGenerator()]}

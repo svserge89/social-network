@@ -10,9 +10,9 @@ import {
   follow,
   unfollow
 } from '../../reducers/users';
-import Paginator from '../common/Paginator/Paginator';
 import UserCard from './UserCard/UserCard';
-import PageSizeSelector from './PageSizeSelector/PageSizeSelector';
+import PageNavToolbar from '../common/PageNavToolbar/PageNavToolbar';
+import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
 
 const Users = ({
   currentUserId,
@@ -29,47 +29,52 @@ const Users = ({
   follow,
   unfollow
 }) => {
-  useEffect(() => {
-    getUsers(page, size);
-  }, [getUsers, page, size]);
+  useEffect(() => { getUsers(page, size) }, [getUsers, page, size]);
 
   const isFollowing = (userId) => following.includes(userId);
 
-  const showUserCards = () => (
-    users.map(({ id, name, status, photos: { small }, followed }) => (
-      <Row key={id} className="mb-1">
-        <UserCard
-          userId={id}
-          name={name}
-          status={status}
-          image={small}
-          followed={followed}
-          following={isFollowing(id)}
-          currentUserId={currentUserId}
-          follow={follow}
-          unfollow={unfollow}
-        />
+  const showUserCards = () => {
+    if (fetching) return (
+      <Row className="mx-10">
+        <Col className="col-12 p-0">
+          <ComponentLoader />
+        </Col>
       </Row>
-    ))
-  );
+    );
+
+    return (
+      users.map(({ id, name, status, photos: { small }, followed }) => (
+        <Row key={id} className="mb-1">
+          <Col className="col-12 p-0">
+            <UserCard
+              userId={id}
+              name={name}
+              status={status}
+              image={small}
+              followed={followed}
+              following={isFollowing(id)}
+              currentUserId={currentUserId}
+              follow={follow}
+              unfollow={unfollow}
+            />
+          </Col>
+        </Row>
+      ))
+    );
+  };
 
   return (
     <>
-      <Row className="mt-3">
-        <Col className="px-0">
-          <Paginator
-            totalItems={total}
-            pageSize={size}
-            currentPage={page}
+      <Row>
+        <Col className="col-12 p-0 mb-3">
+          <PageNavToolbar
+            total={total}
+            size={size}
+            page={page}
             setPage={setPage}
-            sideLength={3}
-          />
-        </Col>
-        <Col className="px-0 mb-3" xl={2} lg={2} md={3} sm={4}>
-          <PageSizeSelector
+            setSize={setSize}
             available={available}
-            current={size}
-            change={setSize}
+            fetching={fetching}
           />
         </Col>
       </Row>
@@ -93,11 +98,5 @@ const mapStateToProps = ({
 });
 
 export default compose(
-  connect(mapStateToProps, {
-    setPage,
-    setSize,
-    getUsers,
-    follow,
-    unfollow
-  })
+  connect(mapStateToProps, { setPage, setSize, getUsers, follow, unfollow })
 )(Users);

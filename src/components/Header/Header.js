@@ -1,12 +1,13 @@
 import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import { logout } from '../../reducers/auth';
 import LoginLink from './LoginLink/LoginLink';
 import UserDropdown from './UserDropdown/UserDropdown';
+import Layout from '../Layout/Layout';
 
 const Header = ({ login, logout }) => {
   const showLogin = () => (
@@ -17,7 +18,7 @@ const Header = ({ login, logout }) => {
 
   return (
     <Navbar bg="primary" variant="dark">
-      <Container>
+      <Layout>
         <LinkContainer to="/">
           <Navbar.Brand>Social Network</Navbar.Brand>
         </LinkContainer>
@@ -35,7 +36,7 @@ const Header = ({ login, logout }) => {
             {showLogin()}
           </Nav>
         </Navbar.Collapse>
-      </Container>
+      </Layout>
     </Navbar>
   );
 };
