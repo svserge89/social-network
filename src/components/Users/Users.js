@@ -35,7 +35,7 @@ const Users = ({
 
   const showUserCards = () => {
     if (fetching) return (
-      <Row className="mx-10">
+      <Row>
         <Col className="col-12 p-0">
           <ComponentLoader />
         </Col>
