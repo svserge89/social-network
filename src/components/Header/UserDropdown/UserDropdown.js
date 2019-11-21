@@ -1,13 +1,13 @@
 import React from 'react';
-import { NavDropdown } from 'react-bootstrap';
+import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 const UserDropdown = ({ userName, logout }) => {
   const onClick = () => logout();
 
   return (
-    <NavDropdown title={userName} id="basic-nav-dropdown">
-      <NavDropdown.Item onClick={onClick} >Logout</NavDropdown.Item>
-    </NavDropdown>
+    <DropdownButton title={userName} variant="outline-light">
+      <Dropdown.Item onClick={onClick} >Logout</Dropdown.Item>
+    </DropdownButton>
   );
 };
 

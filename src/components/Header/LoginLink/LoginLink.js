@@ -1,10 +1,10 @@
 import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Nav } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 const LoginLink = ({ path }) => (
   <LinkContainer to={path}>
-    <Nav.Link>Login</Nav.Link>
+    <Button variant="outline-light">Login</Button>
   </LinkContainer>
 );
 
