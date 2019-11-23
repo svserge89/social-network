@@ -4,9 +4,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 
+import {
+  getProfile,
+  getStatus,
+  updateStatus,
+  updatePhoto
+} from '../../reducers/profile';
 import AvatarCard from './AvatarCard/AvatarCard';
 import InfoCard from './InfoCard/InfoCard';
-import { getProfile, getStatus, updateStatus } from '../../reducers/profile';
 import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
 
 const Profile = ({
@@ -19,10 +24,12 @@ const Profile = ({
   aboutMe,
   fetching,
   fetchingStatus,
+  fetchingPhoto,
   status,
   getProfile,
   getStatus,
   updateStatus,
+  updatePhoto,
   photos: { large },
   match: { params }
 }) => {
@@ -55,6 +62,8 @@ const Profile = ({
             className="flex-shrink-0 flex-grow-0"
             image={large}
             editable={isCurrentUser()}
+            updateImage={updatePhoto}
+            fetching={fetchingPhoto}
           />
           <InfoCard
             fullName={fullName}
@@ -74,17 +83,23 @@ const Profile = ({
 };
 
 const mapStateToProps = ({
-  profile: { profile, fetching, fetchingStatus, status },
+  profile: { profile, fetching, fetchingStatus, fetchingPhoto, status },
   auth: { userId }
 }) => ({
   currentUserId: userId,
   ...profile,
   fetching,
   fetchingStatus,
+  fetchingPhoto,
   status
 });
 
 export default compose(
-  connect(mapStateToProps, { getProfile, getStatus, updateStatus }),
+  connect(mapStateToProps, {
+    getProfile,
+    getStatus,
+    updateStatus,
+    updatePhoto
+  }),
   withRouter
 )(Profile);

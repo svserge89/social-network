@@ -8,6 +8,7 @@ const USERS = '/users';
 const FOLLOW = '/follow';
 const PROFILE = '/profile';
 const PROFILE_STATUS = PROFILE + '/status';
+const PROFILE_PHOTO = PROFILE + '/photo';
 
 const API_KEY = '12978896-c3c3-47c8-a5ce-4cdffd884edb';
 
@@ -52,5 +53,15 @@ export const profileAPI = {
 
   updateStatus: (status) => (
     instance.put(PROFILE_STATUS, { status }).then(responseData)
-  )
+  ),
+
+  updatePhoto: (image) => {
+    const formData = new FormData();
+
+    formData.append('image', image);
+
+    return instance.put(PROFILE_PHOTO, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    }).then(responseData);
+  }
 };

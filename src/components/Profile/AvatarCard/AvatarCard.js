@@ -1,5 +1,7 @@
 import React from 'react';
-import { Card, Button, ButtonToolbar } from 'react-bootstrap';
+import { Card, InputGroup, FormControl, FormLabel } from 'react-bootstrap';
+
+import ComponentLoader from '../../common/ComponentLoader/ComponentLoader';
 
 import style from './AvatarCard.module.css';
 import avatar from '../../../assets/images/avatar.png';
@@ -7,30 +9,48 @@ import avatar from '../../../assets/images/avatar.png';
 const AvatarCard = ({
   image,
   updateImage,
-  editProfile,
   editable,
   fetching
 }) => {
   const imageUrl = image ? image : avatar;
 
+  const onSelectImage = ({ target: { files } }) => (
+    files.length && updateImage(files[0])
+  );
+
+  const showImage = () => (
+    fetching ?
+      (
+        <div className={`${style.avatar} pt-3`}>
+          <ComponentLoader />
+        </div>
+      ) :
+      (<Card.Img variant="top" src={imageUrl} className={style.avatar} />)
+  );
+
   const showButtonToolbar = () => (
     editable && (
-      <Card.Body>
-        <ButtonToolbar className="justify-content-between">
-          <Button onClick={updateImage} disabled={fetching}>
-            Update photo
-          </Button>
-          <Button onClick={editProfile} disabled={fetching}>
-            Edit profile
-          </Button>
-        </ButtonToolbar>
+      <Card.Body className="p-1">
+        <InputGroup>
+          <FormControl
+            className="custom-file-input"
+            type="file"
+            id="uploadImage"
+            accept="image/x-png,image/jpeg"
+            onChange={onSelectImage}
+            disabled={fetching}
+          />
+          <FormLabel className="custom-file-label" htmlFor="uploadImage">
+            Choose image
+          </FormLabel>
+        </InputGroup>
       </Card.Body>
     )
   );
 
   return (
     <Card className="mb-auto">
-      <Card.Img variant="top" src={imageUrl} className={style.avatar} />
+      {showImage()}
       {showButtonToolbar()}
     </Card>
   );

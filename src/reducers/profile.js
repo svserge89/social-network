@@ -3,12 +3,18 @@ import { profileAPI } from '../api/api';
 const PREFIX = "social-network/profile/";
 
 const SET_PROFILE = PREFIX + "SET-PROFILE";
+const SET_STATUS = PREFIX + "SET-STATUS";
+const SET_PHOTO = PREFIX + "SET-PHOTO";
 const SET_FETCHING = PREFIX + "SET-FETCHING";
 const SET_FETCHING_STATUS = PREFIX + "SET-FETCHING-STATUS";
-const SET_STATUS = PREFIX + "SET-STATUS";
+const SET_FETCHING_PHOTO = PREFIX + "SET-FETCHING-PHOTO";
 
 // Action creators
 const setProfile = (profile) => ({ type: SET_PROFILE, data: { profile } });
+
+const setStatus = (status) => ({ type: SET_STATUS, data: { status } });
+
+const setPhoto = (photos) => ({ type: SET_PHOTO, photos });
 
 const setFetching = (fetching) => ({ type: SET_FETCHING, data: { fetching } });
 
@@ -17,7 +23,10 @@ const setFetchingStatus = (fetchingStatus) => ({
   data: { fetchingStatus }
 });
 
-const setStatus = (status) => ({ type: SET_STATUS, data: { status } });
+const setFetchingPhoto = (fetchingPhoto) => ({
+  type: SET_FETCHING_PHOTO,
+  data: { fetchingPhoto }
+});
 
 // Thunks
 export const getProfile = (userId) => async (dispatch) => {
@@ -52,8 +61,29 @@ export const updateStatus = (status) => async (dispatch) => {
   }
 };
 
+export const updatePhoto = (image) => async (dispatch) => {
+  dispatch(setFetchingPhoto(true));
+
+  try {
+    const { resultCode, data: { photos } } = (
+      await profileAPI.updatePhoto(image)
+    );
+    
+    if (resultCode) return;
+
+    dispatch(setPhoto(photos));
+  } finally {
+    dispatch(setFetchingPhoto(false))
+  }
+};
+
 // Utils
-const chandeData = (state, data) => ({ ...state, ...data });
+const changeData = (state, data) => ({ ...state, ...data });
+
+const changePhoto = (state, photos) => ({
+  ...state,
+  profile: { ...state.profile, photos }
+});
 
 const initialState = {
   profile: {
@@ -62,6 +92,7 @@ const initialState = {
   },
   fetching: false,
   fetchingStatus: false,
+  fetchingPhoto: false,
   status: null
 };
 
@@ -71,7 +102,10 @@ const profileReducer = (state = initialState, action) => {
     case SET_STATUS:
     case SET_FETCHING:
     case SET_FETCHING_STATUS:
-      return chandeData(state, action.data);
+    case SET_FETCHING_PHOTO:
+      return changeData(state, action.data);
+    case SET_PHOTO:
+      return changePhoto(state, action.photos);
     default:
       return state;
   }
