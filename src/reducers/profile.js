@@ -4,23 +4,20 @@ const PREFIX = "social-network/profile/";
 
 const SET_PROFILE = PREFIX + "SET-PROFILE";
 const SET_FETCHING = PREFIX + "SET-FETCHING";
+const SET_FETCHING_STATUS = PREFIX + "SET-FETCHING-STATUS";
 const SET_STATUS = PREFIX + "SET-STATUS";
 
 // Action creators
-const setProfile = (profile) => ({
-  type: SET_PROFILE,
-  profile
+const setProfile = (profile) => ({ type: SET_PROFILE, data: { profile } });
+
+const setFetching = (fetching) => ({ type: SET_FETCHING, data: { fetching } });
+
+const setFetchingStatus = (fetchingStatus) => ({
+  type: SET_FETCHING_STATUS,
+  data: { fetchingStatus }
 });
 
-const setFetching = (fetching) => ({
-  type: SET_FETCHING,
-  fetching
-});
-
-const setStatus = (status) => ({
-  type: SET_STATUS,
-  status
-});
+const setStatus = (status) => ({ type: SET_STATUS, data: { status } });
 
 // Thunks
 export const getProfile = (userId) => async (dispatch) => {
@@ -42,45 +39,39 @@ export const getStatus = (userId) => async (dispatch) => {
 };
 
 export const updateStatus = (status) => async (dispatch) => {
-  const { resultCode } = await profileAPI.updateStatus(status);
+  dispatch(setFetchingStatus(true));
 
-  if (resultCode) return;
+  try {
+    const { resultCode } = await profileAPI.updateStatus(status);
 
-  dispatch(setStatus(status));
+    if (resultCode) return;
+
+    dispatch(setStatus(status));
+  } finally {
+    dispatch(setFetchingStatus(false));
+  }
 };
 
 // Utils
-const changeProfile = (state, profile) => ({
-  ...state,
-  profile
-});
-
-const changeFetching = (state, fetching) => ({
-  ...state,
-  fetching
-});
-
-const changeStatus = (state, status) => ({
-  ...state,
-  status
-});
+const chandeData = (state, data) => ({ ...state, ...data });
 
 const initialState = {
   profile: {
+    contacts: {},
     photos: {}
   },
   fetching: false,
+  fetchingStatus: false,
   status: null
 };
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_PROFILE:
-      return changeProfile(state, action.profile);
     case SET_STATUS:
-      return changeStatus(state, action.status);
     case SET_FETCHING:
-      return changeFetching(state, action.fetching);
+    case SET_FETCHING_STATUS:
+      return chandeData(state, action.data);
     default:
       return state;
   }
