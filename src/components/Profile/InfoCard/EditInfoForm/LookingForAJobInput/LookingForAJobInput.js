@@ -5,11 +5,7 @@ import {Field} from 'redux-form';
 import TextAreaField from '../../../../common/TextAreaField/TextAreaField';
 
 const LookingForAJobInput = ({checkboxName, textareaName, checked, change, validators}) => {
-  const onClick = ({target: {checked}}) => {
-    change(checkboxName, checked);
-
-    if (!checked) change(textareaName, null);
-  };
+  const onClick = ({target: {checked}}) => change(checkboxName, checked);
 
   return (
     <>
