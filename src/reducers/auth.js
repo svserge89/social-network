@@ -1,5 +1,5 @@
-import { authAPI } from '../api/api';
-import { stopSubmit } from 'redux-form';
+import {authAPI} from '../api/api';
+import {stopSubmit} from 'redux-form';
 
 const PREFIX = "social-network/auth/";
 
@@ -9,20 +9,17 @@ const SET_FETCHING = PREFIX + 'SET-FETCHING';
 // Action creators
 const setCurrentUser = (userId = null, email = null, login = null) => ({
   type: SET_CURRENT_USER,
-  data: { userId, email, login }
+  data: {userId, email, login}
 });
 
-const setFetching = (fetching) => ({ type: SET_FETCHING, data: { fetching } });
+const setFetching = (fetching) => ({type: SET_FETCHING, data: {fetching}});
 
 // Thunks
 export const getCurrentUser = () => async (dispatch) => {
   dispatch(setFetching(true));
 
   try {
-    const {
-      resultCode,
-      data: { id, email, login }
-    } = await authAPI.getCurrentUser();
+    const {resultCode, data: {id, email, login}} = await authAPI.getCurrentUser();
 
     if (resultCode) return;
 
@@ -32,27 +29,23 @@ export const getCurrentUser = () => async (dispatch) => {
   }
 };
 
-export const login = ({ email, password, rememberMe }) =>
-  async (dispatch) => {
-    const { 
-      messages, 
-      resultCode 
-    } = await authAPI.login(email, password, rememberMe);
+export const login = ({email, password, rememberMe}) => async (dispatch) => {
+  const {messages, resultCode} = await authAPI.login(email, password, rememberMe);
 
-    const message = messages.length > 0 ? messages[0] : 'Some error';
+  const message = messages.length > 0 ? messages[0] : 'Some error';
 
-    switch (resultCode) {
-      case 0:
-        dispatch(getCurrentUser());
-        break;
-      default:
-        dispatch(stopSubmit('login', { _error: message }));
-        break;
-    }
-  };
+  switch (resultCode) {
+    case 0:
+      dispatch(getCurrentUser());
+      break;
+    default:
+      dispatch(stopSubmit('login', {_error: message}));
+      break;
+  }
+};
 
 export const logout = () => async (dispatch) => {
-  const { resultCode } = await authAPI.logout();
+  const {resultCode} = await authAPI.logout();
 
   if (resultCode) return;
 
@@ -60,14 +53,9 @@ export const logout = () => async (dispatch) => {
 };
 
 // Utils
-const changeData = (state, data) => ({ ...state, ...data });
+const changeData = (state, data) => ({...state, ...data});
 
-const initialState = {
-  userId: null,
-  email: null,
-  login: null,
-  fetching: false
-};
+const initialState = {userId: null, email: null, login: null, fetching: false};
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {

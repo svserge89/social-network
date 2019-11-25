@@ -1,17 +1,17 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
-import { Field } from 'redux-form';
+import {Form} from 'react-bootstrap';
+import {Field} from 'redux-form';
 
 import InputField from '../../../common/InputField/InputField';
 
-const PasswordInput = ({ name, validators }) => (
+const PasswordInput = ({name, validators}) => (
   <Form.Group controlId="formBasicPassword">
-    <Form.Label>Password</Form.Label>
+    <Form.Label column={false}>Password</Form.Label>
     <Field type="password"
-      placeholder="Password"
-      name={name}
-      component={InputField}
-      validate={validators} />
+           placeholder="Password"
+           name={name}
+           component={InputField}
+           validate={validators}/>
   </Form.Group>
 );
 

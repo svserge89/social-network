@@ -1,14 +1,11 @@
-import { getCurrentUser } from './auth';
+import {getCurrentUser} from './auth';
 
 const PREFIX = "social-network/init/";
 
 const SET_INITIALIZED = PREFIX + "SET-INITIALIZED";
 
 // Action creators
-const setInitialized = (initialized) => ({
-  type: SET_INITIALIZED,
-  initialized
-});
+const setInitialized = (initialized) => ({type: SET_INITIALIZED, initialized});
 
 // Thunks
 export const initialization = () => async (dispatch) => {
@@ -17,14 +14,9 @@ export const initialization = () => async (dispatch) => {
 };
 
 // Utils
-const changeInitialized = (state, initialized) => ({
-  ...state,
-  initialized
-});
+const changeInitialized = (state, initialized) => ({...state, initialized});
 
-const initialState = {
-  initialized: false
-};
+const initialState = {initialized: false};
 
 const initReducer = (state = initialState, action) => {
   switch (action.type) {

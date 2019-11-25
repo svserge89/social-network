@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
+import React, {useEffect} from 'react';
+import {Route, Switch, withRouter} from 'react-router-dom';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
 
-import { initialization } from './reducers/init';
+import {initialization} from './reducers/init';
 import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
 import NotMatch from './components/NotMatch/NotMatch';
@@ -15,32 +15,29 @@ import PageLoader from './components/common/PageLoader/PageLoader';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const App = ({ initialized, initialization }) => {
-  useEffect(() => { initialization() }, [initialization]);
+const App = ({initialized, initialization}) => {
+  useEffect(() => {
+    initialization();
+  }, [initialization]);
 
-  if (!initialized) {
-    return (<PageLoader />);
-  }
+  if (!initialized) return (<PageLoader/>);
 
   return (
     <>
-      <Header />
+      <Header/>
       <Layout>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/profile/:userId?" component={Profile} />
-          <Route exact path="/users" component={Users} />
-          <Route exact path="/login" component={Login} />
-          <Route component={NotMatch} />
+          <Route exact path="/" component={Home}/>
+          <Route path="/profile/:userId?" component={Profile}/>
+          <Route exact path="/users" component={Users}/>
+          <Route exact path="/login" component={Login}/>
+          <Route component={NotMatch}/>
         </Switch>
       </Layout>
     </>
   );
 };
 
-const mapStateToProps = ({ init: { initialized } }) => ({ initialized });
+const mapStateToProps = ({init: {initialized}}) => ({initialized});
 
-export default compose(
-  connect(mapStateToProps, { initialization }),
-  withRouter
-)(App);
+export default compose(connect(mapStateToProps, {initialization}), withRouter)(App);

@@ -1,5 +1,5 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import { reducer as formReducer } from 'redux-form';
+import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
+import {reducer as formReducer} from 'redux-form';
 import thunk from 'redux-thunk';
 
 import authReducer from '../reducers/auth';

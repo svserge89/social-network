@@ -1,57 +1,68 @@
-import React from 'react';
-import { Card } from 'react-bootstrap';
+import React, {useState} from 'react';
+import {Card, Button} from 'react-bootstrap';
 
 import ContactList from './ContactList/ContactList';
 import Status from './Status/Status';
+import LookingForAJob from './LookingForAJob/LookingForAJob';
+import EditInfoForm from './EditInfoForm/EditInfoForm';
 
 const InfoCard = ({
-  fullName,
-  status,
-  contacts,
-  lookingForAJob,
-  lookingForAJobDescription,
-  aboutMe,
-  setStatus,
-  fetchingStatus,
-  editableStatus
-}) => {
-  const showLookingForAJob = () => (
-    lookingForAJob && (
-      <Card.Text as="div">
-        <h5>Lockign for a job</h5>
-        <p className="text-nowrap text-truncate">
-          {lookingForAJobDescription}
-        </p>
-      </Card.Text>
-    )
-  );
+                    fullName,
+                    status,
+                    contacts,
+                    lookingForAJob,
+                    lookingForAJobDescription,
+                    aboutMe,
+                    contactLabels,
+                    setStatus,
+                    fetchingStatus,
+                    updateProfile,
+                    editable
+                  }) => {
+  const [editMode, setEditMode] = useState(false);
 
   const showAboutMe = () => (
     aboutMe ? (<p>{aboutMe}</p>) : (<p className="text-secondary">Empty.</p>)
   );
 
+  const onEdit = () => setEditMode(true);
+
+  const onSubmit = (profile) => updateProfile(profile).then(() => setEditMode(false));
+
+  const showEditButton = () => editable && (<Button onClick={onEdit}>Edit</Button>);
+
+  const showBody = () => (
+    !editMode
+      ? (
+        <Card.Body>
+          <Card.Text as="div">
+            <h5>Contacts</h5>
+            <ContactList contacts={contacts} labels={contactLabels}/>
+          </Card.Text>
+          <LookingForAJob answer={lookingForAJob} description={lookingForAJobDescription}/>
+          <Card.Text as="div"><h5>About me</h5>{showAboutMe()}</Card.Text>
+          {showEditButton()}
+        </Card.Body>
+      )
+      : (
+        <Card.Body>
+          <EditInfoForm onSubmit={onSubmit}
+                        setEditMode={setEditMode}
+                        contactLabels={contactLabels}/>
+        </Card.Body>
+      )
+  );
+
   return (
     <Card className="ml-3 flex-grow-1 flex-shrink-1">
       <Card.Header>
-        <Card.Title><strong>{fullName}</strong></Card.Title>
-        <Status
-          status={status}
-          editable={editableStatus}
-          setStatus={setStatus}
-          fetching={fetchingStatus}
-        />
+        <Card.Title><span className="font-weight-bold">{fullName}</span></Card.Title>
+        <Status status={status}
+                editable={editable}
+                setStatus={setStatus}
+                fetching={fetchingStatus}/>
       </Card.Header>
-      <Card.Body>
-        <Card.Text as="div">
-          <h5>Contacts</h5>
-          <ContactList contacts={contacts} />
-        </Card.Text>
-        {showLookingForAJob()}
-        <Card.Text as="div">
-          <h5>About me</h5>
-          {showAboutMe()}
-        </Card.Text>
-      </Card.Body>
+      {showBody()}
     </Card>
   );
 };

@@ -1,12 +1,12 @@
 import React from 'react';
-import { DropdownButton, Dropdown } from 'react-bootstrap';
+import {DropdownButton, Dropdown} from 'react-bootstrap';
 
-const UserDropdown = ({ userName, logout }) => {
+const UserDropdown = ({userName, logout}) => {
   const onClick = () => logout();
 
   return (
-    <DropdownButton title={userName} variant="outline-light">
-      <Dropdown.Item onClick={onClick} >Logout</Dropdown.Item>
+    <DropdownButton title={userName} variant="outline-light" id="user-dropdown">
+      <Dropdown.Item onClick={onClick}>Logout</Dropdown.Item>
     </DropdownButton>
   );
 };
