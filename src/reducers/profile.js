@@ -44,9 +44,10 @@ export const updateProfile = (profile) => async (dispatch) => {
 
   try {
     const {resultCode, messages} = await profileAPI.update(profile);
+    const message = messages.length > 0 ? messages[0] : 'Some error';
 
     if (resultCode) {
-      stopSubmit('profileInfo', {_error: messages[0]});
+      dispatch(stopSubmit('profileInfo', {_error: message}));
 
       return;
     }

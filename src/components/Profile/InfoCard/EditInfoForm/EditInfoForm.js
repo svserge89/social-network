@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, formValueSelector} from 'redux-form';
 import {compose} from 'redux';
-import {Form, Card, Button, ButtonToolbar} from 'react-bootstrap';
+import {Form, Card, Button, ButtonToolbar, Alert} from 'react-bootstrap';
 
 import ContactInput from './ContactInput/ContactInput';
 import LookingForAJobInput from './LookingForAJobInput/LookingForAJobInput';
@@ -11,13 +11,19 @@ import AboutMeInput from './AboutMeInput/AboutMeInput';
 
 const EditInfoForm = ({
                         handleSubmit,
-                        // error,
+                        error,
                         reset,
                         setEditMode,
                         contactLabels,
                         lookingForAJobValue,
                         change
                       }) => {
+  const [errorMessage, setErrorMessage] = useState(error);
+
+  useEffect(() => {
+    if (error) setErrorMessage(error);
+  }, [error, setErrorMessage]);
+
   const showContactInputs = () => (
     [...contactLabels.entries()].map(([key, value]) => (
       <ContactInput key={key}
@@ -27,10 +33,13 @@ const EditInfoForm = ({
     ))
   );
 
+  const showAlert = () => (errorMessage && (<Alert variant="danger">{errorMessage}</Alert>));
+
   const onCancel = () => setEditMode(false);
 
   return (
     <Form onSubmit={handleSubmit}>
+      {showAlert()}
       <Card.Text as="div">
         <FullNameInput name="fullName"/>
       </Card.Text>
