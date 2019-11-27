@@ -17,7 +17,8 @@ const InfoCard = ({
                     setStatus,
                     fetchingStatus,
                     updateProfile,
-                    editable
+                    editable,
+                    updating
                   }) => {
   const [editMode, setEditMode] = useState(false);
 
@@ -48,7 +49,8 @@ const InfoCard = ({
         <Card.Body>
           <EditInfoForm onSubmit={onSubmit}
                         setEditMode={setEditMode}
-                        contactLabels={contactLabels}/>
+                        contactLabels={contactLabels}
+                        updating={updating}/>
         </Card.Body>
       )
   );

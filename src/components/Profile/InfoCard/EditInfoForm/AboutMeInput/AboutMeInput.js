@@ -4,10 +4,15 @@ import {Field} from 'redux-form';
 
 import TextAreaField from '../../../../common/TextAreaField/TextAreaField';
 
-const AboutMeInput = ({name, validators}) => (
+const AboutMeInput = ({name, validators, disabled}) => (
   <Form.Group>
     <Form.Label column={false}><h5>About me</h5></Form.Label>
-    <Field type="textarea" name={name} rows={3} component={TextAreaField} validate={validators}/>
+    <Field type="textarea"
+           name={name}
+           rows={3}
+           component={TextAreaField}
+           validate={validators}
+           disabled={disabled}/>
   </Form.Group>
 );
 

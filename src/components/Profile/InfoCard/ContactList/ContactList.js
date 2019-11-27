@@ -9,7 +9,7 @@ const ContactList = ({contacts, labels}) => {
   const showContact = (key, label, link) => (
     link && (
       <Row className="flex-nowrap" key={key}>
-        <Col xs={5} md={4} lg={3}><span className="font-weight-bold">{label}:</span></Col>
+        <Col xs={4} md={4} lg={3}><span className="font-weight-bold">{label}:</span></Col>
         <Col className="text-nowrap text-truncate">{link}</Col>
       </Row>
     )

@@ -32,6 +32,7 @@ const Profile = ({
                    updateStatus,
                    updatePhoto,
                    updateProfile,
+                   updating,
                    photos: {large},
                    match: {params}
                  }) => {
@@ -71,7 +72,8 @@ const Profile = ({
                     setStatus={updateStatus}
                     fetchingStatus={fetchingStatus}
                     editable={isCurrentUser()}
-                    updateProfile={updateProfile}/>
+                    updateProfile={updateProfile}
+                    updating={updating}/>
         </div>
       </Col>
     </Row>
@@ -85,7 +87,8 @@ const mapStateToProps = ({
                              fetchingStatus,
                              fetchingPhoto,
                              status,
-                             contactLabels
+                             contactLabels,
+                             updating
                            },
                            auth: {userId}
                          }) => ({
@@ -95,7 +98,8 @@ const mapStateToProps = ({
   fetchingStatus,
   fetchingPhoto,
   status,
-  contactLabels
+  contactLabels,
+  updating
 });
 
 export default compose(

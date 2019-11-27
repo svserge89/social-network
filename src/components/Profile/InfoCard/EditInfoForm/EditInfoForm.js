@@ -8,6 +8,7 @@ import ContactInput from './ContactInput/ContactInput';
 import LookingForAJobInput from './LookingForAJobInput/LookingForAJobInput';
 import FullNameInput from './FullNameInput/FullNameInput';
 import AboutMeInput from './AboutMeInput/AboutMeInput';
+import ButtonLoader from '../../../common/ButtonLoader/ButtonLoader';
 
 const EditInfoForm = ({
                         handleSubmit,
@@ -16,7 +17,8 @@ const EditInfoForm = ({
                         setEditMode,
                         contactLabels,
                         lookingForAJobValue,
-                        change
+                        change,
+                        updating
                       }) => {
   const [errorMessage, setErrorMessage] = useState(error);
 
@@ -29,11 +31,16 @@ const EditInfoForm = ({
       <ContactInput key={key}
                     label={value}
                     placeholder={`Enter ${value} profile link`}
-                    name={`contacts.${key}`}/>
+                    name={`contacts.${key}`}
+                    disabled={updating}/>
     ))
   );
 
   const showAlert = () => (errorMessage && (<Alert variant="danger">{errorMessage}</Alert>));
+
+  const showSaveButton = () => (
+    updating ? (<ButtonLoader/>) : (<Button variant="success" type="submit">Save</Button>)
+  );
 
   const onCancel = () => setEditMode(false);
 
@@ -41,7 +48,7 @@ const EditInfoForm = ({
     <Form onSubmit={handleSubmit}>
       {showAlert()}
       <Card.Text as="div">
-        <FullNameInput name="fullName"/>
+        <FullNameInput name="fullName" disabled={updating}/>
       </Card.Text>
       <Card.Text as="div">
         <Form.Label column={false}><h5>Contacts</h5></Form.Label>
@@ -51,15 +58,16 @@ const EditInfoForm = ({
         <LookingForAJobInput checkboxName="lookingForAJob"
                              textareaName="lookingForAJobDescription"
                              checked={lookingForAJobValue}
-                             change={change}/>
+                             change={change}
+                             disabled={updating}/>
       </Card.Text>
       <Card.Text as="div">
-        <AboutMeInput name="aboutMe"/>
+        <AboutMeInput name="aboutMe" disabled={updating}/>
       </Card.Text>
       <ButtonToolbar className="justify-content-between">
-        <Button variant="success" type="submit">Save</Button>
-        <Button variant="primary" type="reset" onClick={reset}>Clean</Button>
-        <Button variant="danger" onClick={onCancel}>Cancel</Button>
+        {showSaveButton()}
+        <Button variant="warning" type="reset" onClick={reset} disabled={updating}>Clean</Button>
+        <Button variant="danger" onClick={onCancel} disabled={updating}>Cancel</Button>
       </ButtonToolbar>
     </Form>
   );
