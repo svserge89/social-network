@@ -57,8 +57,7 @@ const Profile = ({
     <Row>
       <Col className="col-12 p-0 mt-3">
         <div className="d-flex">
-          <AvatarCard className="flex-shrink-0 flex-grow-0"
-                      image={large}
+          <AvatarCard image={large}
                       editable={isCurrentUser()}
                       updateImage={updatePhoto}
                       fetching={fetchingPhoto}/>

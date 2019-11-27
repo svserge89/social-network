@@ -36,7 +36,7 @@ const AvatarCard = ({image, updateImage, editable, fetching}) => {
   );
 
   return (
-    <Card className="mb-auto">
+    <Card className="mb-auto flex-shrink-0 flex-grow-0">
       {showImage()}
       {showButtonToolbar()}
     </Card>

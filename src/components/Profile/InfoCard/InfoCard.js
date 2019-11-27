@@ -56,9 +56,11 @@ const InfoCard = ({
   );
 
   return (
-    <Card className="ml-3 flex-grow-1 flex-shrink-1">
+    <Card className="ml-3 flex-shrink-1 flex-grow-1">
       <Card.Header>
-        <Card.Title><span className="font-weight-bold">{fullName}</span></Card.Title>
+        <Card.Title>
+          <span className="font-weight-bold text-nowrap text-truncate">{fullName}</span>
+        </Card.Title>
         <Status status={status}
                 editable={editable}
                 setStatus={setStatus}
