@@ -5,6 +5,7 @@ const PREFIX = "social-network/auth/";
 
 const SET_CURRENT_USER = PREFIX + 'SET-CURRENT-USER';
 const SET_FETCHING = PREFIX + 'SET-FETCHING';
+const SET_UPDATING = PREFIX + 'SET-UPDATING';
 
 // Action creators
 const setCurrentUser = (userId = null, email = null, login = null) => ({
@@ -13,6 +14,8 @@ const setCurrentUser = (userId = null, email = null, login = null) => ({
 });
 
 const setFetching = (fetching) => ({type: SET_FETCHING, data: {fetching}});
+
+const setUpdating = (updating) => ({type: SET_UPDATING, data: {updating}});
 
 // Thunks
 export const getCurrentUser = () => async (dispatch) => {
@@ -30,37 +33,50 @@ export const getCurrentUser = () => async (dispatch) => {
 };
 
 export const login = ({email, password, rememberMe}) => async (dispatch) => {
-  const {messages, resultCode} = await authAPI.login(email, password, rememberMe);
+  dispatch(setUpdating(true));
 
-  const message = messages.length > 0 ? messages[0] : 'Some error';
+  try {
+    const {messages, resultCode} = await authAPI.login(email, password, rememberMe);
 
-  switch (resultCode) {
-    case 0:
-      dispatch(getCurrentUser());
-      break;
-    default:
-      dispatch(stopSubmit('login', {_error: message}));
-      break;
+    const message = messages.length > 0 ? messages[0] : 'Some error';
+
+    switch (resultCode) {
+      case 0:
+        dispatch(getCurrentUser());
+        break;
+      default:
+        dispatch(stopSubmit('login', {_error: message}));
+        break;
+    }
+  } finally {
+    dispatch(setUpdating(false));
   }
 };
 
 export const logout = () => async (dispatch) => {
-  const {resultCode} = await authAPI.logout();
+  dispatch(setUpdating(true));
 
-  if (resultCode) return;
+  try {
+    const {resultCode} = await authAPI.logout();
 
-  dispatch(setCurrentUser());
+    if (resultCode) return;
+
+    dispatch(setCurrentUser());
+  } finally {
+    dispatch(setUpdating(false));
+  }
 };
 
 // Utils
 const changeData = (state, data) => ({...state, ...data});
 
-const initialState = {userId: null, email: null, login: null, fetching: false};
+const initialState = {userId: null, email: null, login: null, fetching: false, updating: false};
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_FETCHING:
     case SET_CURRENT_USER:
+    case SET_UPDATING:
       return changeData(state, action.data);
     default:
       return state;

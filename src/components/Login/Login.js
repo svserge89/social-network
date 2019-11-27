@@ -7,7 +7,7 @@ import {Card, Row, Col} from 'react-bootstrap';
 import {login} from '../../reducers/auth';
 import LoginForm from './LoginForm/LoginForm';
 
-const Login = ({userId, login}) => {
+const Login = ({userId, updating, login}) => {
   if (userId) return (<Redirect to="/profile"/>);
 
   return (
@@ -15,13 +15,13 @@ const Login = ({userId, login}) => {
       <Col className="col-12 px-0">
         <Card>
           <Card.Header><h5>Login</h5></Card.Header>
-          <Card.Body><LoginForm onSubmit={login}/></Card.Body>
+          <Card.Body><LoginForm onSubmit={login} updating={updating}/></Card.Body>
         </Card>
       </Col>
     </Row>
   );
 };
 
-const mapStateToProps = ({auth: {userId}}) => ({userId});
+const mapStateToProps = ({auth: {userId, updating}}) => ({userId, updating});
 
 export default compose(connect(mapStateToProps, {login}))(Login);

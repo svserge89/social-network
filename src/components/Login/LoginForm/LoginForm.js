@@ -6,12 +6,13 @@ import {Form, Button, Alert, ButtonToolbar} from 'react-bootstrap';
 import EmailInput from './EmailInput/EmailInput';
 import PasswordInput from './PasswordInput/PasswordInput';
 import RememberMeCheckbox from './RememberMeCheckbox/RememberMeCheckbox';
+import ButtonLoader from '../../common/ButtonLoader/ButtonLoader';
 import {required, isEmail, minLength, maxLength} from '../../../utils/validators';
 
 const minLength6 = minLength(6);
 const maxLength50 = maxLength(50);
 
-const LoginForm = ({handleSubmit, error, reset}) => {
+const LoginForm = ({handleSubmit, error, reset, updating}) => {
   const [errorMessage, setErrorMessage] = useState(error);
 
   useEffect(() => {
@@ -20,15 +21,21 @@ const LoginForm = ({handleSubmit, error, reset}) => {
 
   const showAlert = () => (errorMessage && (<Alert variant="danger">{errorMessage}</Alert>));
 
+  const showLogInButton = () => (
+    updating ? (<ButtonLoader/>) : (<Button variant="success" type="submit">Log In</Button>)
+  );
+
   return (
     <Form onSubmit={handleSubmit}>
       {showAlert()}
-      <EmailInput name="email" validators={[required, isEmail, maxLength50]}/>
-      <PasswordInput name="password" validators={[required, minLength6, maxLength50]}/>
-      <RememberMeCheckbox name="rememberMe"/>
+      <EmailInput name="email" validators={[required, isEmail, maxLength50]} disabled={updating}/>
+      <PasswordInput name="password"
+                     validators={[required, minLength6, maxLength50]}
+                     disabled={updating}/>
+      <RememberMeCheckbox name="rememberMe" disabled={updating}/>
       <ButtonToolbar className="justify-content-between">
-        <Button variant="success" type="submit">Log In</Button>
-        <Button variant="primary" type="reset" onClick={reset}>Clean</Button>
+        {showLogInButton()}
+        <Button variant="warning" type="reset" onClick={reset} disabled={updating}>Clean</Button>
       </ButtonToolbar>
     </Form>
   );
