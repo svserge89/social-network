@@ -8,10 +8,13 @@ import {logout} from '../../reducers/auth';
 import LoginLink from './LoginLink/LoginLink';
 import UserDropdown from './UserDropdown/UserDropdown';
 import Layout from '../Layout/Layout';
+import ButtonLoader from '../common/ButtonLoader/ButtonLoader';
 
-const Header = ({login, logout}) => {
+const Header = ({login, logout, fetching, updating}) => {
   const showLogin = () => (
-    login ? (<UserDropdown userName={login} logout={logout}/>) : (<LoginLink path="/login"/>)
+    fetching || updating
+      ? (<ButtonLoader outline={true}/>)
+      : login ? (<UserDropdown userName={login} logout={logout}/>) : (<LoginLink path="/login"/>)
   );
 
   return (
@@ -31,11 +34,12 @@ const Header = ({login, logout}) => {
   );
 };
 
-const mapStateToProps = ({auth: {userId, email, login, fetching}}) => ({
+const mapStateToProps = ({auth: {userId, email, login, fetching, updating}}) => ({
   userId,
   email,
   login,
-  fetching
+  fetching,
+  updating
 });
 
 export default compose(connect(mapStateToProps, {logout}))(Header);
