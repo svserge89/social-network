@@ -26,13 +26,15 @@ const App = ({initialized, initialization}) => {
     <>
       <Header/>
       <Layout>
-        <Switch>
-          <Route exact path="/" component={Home}/>
-          <Route path="/profile/:userId?" component={Profile}/>
-          <Route exact path="/users" component={Users}/>
-          <Route exact path="/login" component={Login}/>
-          <Route component={NotMatch}/>
-        </Switch>
+        <div className="px-2">
+          <Switch>
+            <Route exact path="/" component={Home}/>
+            <Route path="/profile/:userId?" component={Profile}/>
+            <Route exact path="/users" component={Users}/>
+            <Route exact path="/login" component={Login}/>
+            <Route component={NotMatch}/>
+          </Switch>
+        </div>
       </Layout>
     </>
   );

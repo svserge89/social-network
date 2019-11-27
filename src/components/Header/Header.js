@@ -18,8 +18,8 @@ const Header = ({login, logout, fetching, updating}) => {
   );
 
   return (
-    <Navbar bg="primary" variant="dark">
-      <Layout>
+    <Navbar bg="primary" variant="dark" className="p-0">
+      <Layout className="bg-primary p-2">
         <LinkContainer to="/"><Navbar.Brand>Social Network</Navbar.Brand></LinkContainer>
         <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
         <Navbar.Collapse id="responsive-navbar-nav">
