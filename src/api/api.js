@@ -9,6 +9,7 @@ const FOLLOW = '/follow';
 const PROFILE = '/profile';
 const PROFILE_STATUS = PROFILE + '/status';
 const PROFILE_PHOTO = PROFILE + '/photo';
+const CAPTCHA = '/security/get-captcha-url';
 
 const API_KEY = '12978896-c3c3-47c8-a5ce-4cdffd884edb';
 
@@ -55,4 +56,8 @@ export const profileAPI = {
     return instance.put(PROFILE_PHOTO, formData, {headers: {'Content-Type': 'multipart/form-data'}})
       .then(responseData);
   }
+};
+
+export const securityAPI = {
+  getCaptcha: () => instance.get(`${CAPTCHA}`).then(responseData)
 };

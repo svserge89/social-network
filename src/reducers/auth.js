@@ -1,9 +1,10 @@
-import {authAPI} from '../api/api';
+import {authAPI, securityAPI} from '../api/api';
 import {stopSubmit} from 'redux-form';
 
-const PREFIX = "social-network/auth/";
+const PREFIX = 'social-network/auth/';
 
 const SET_CURRENT_USER = PREFIX + 'SET-CURRENT-USER';
+const SET_CAPTCHA = PREFIX + 'SET-CAPTCHA';
 const SET_FETCHING = PREFIX + 'SET-FETCHING';
 const SET_UPDATING = PREFIX + 'SET-UPDATING';
 
@@ -12,6 +13,8 @@ const setCurrentUser = (userId = null, email = null, login = null) => ({
   type: SET_CURRENT_USER,
   data: {userId, email, login}
 });
+
+const setCaptcha = (captcha = null) => ({type: SET_CAPTCHA, data: {captcha}});
 
 const setFetching = (fetching) => ({type: SET_FETCHING, data: {fetching}});
 
@@ -32,17 +35,28 @@ export const getCurrentUser = () => async (dispatch) => {
   }
 };
 
-export const login = ({email, password, rememberMe}) => async (dispatch) => {
+const getCaptcha = () => async (dispatch) => {
+  const {url} = await securityAPI.getCaptcha();
+
+  dispatch(setCaptcha(url));
+};
+
+export const login = ({email, password, rememberMe, captcha}) => async (dispatch) => {
   dispatch(setUpdating(true));
 
   try {
-    const {messages, resultCode} = await authAPI.login(email, password, rememberMe);
+    const {messages, resultCode} = await authAPI.login(email, password, rememberMe, captcha);
 
     const message = messages.length > 0 ? messages[0] : 'Some error';
 
     switch (resultCode) {
       case 0:
-        dispatch(getCurrentUser());
+        await dispatch(getCurrentUser());
+        dispatch(setCaptcha());
+        break;
+      case 10:
+        await dispatch(getCaptcha());
+        dispatch(stopSubmit('login', {'captcha': message, _error: "Captcha required"}));
         break;
       default:
         dispatch(stopSubmit('login', {_error: message}));
@@ -70,12 +84,20 @@ export const logout = () => async (dispatch) => {
 // Utils
 const changeData = (state, data) => ({...state, ...data});
 
-const initialState = {userId: null, email: null, login: null, fetching: false, updating: false};
+const initialState = {
+  userId: null,
+  email: null,
+  login: null,
+  fetching: false,
+  updating: false,
+  captcha: null
+};
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_FETCHING:
     case SET_CURRENT_USER:
+    case SET_CAPTCHA:
     case SET_UPDATING:
       return changeData(state, action.data);
     default:

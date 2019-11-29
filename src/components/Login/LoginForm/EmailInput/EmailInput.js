@@ -5,7 +5,7 @@ import {Field} from 'redux-form';
 import InputField from '../../../common/InputField/InputField';
 
 const EmailInput = ({name, validators, disabled}) => (
-  <Form.Group controlId="formBasicEmail">
+  <Form.Group>
     <Form.Label column={false}>Email address</Form.Label>
     <Field type="email"
            placeholder="Enter email"

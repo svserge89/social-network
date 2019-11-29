@@ -3,7 +3,7 @@ import {Form} from 'react-bootstrap';
 import {Field} from 'redux-form';
 
 const RememberMeCheckbox = ({name, disabled}) => (
-  <Form.Group controlId="formBasicCheckbox">
+  <Form.Group>
     <Field type="checkbox"
            label="Remember me"
            name={name}
