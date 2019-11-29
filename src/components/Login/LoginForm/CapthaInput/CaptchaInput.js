@@ -12,7 +12,8 @@ const CaptchaInput = ({name, url, validators, disabled}) => (
            name={name}
            component={InputField}
            validate={validators}
-           disabled={disabled}/>
+           disabled={disabled}
+           autoComplete="off"/>
   </Form.Group>
 );
 
