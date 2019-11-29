@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
 import {Row, Col} from 'react-bootstrap';
 
 import {
@@ -44,6 +44,8 @@ const Profile = ({
       getStatus(id);
     }
   }, [params.userId, currentUserId, getProfile, getStatus]);
+
+  if (!params.userId && !currentUserId) return (<Redirect to="/login"/>);
 
   if (fetching) return (
     <Row className="mt-3"><Col className="col-12 p-0"><ComponentLoader/></Col></Row>
