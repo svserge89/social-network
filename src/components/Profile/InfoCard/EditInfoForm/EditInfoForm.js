@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, formValueSelector} from 'redux-form';
 import {compose} from 'redux';
@@ -20,12 +20,6 @@ const EditInfoForm = ({
                         change,
                         updating
                       }) => {
-  const [errorMessage, setErrorMessage] = useState(error);
-
-  useEffect(() => {
-    if (error) setErrorMessage(error);
-  }, [error, setErrorMessage]);
-
   const showContactInputs = () => (
     [...contactLabels.entries()].map(([key, value]) => (
       <ContactInput key={key}
@@ -36,7 +30,7 @@ const EditInfoForm = ({
     ))
   );
 
-  const showAlert = () => (errorMessage && (<Alert variant="danger">{errorMessage}</Alert>));
+  const showAlert = () => (error && (<Alert variant="danger">{error}</Alert>));
 
   const showSaveButton = () => (
     updating ? (<ButtonLoader/>) : (<Button variant="success" type="submit">Save</Button>)

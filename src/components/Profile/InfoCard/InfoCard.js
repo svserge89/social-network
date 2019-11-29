@@ -28,7 +28,9 @@ const InfoCard = ({
 
   const onEdit = () => setEditMode(true);
 
-  const onSubmit = (profile) => updateProfile(profile);
+  const onSubmit = (profile) => {
+    updateProfile(profile)
+  };
 
   const showEditButton = () => editable && (<Button onClick={onEdit}>Edit</Button>);
 
