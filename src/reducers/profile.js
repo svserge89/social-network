@@ -59,6 +59,10 @@ export const updateProfile = (profile) => async (dispatch) => {
   }
 };
 
+export const cleanProfile = () => (dispatch) => (
+  dispatch(setProfile({contacts: {}, photos: {}}))
+);
+
 export const getStatus = (userId) => async (dispatch) => {
   const status = await profileAPI.getStatus(userId);
 

@@ -7,6 +7,7 @@ import {Row, Col} from 'react-bootstrap';
 import {
   getProfile,
   updateProfile,
+  cleanProfile,
   getStatus,
   updateStatus,
   updatePhoto
@@ -17,6 +18,7 @@ import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
 
 const Profile = ({
                    currentUserId,
+                   userId,
                    contacts,
                    lookingForAJob,
                    lookingForAJobDescription,
@@ -32,6 +34,7 @@ const Profile = ({
                    updateStatus,
                    updatePhoto,
                    updateProfile,
+                   cleanProfile,
                    updating,
                    photos: {large},
                    match: {params}
@@ -45,9 +48,11 @@ const Profile = ({
     }
   }, [params.userId, currentUserId, getProfile, getStatus]);
 
+  useEffect(() => () => cleanProfile(), [cleanProfile]);
+
   if (!params.userId && !currentUserId) return (<Redirect to="/login"/>);
 
-  if (fetching) return (
+  if (fetching || !userId) return (
     <Row className="mt-3"><Col className="col-12 p-0"><ComponentLoader/></Col></Row>
   );
 
@@ -104,6 +109,13 @@ const mapStateToProps = ({
 });
 
 export default compose(
-  connect(mapStateToProps, {getProfile, getStatus, updateStatus, updatePhoto, updateProfile}),
+  connect(mapStateToProps, {
+    getProfile,
+    getStatus,
+    updateStatus,
+    updatePhoto,
+    updateProfile,
+    cleanProfile
+  }),
   withRouter
 )(Profile);
