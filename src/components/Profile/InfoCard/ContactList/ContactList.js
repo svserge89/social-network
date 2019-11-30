@@ -10,7 +10,7 @@ const ContactList = ({contacts, labels}) => {
     link && (
       <Row className="flex-nowrap" key={key}>
         <Col xs={4} md={4} lg={3}><span className="font-weight-bold">{label}:</span></Col>
-        <Col className="text-nowrap text-truncate">{link}</Col>
+        <Col className="text-nowrap text-truncate"><a href={link}>{link}</a></Col>
       </Row>
     )
   );
