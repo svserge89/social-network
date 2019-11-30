@@ -3,7 +3,7 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {Row, Col} from 'react-bootstrap';
 
-import {setPage, setSize, getUsers, follow, unfollow} from '../../reducers/users';
+import {setPage, setSize, getUsers, cleanUsers, follow, unfollow} from '../../reducers/users';
 import UserCard from './UserCard/UserCard';
 import PageNavToolbar from '../common/PageNavToolbar/PageNavToolbar';
 import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
@@ -20,6 +20,7 @@ const Users = ({
                  setPage,
                  setSize,
                  getUsers,
+                 cleanUsers,
                  follow,
                  unfollow
                }) => {
@@ -27,10 +28,14 @@ const Users = ({
     getUsers(page, size);
   }, [getUsers, page, size]);
 
+  useEffect(() => () => cleanUsers(), [cleanUsers]);
+
   const isFollowing = (userId) => following.includes(userId);
 
   const showUserCards = () => {
-    if (fetching) return (<Row><Col className="col-12 p-0"><ComponentLoader/></Col></Row>);
+    if (fetching || !users) return (
+      <Row><Col className="col-12 p-0"><ComponentLoader/></Col></Row>
+    );
 
     return (
       users.map(({id, name, status, photos: {small}, followed}) => (
@@ -84,5 +89,5 @@ const mapStateToProps = ({
 });
 
 export default compose(
-  connect(mapStateToProps, {setPage, setSize, getUsers, follow, unfollow})
+  connect(mapStateToProps, {setPage, setSize, getUsers, cleanUsers, follow, unfollow})
 )(Users);

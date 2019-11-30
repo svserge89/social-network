@@ -1,21 +1,21 @@
 import {usersAPI} from '../api/api';
 
-const PREFIX = "social-network/users/";
+const PREFIX = 'social-network/users/';
 
-const SET_USERS = PREFIX + "SET-USERS";
-const SET_PAGE = PREFIX + "SET-PAGE";
-const SET_SIZE = PREFIX + "SET-SIZE";
-const SET_FETCHING = PREFIX + "SET-FETCHING";
-const SET_FOLLOWING = PREFIX + "SET-FOLLOWING";
-const FOLLOW = PREFIX + "FOLLOW";
-const UNFOLLOW = PREFIX + "UNFOLLOW";
+const SET_USERS = PREFIX + 'SET-USERS';
+const SET_PAGE = PREFIX + 'SET-PAGE';
+const SET_SIZE = PREFIX + 'SET-SIZE';
+const SET_FETCHING = PREFIX + 'SET-FETCHING';
+const SET_FOLLOWING = PREFIX + 'SET-FOLLOWING';
+const FOLLOW = PREFIX + 'FOLLOW';
+const UNFOLLOW = PREFIX + 'UNFOLLOW';
 
 // Action creators
 const setFollow = (userId) => ({type: FOLLOW, userId});
 
 const setUnfollow = (userId) => ({type: UNFOLLOW, userId});
 
-const setUsers = (users, total, page) => ({type: SET_USERS, data: {users, total, page}});
+const setUsers = (users, total) => ({type: SET_USERS, data: {users, total}});
 
 export const setPage = (page) => ({type: SET_PAGE, data: {page}});
 
@@ -32,11 +32,13 @@ export const getUsers = (page, size) => async (dispatch) => {
   try {
     const {items, totalCount} = await usersAPI.get(size, page);
 
-    dispatch(setUsers(items, totalCount, page));
+    dispatch(setUsers(items, totalCount));
   } finally {
     dispatch(setFetching(false));
   }
 };
+
+export const cleanUsers = () => (dispatch) => dispatch(setUsers(null, 0));
 
 export const follow = (userId) => async (dispatch) => {
   dispatch(setFollowing(true, userId));
