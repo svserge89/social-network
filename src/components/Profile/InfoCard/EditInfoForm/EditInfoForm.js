@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, formValueSelector} from 'redux-form';
 import {compose} from 'redux';
-import {Form, Card, Button, ButtonToolbar, Alert} from 'react-bootstrap';
+import {Form, Card, Button, ButtonToolbar, ButtonGroup, Alert} from 'react-bootstrap';
 
 import ContactInput from './ContactInput/ContactInput';
 import LookingForAJobInput from './LookingForAJobInput/LookingForAJobInput';
@@ -60,8 +60,10 @@ const EditInfoForm = ({
       </Card.Text>
       <ButtonToolbar className="justify-content-between">
         {showSaveButton()}
-        <Button variant="warning" type="reset" onClick={reset} disabled={updating}>Clean</Button>
-        <Button variant="danger" onClick={onCancel} disabled={updating}>Cancel</Button>
+        <ButtonGroup>
+          <Button variant="warning" type="reset" onClick={reset} disabled={updating}>Clean</Button>
+          <Button variant="danger" onClick={onCancel} disabled={updating}>Cancel</Button>
+        </ButtonGroup>
       </ButtonToolbar>
     </Form>
   );

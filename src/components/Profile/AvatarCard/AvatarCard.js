@@ -14,12 +14,12 @@ const AvatarCard = ({image, updateImage, editable, fetching}) => {
   const showImage = () => (
     fetching
       ? (<div className={`${style.avatar} pt-3`}><ComponentLoader/></div>)
-      : (<Card.Img variant="top" src={imageUrl} className={`${style.avatar} rounded`}/>)
+      : (<Card.Img variant="top" src={imageUrl} className={`${style.avatar}`}/>)
   );
 
   const showButtonToolbar = () => (
     editable && (
-      <Card.Body className="p-1">
+      <Card.Body className="px-0 pb-0 pt-1">
         <InputGroup>
           <FormControl className="custom-file-input"
                        type="file"
@@ -36,7 +36,7 @@ const AvatarCard = ({image, updateImage, editable, fetching}) => {
   );
 
   return (
-    <Card className="mb-auto flex-shrink-0 flex-grow-0">
+    <Card className="mb-auto flex-shrink-0 flex-grow-0 bg-light p-1">
       {showImage()}
       {showButtonToolbar()}
     </Card>
