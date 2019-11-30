@@ -1,15 +1,17 @@
-import {profileAPI} from '../api/api';
 import {stopSubmit} from 'redux-form';
 
-const PREFIX = "social-network/profile/";
+import {profileAPI} from '../api/api';
+import {parseMessages} from '../utils/errorParser';
 
-const SET_PROFILE = PREFIX + "SET-PROFILE";
-const SET_STATUS = PREFIX + "SET-STATUS";
-const SET_PHOTO = PREFIX + "SET-PHOTO";
-const SET_FETCHING = PREFIX + "SET-FETCHING";
-const SET_FETCHING_STATUS = PREFIX + "SET-FETCHING-STATUS";
-const SET_FETCHING_PHOTO = PREFIX + "SET-FETCHING-PHOTO";
-const SET_UPDATING = PREFIX + "SET-UPDATING";
+const PREFIX = 'social-network/profile/';
+
+const SET_PROFILE = PREFIX + 'SET-PROFILE';
+const SET_STATUS = PREFIX + 'SET-STATUS';
+const SET_PHOTO = PREFIX + 'SET-PHOTO';
+const SET_FETCHING = PREFIX + 'SET-FETCHING';
+const SET_FETCHING_STATUS = PREFIX + 'SET-FETCHING-STATUS';
+const SET_FETCHING_PHOTO = PREFIX + 'SET-FETCHING-PHOTO';
+const SET_UPDATING = PREFIX + 'SET-UPDATING';
 
 // Action creators
 const setProfile = (profile) => ({type: SET_PROFILE, data: {profile}});
@@ -44,10 +46,9 @@ export const updateProfile = (profile) => async (dispatch) => {
 
   try {
     const {resultCode, messages} = await profileAPI.update(profile);
-    const message = messages.length > 0 ? messages[0] : 'Some error';
 
     if (resultCode) {
-      dispatch(stopSubmit('profileInfo', {_error: message}));
+      dispatch(stopSubmit('profileInfo', parseMessages(messages)));
 
       return;
     }
@@ -100,14 +101,14 @@ const changePhoto = (state, photos) => ({...state, profile: {...state.profile, p
 const initialState = {
   profile: {contacts: {}, photos: {}},
   contactLabels: new Map([
-    ["github", "GitHub"],
-    ["facebook", "Facebook"],
-    ["vk", "VK"],
-    ["twitter", "Twitter"],
-    ["instagram", "Instagram"],
-    ["youtube", "Youtube"],
-    ["website", "Web Site"],
-    ["mainLink", "Main Link"]
+    ['github', 'GitHub'],
+    ['facebook', 'Facebook'],
+    ['vk', 'VK'],
+    ['twitter', 'Twitter'],
+    ['instagram', 'Instagram'],
+    ['youtube', 'Youtube'],
+    ['website', 'Web Site'],
+    ['mainLink', 'Main Link']
   ]),
   fetching: false,
   fetchingStatus: false,

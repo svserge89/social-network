@@ -1,5 +1,7 @@
-import {authAPI, securityAPI} from '../api/api';
 import {stopSubmit} from 'redux-form';
+
+import {authAPI, securityAPI} from '../api/api';
+import {parseMessages} from '../utils/errorParser';
 
 const PREFIX = 'social-network/auth/';
 
@@ -47,8 +49,6 @@ export const login = ({email, password, rememberMe, captcha}) => async (dispatch
   try {
     const {messages, resultCode} = await authAPI.login(email, password, rememberMe, captcha);
 
-    const message = messages.length > 0 ? messages[0] : 'Some error';
-
     switch (resultCode) {
       case 0:
         await dispatch(getCurrentUser());
@@ -56,10 +56,9 @@ export const login = ({email, password, rememberMe, captcha}) => async (dispatch
         break;
       case 10:
         await dispatch(getCaptcha());
-        dispatch(stopSubmit('login', {'captcha': message, _error: "Captcha required"}));
-        break;
+      // eslint-disable-next-line no-fallthrough
       default:
-        dispatch(stopSubmit('login', {_error: message}));
+        dispatch(stopSubmit('login', parseMessages(messages)));
         break;
     }
   } finally {
