@@ -21,11 +21,16 @@ const Status = ({status, editable, setStatus, fetching}) => {
     setEditMode(false);
   };
 
+  const onKeyDown = (event) => {
+    if (event.key === 'Enter') onSetStatus(event);
+  };
+
   if (editMode) {
     return (
       <FormControl value={localStatus}
                    onChange={onChangeStatus}
                    onBlur={onSetStatus}
+                   onKeyDown={onKeyDown}
                    placeholder="Input status"
                    autoFocus/>
     );
@@ -40,7 +45,7 @@ const Status = ({status, editable, setStatus, fetching}) => {
   }
 
   return (
-    <Card.Subtitle onDoubleClick={onEdit} className="text-nowrap text-truncate">
+    <Card.Subtitle onDoubleClick={onEdit} className="text-nowrap text-truncate" title={localStatus}>
       {localStatus}
     </Card.Subtitle>
   );
