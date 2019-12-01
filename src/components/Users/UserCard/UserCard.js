@@ -40,11 +40,13 @@ const UserCard = ({
     <Card className="p-1">
       <div className="d-flex">
         <LinkContainer to={`/profile/${userId}`} className="flex-shrink-0">
-          <Card.Link><Image src={imageSrc} thumbnail className="bg-light"/></Card.Link>
+          <Card.Link>
+            <Image src={imageSrc} thumbnail className={`${style.image} bg-light`}/>
+          </Card.Link>
         </LinkContainer>
-        <Card.Body className={style.cardBody}>
-          <Card.Title className="text-nowrap text-truncate">{name}</Card.Title>
-          <Card.Text className="text-nowrap text-truncate">{status}</Card.Text>
+        <Card.Body className="flex-shrink-2">
+          <Card.Title className="text-nowrap text-truncate" title={name}>{name}</Card.Title>
+          <Card.Text className="text-nowrap text-truncate" title={status}>{status}</Card.Text>
         </Card.Body>
         <div className="flex-shrink-0 align-self-center">{showButton()}</div>
       </div>

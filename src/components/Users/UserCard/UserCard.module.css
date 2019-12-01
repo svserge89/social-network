@@ -1,4 +1,4 @@
-.cardBody {
-  min-width: 200px;
-  flex-shrink: 2;
+.image {
+  min-width: 110px;
+  min-height: 110px;
 }
