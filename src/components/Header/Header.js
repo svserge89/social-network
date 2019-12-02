@@ -24,8 +24,8 @@ const Header = ({login, logout, fetching, updating}) => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <LinkContainer to="/profile"><Nav.Link>Profile</Nav.Link></LinkContainer>
-            <LinkContainer to="/users"><Nav.Link>Users</Nav.Link></LinkContainer>
+            <LinkContainer to="/profile"><Nav.Link active={false}>Profile</Nav.Link></LinkContainer>
+            <LinkContainer to="/users"><Nav.Link active={false}>Users</Nav.Link></LinkContainer>
           </Nav>
           <Nav>{showLogin()}</Nav>
         </Navbar.Collapse>
