@@ -1,4 +1,5 @@
 import {usersAPI} from '../api/api';
+import {SUCCESS} from '../utils/responseCodes';
 
 const PREFIX = 'social-network/users/';
 
@@ -46,7 +47,7 @@ export const follow = (userId) => async (dispatch) => {
   try {
     const {resultCode} = await usersAPI.follow(userId);
 
-    if (resultCode) return;
+    if (resultCode !== SUCCESS) return;
 
     dispatch(setFollow(userId));
   } finally {
@@ -60,7 +61,7 @@ export const unfollow = (userId) => async (dispatch) => {
   try {
     const {resultCode} = await usersAPI.unFollow(userId);
 
-    if (resultCode) return;
+    if (resultCode !== SUCCESS) return;
 
     dispatch(setUnfollow(userId));
   } finally {

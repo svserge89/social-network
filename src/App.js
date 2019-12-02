@@ -4,6 +4,7 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 
 import {initialization} from './reducers/init';
+import {HOME, LOGIN, PROFILE, USERS} from './utils/routes';
 import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
 import NotMatch from './components/NotMatch/NotMatch';
@@ -28,10 +29,10 @@ const App = ({initialized, initialization}) => {
       <Layout>
         <div className="px-2">
           <Switch>
-            <Route exact path="/" component={Home}/>
-            <Route path="/profile/:userId?" component={Profile}/>
-            <Route exact path="/users" component={Users}/>
-            <Route exact path="/login" component={Login}/>
+            <Route exact path={HOME} component={Home}/>
+            <Route path={`${PROFILE}/:userId?`} component={Profile}/>
+            <Route exact path={USERS} component={Users}/>
+            <Route exact path={LOGIN} component={Login}/>
             <Route component={NotMatch}/>
           </Switch>
         </div>

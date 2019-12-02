@@ -1,6 +1,7 @@
 import {stopSubmit} from 'redux-form';
 
 import {authAPI, securityAPI} from '../api/api';
+import {CAPTCHA_REQUIRED, SUCCESS} from '../utils/responseCodes';
 import {parseMessages} from '../utils/errorParser';
 
 const PREFIX = 'social-network/auth/';
@@ -29,7 +30,7 @@ export const getCurrentUser = () => async (dispatch) => {
   try {
     const {resultCode, data: {id, email, login}} = await authAPI.getCurrentUser();
 
-    if (resultCode) return;
+    if (resultCode !== SUCCESS) return;
 
     dispatch(setCurrentUser(id, email, login));
   } finally {
@@ -50,11 +51,11 @@ export const login = ({email, password, rememberMe, captcha}) => async (dispatch
     const {messages, resultCode} = await authAPI.login(email, password, rememberMe, captcha);
 
     switch (resultCode) {
-      case 0:
+      case SUCCESS:
         await dispatch(getCurrentUser());
         dispatch(setCaptcha());
         break;
-      case 10:
+      case CAPTCHA_REQUIRED:
         await dispatch(getCaptcha());
       // eslint-disable-next-line no-fallthrough
       default:
@@ -72,7 +73,7 @@ export const logout = () => async (dispatch) => {
   try {
     const {resultCode} = await authAPI.logout();
 
-    if (resultCode) return;
+    if (resultCode !== SUCCESS) return;
 
     dispatch(setCurrentUser());
   } finally {

@@ -1,6 +1,7 @@
 import {stopSubmit} from 'redux-form';
 
 import {profileAPI} from '../api/api';
+import {SUCCESS} from '../utils/responseCodes';
 import {parseMessages} from '../utils/errorParser';
 
 const PREFIX = 'social-network/profile/';
@@ -47,7 +48,7 @@ export const updateProfile = (profile) => async (dispatch) => {
   try {
     const {resultCode, messages} = await profileAPI.update(profile);
 
-    if (resultCode) {
+    if (resultCode !== SUCCESS) {
       dispatch(stopSubmit('profileInfo', parseMessages(messages)));
 
       return;
@@ -75,7 +76,7 @@ export const updateStatus = (status) => async (dispatch) => {
   try {
     const {resultCode} = await profileAPI.updateStatus(status);
 
-    if (resultCode) return;
+    if (resultCode !== SUCCESS) return;
 
     dispatch(setStatus(status));
   } finally {
@@ -89,11 +90,11 @@ export const updatePhoto = (image) => async (dispatch) => {
   try {
     const {resultCode, data: {photos}} = await profileAPI.updatePhoto(image);
 
-    if (resultCode) return;
+    if (resultCode !== SUCCESS) return;
 
     dispatch(setPhoto(photos));
   } finally {
-    dispatch(setFetchingPhoto(false))
+    dispatch(setFetchingPhoto(false));
   }
 };
 

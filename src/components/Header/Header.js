@@ -5,6 +5,7 @@ import {Navbar, Nav} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
 import {logout} from '../../reducers/auth';
+import {HOME, LOGIN, PROFILE, USERS} from '../../utils/routes';
 import LoginLink from './LoginLink/LoginLink';
 import UserDropdown from './UserDropdown/UserDropdown';
 import Layout from '../Layout/Layout';
@@ -14,18 +15,18 @@ const Header = ({login, logout, fetching, updating}) => {
   const showLogin = () => (
     fetching || updating
       ? (<ButtonLoader outline={true}/>)
-      : login ? (<UserDropdown userName={login} logout={logout}/>) : (<LoginLink path="/login"/>)
+      : login ? (<UserDropdown userName={login} logout={logout}/>) : (<LoginLink path={LOGIN}/>)
   );
 
   return (
     <Navbar bg="primary" variant="dark" className="p-0">
       <Layout className="bg-primary p-2">
-        <LinkContainer to="/"><Navbar.Brand>Social Network</Navbar.Brand></LinkContainer>
+        <LinkContainer to={HOME}><Navbar.Brand>Social Network</Navbar.Brand></LinkContainer>
         <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <LinkContainer to="/profile"><Nav.Link active={false}>Profile</Nav.Link></LinkContainer>
-            <LinkContainer to="/users"><Nav.Link active={false}>Users</Nav.Link></LinkContainer>
+            <LinkContainer to={PROFILE}><Nav.Link active={false}>Profile</Nav.Link></LinkContainer>
+            <LinkContainer to={USERS}><Nav.Link active={false}>Users</Nav.Link></LinkContainer>
           </Nav>
           <Nav>{showLogin()}</Nav>
         </Navbar.Collapse>
