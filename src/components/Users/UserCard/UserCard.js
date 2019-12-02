@@ -2,6 +2,7 @@ import React from 'react';
 import {Card, Image, Button} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
+import {PROFILE} from '../../../utils/routes';
 import ButtonLoader from '../../common/ButtonLoader/ButtonLoader';
 
 import smallAvatar from '../../../assets/images/small-avatar.png';
@@ -39,12 +40,12 @@ const UserCard = ({
   return (
     <Card className="p-1">
       <div className="d-flex">
-        <LinkContainer to={`/profile/${userId}`} className="flex-shrink-0">
+        <LinkContainer to={`${PROFILE}/${userId}`} className="flex-shrink-0">
           <Card.Link>
             <Image src={imageSrc} thumbnail className={`${style.image} bg-light`}/>
           </Card.Link>
         </LinkContainer>
-        <Card.Body className="flex-shrink-2">
+        <Card.Body className="flex-shrink-2 text-nowrap text-truncate">
           <Card.Title className="text-nowrap text-truncate" title={name}>{name}</Card.Title>
           <Card.Text className="text-nowrap text-truncate" title={status}>{status}</Card.Text>
         </Card.Body>
