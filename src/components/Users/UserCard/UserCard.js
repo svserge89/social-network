@@ -1,6 +1,7 @@
 import React from 'react';
 import {Card, Image, Button} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
+import cn from 'classnames';
 
 import {PROFILE} from '../../../utils/routes';
 import ButtonLoader from '../../common/ButtonLoader/ButtonLoader';
@@ -42,7 +43,7 @@ const UserCard = ({
       <div className="d-flex">
         <LinkContainer to={`${PROFILE}/${userId}`} className="flex-shrink-0">
           <Card.Link>
-            <Image src={imageSrc} thumbnail className={`${style.image} bg-light`}/>
+            <Image src={imageSrc} thumbnail className={cn(style.image, 'bg-light')}/>
           </Card.Link>
         </LinkContainer>
         <Card.Body className="flex-shrink-2 text-nowrap text-truncate">

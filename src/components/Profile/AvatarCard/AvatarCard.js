@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card, InputGroup, FormControl, FormLabel} from 'react-bootstrap';
+import cn from 'classnames';
 
 import ComponentLoader from '../../common/ComponentLoader/ComponentLoader';
 
@@ -13,7 +14,7 @@ const AvatarCard = ({image, updateImage, editable, fetching}) => {
 
   const showImage = () => (
     fetching
-      ? (<div className={`${style.avatar} pt-3`}><ComponentLoader/></div>)
+      ? (<div className={cn(style.avatar, 'pt-3')}><ComponentLoader/></div>)
       : (<Card.Img variant="top" src={imageUrl} className={style.avatar}/>)
   );
 
