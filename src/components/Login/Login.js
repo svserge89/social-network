@@ -5,10 +5,11 @@ import {connect} from 'react-redux';
 import {Card, Row, Col} from 'react-bootstrap';
 
 import {login} from '../../reducers/auth';
+import {PROFILE} from '../../utils/routes';
 import LoginForm from './LoginForm/LoginForm';
 
 const Login = ({userId, updating, login, captcha}) => {
-  if (userId) return (<Redirect to="/profile"/>);
+  if (userId) return (<Redirect to={PROFILE}/>);
 
   const onSubmit = (data) => {
     login(data)

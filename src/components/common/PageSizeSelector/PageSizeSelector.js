@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form, InputGroup} from 'react-bootstrap';
 
-const PageSizeSelector = ({available, current, change, disabled, size = "sm"}) => {
+const PageSizeSelector = ({available, current, change, disabled, size = 'sm'}) => {
   const onChange = ({target: {value}}) => change(+value);
 
   const showOptions = () => available.map(value => (<option key={value}>{value}</option>));

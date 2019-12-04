@@ -6,9 +6,9 @@ import {Form, Button, Alert, ButtonToolbar} from 'react-bootstrap';
 import EmailInput from './EmailInput/EmailInput';
 import PasswordInput from './PasswordInput/PasswordInput';
 import RememberMeCheckbox from './RememberMeCheckbox/RememberMeCheckbox';
+import CaptchaInput from './CapthaInput/CaptchaInput';
 import ButtonLoader from '../../common/ButtonLoader/ButtonLoader';
 import {required, isEmail, minLength, maxLength} from '../../../utils/validators';
-import CaptchaInput from "./CapthaInput/CaptchaInput";
 
 const minLength6 = minLength(6);
 const maxLength50 = maxLength(50);

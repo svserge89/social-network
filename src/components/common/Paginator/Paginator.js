@@ -8,7 +8,7 @@ const Paginator = ({
                      setPage,
                      disabled,
                      sideLength = 3,
-                     size = "sm"
+                     size = 'sm'
                    }) => {
   const pagesCount = Math.ceil(totalItems / pageSize);
 

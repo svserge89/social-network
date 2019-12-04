@@ -12,6 +12,7 @@ import {
   updateStatus,
   updatePhoto
 } from '../../reducers/profile';
+import {LOGIN} from '../../utils/routes';
 import AvatarCard from './AvatarCard/AvatarCard';
 import InfoCard from './InfoCard/InfoCard';
 import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
@@ -50,7 +51,7 @@ const Profile = ({
 
   useEffect(() => () => cleanProfile(), [cleanProfile]);
 
-  if (!params.userId && !currentUserId) return (<Redirect to="/login"/>);
+  if (!params.userId && !currentUserId) return (<Redirect to={LOGIN}/>);
 
   if (fetching || !userId) return (
     <Row className="mt-3"><Col className="col-12 p-0"><ComponentLoader/></Col></Row>

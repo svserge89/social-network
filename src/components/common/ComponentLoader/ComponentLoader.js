@@ -9,7 +9,7 @@ const ComponentLoader = ({size, center = true}) => {
   );
 
   return (
-    <div className={`d-flex ${center && "justify-content-center"}`}>
+    <div className={center ? 'd-flex justify-content-center' : 'd-flex'}>
       {showLabel()}
       <Spinner size={size} animation="border" role="status" variant="secondary">
         <span className="sr-only">Loading...</span>

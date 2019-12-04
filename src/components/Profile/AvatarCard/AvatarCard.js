@@ -14,7 +14,7 @@ const AvatarCard = ({image, updateImage, editable, fetching}) => {
   const showImage = () => (
     fetching
       ? (<div className={`${style.avatar} pt-3`}><ComponentLoader/></div>)
-      : (<Card.Img variant="top" src={imageUrl} className={`${style.avatar}`}/>)
+      : (<Card.Img variant="top" src={imageUrl} className={style.avatar}/>)
   );
 
   const showButtonToolbar = () => (

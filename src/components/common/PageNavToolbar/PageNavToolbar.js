@@ -13,7 +13,7 @@ const PageNavToolbar = ({
                           setSize,
                           available,
                           sideLength = 3,
-                          buttonSize = "sm",
+                          buttonSize = 'sm',
                           fetching
                         }) => {
   const showPaginator = () => (
