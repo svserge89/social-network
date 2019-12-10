@@ -35,12 +35,6 @@ const Header = ({login, logout, fetching, updating}) => {
   );
 };
 
-const mapStateToProps = ({auth: {userId, email, login, fetching, updating}}) => ({
-  userId,
-  email,
-  login,
-  fetching,
-  updating
-});
+const mapStateToProps = ({auth: {login, fetching, updating}}) => ({login, fetching, updating});
 
 export default compose(connect(mapStateToProps, {logout}))(Header);
