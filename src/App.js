@@ -4,6 +4,7 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 
 import {initialization} from './reducers/init';
+import {initializedSelector} from './selectors/initSelectors';
 import {HOME, LOGIN, PROFILE, USERS} from './utils/routes';
 import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
@@ -41,6 +42,6 @@ const App = ({initialized, initialization}) => {
   );
 };
 
-const mapStateToProps = ({init: {initialized}}) => ({initialized});
+const mapStateToProps = (state) => ({initialized: initializedSelector(state)});
 
 export default compose(connect(mapStateToProps, {initialization}), withRouter)(App);

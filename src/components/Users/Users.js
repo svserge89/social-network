@@ -4,9 +4,19 @@ import {connect} from 'react-redux';
 import {Row, Col} from 'react-bootstrap';
 
 import {setPage, setSize, getUsers, cleanUsers, follow, unfollow} from '../../reducers/users';
+import {
+  availableSelector,
+  fetchingSelector,
+  followingSelector,
+  pageSelector,
+  sizeSelector,
+  totalSelector,
+  usersSelector
+} from '../../selectors/usersSelectors';
 import UserCard from './UserCard/UserCard';
 import PageNavToolbar from '../common/PageNavToolbar/PageNavToolbar';
 import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
+import {userIdSelector} from '../../selectors/authSelectors';
 
 const Users = ({
                  currentUserId,
@@ -74,18 +84,15 @@ const Users = ({
   )
 };
 
-const mapStateToProps = ({
-                           auth: {userId},
-                           users: {users, size, total, page, fetching, following, available}
-                         }) => ({
-  currentUserId: userId,
-  users,
-  size,
-  total,
-  page,
-  fetching,
-  following,
-  available
+const mapStateToProps = (state) => ({
+  currentUserId: userIdSelector(state),
+  users: usersSelector(state),
+  size: sizeSelector(state),
+  total: totalSelector(state),
+  page: pageSelector(state),
+  fetching: fetchingSelector(state),
+  following: followingSelector(state),
+  available: availableSelector(state)
 });
 
 export default compose(

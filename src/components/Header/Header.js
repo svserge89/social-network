@@ -5,17 +5,20 @@ import {Navbar, Nav} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
 import {logout} from '../../reducers/auth';
+import {authenticatedSelector, loadingSelector, loginSelector} from '../../selectors/authSelectors';
 import {HOME, LOGIN, PROFILE, USERS} from '../../utils/routes';
 import LoginLink from './LoginLink/LoginLink';
 import UserDropdown from './UserDropdown/UserDropdown';
 import Layout from '../Layout/Layout';
 import ButtonLoader from '../common/ButtonLoader/ButtonLoader';
 
-const Header = ({login, logout, fetching, updating}) => {
+const Header = ({authenticated, login, logout, loading}) => {
   const showLogin = () => (
-    fetching || updating
+    loading
       ? (<ButtonLoader outline={true}/>)
-      : login ? (<UserDropdown userName={login} logout={logout}/>) : (<LoginLink path={LOGIN}/>)
+      : authenticated
+      ? (<UserDropdown userName={login} logout={logout}/>)
+      : (<LoginLink path={LOGIN}/>)
   );
 
   return (
@@ -35,6 +38,10 @@ const Header = ({login, logout, fetching, updating}) => {
   );
 };
 
-const mapStateToProps = ({auth: {login, fetching, updating}}) => ({login, fetching, updating});
+const mapStateToProps = (state) => ({
+  authenticated: authenticatedSelector(state),
+  login: loginSelector(state),
+  loading: loadingSelector(state)
+});
 
 export default compose(connect(mapStateToProps, {logout}))(Header);

@@ -5,11 +5,16 @@ import {connect} from 'react-redux';
 import {Card, Row, Col} from 'react-bootstrap';
 
 import {login} from '../../reducers/auth';
+import {
+  authenticatedSelector,
+  captchaSelector,
+  updatingSelector
+} from '../../selectors/authSelectors';
 import {PROFILE} from '../../utils/routes';
 import LoginForm from './LoginForm/LoginForm';
 
-const Login = ({userId, updating, login, captcha}) => {
-  if (userId) return (<Redirect to={PROFILE}/>);
+const Login = ({authenticated, updating, login, captcha}) => {
+  if (authenticated) return (<Redirect to={PROFILE}/>);
 
   const onSubmit = (data) => {
     login(data)
@@ -29,6 +34,10 @@ const Login = ({userId, updating, login, captcha}) => {
   );
 };
 
-const mapStateToProps = ({auth: {userId, updating, captcha}}) => ({userId, updating, captcha});
+const mapStateToProps = (state) => ({
+  authenticated: authenticatedSelector(state),
+  updating: updatingSelector(state),
+  captcha: captchaSelector(state)
+});
 
 export default compose(connect(mapStateToProps, {login}))(Login);

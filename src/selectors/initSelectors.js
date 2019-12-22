@@ -1,0 +1,1 @@
+export const initializedSelector = ({init}) => init.initialized;

@@ -1,6 +1,20 @@
 import React, {useState} from 'react';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
 import {Card, Button} from 'react-bootstrap';
 
+import {updateProfile, updateStatus} from '../../../reducers/profile';
+import {
+  aboutMeSelector,
+  contactLabelsSelector,
+  contactsSelector,
+  fetchingStatusSelector,
+  fullNameSelector,
+  lookingForAJobDescriptionSelector,
+  lookingForAJobSelector,
+  statusSelector,
+  updatingSelector
+} from '../../../selectors/profileSelectors';
 import ContactList from './ContactList/ContactList';
 import Status from './Status/Status';
 import LookingForAJob from './LookingForAJob/LookingForAJob';
@@ -14,11 +28,11 @@ const InfoCard = ({
                     lookingForAJobDescription,
                     aboutMe,
                     contactLabels,
-                    setStatus,
                     fetchingStatus,
+                    updateStatus,
                     updateProfile,
-                    editable,
-                    updating
+                    updating,
+                    editable = false
                   }) => {
   const [editMode, setEditMode] = useState(false);
 
@@ -65,7 +79,7 @@ const InfoCard = ({
         </Card.Title>
         <Status status={status}
                 editable={editable}
-                setStatus={setStatus}
+                setStatus={updateStatus}
                 fetching={fetchingStatus}/>
       </Card.Header>
       {showBody()}
@@ -73,4 +87,16 @@ const InfoCard = ({
   );
 };
 
-export default InfoCard;
+const mapStateToProps = (state) => ({
+  fullName: fullNameSelector(state),
+  status: statusSelector(state),
+  contacts: contactsSelector(state),
+  lookingForAJob: lookingForAJobSelector(state),
+  lookingForAJobDescription: lookingForAJobDescriptionSelector(state),
+  aboutMe: aboutMeSelector(state),
+  contactLabels: contactLabelsSelector(state),
+  fetchingStatus: fetchingStatusSelector(state),
+  updating: updatingSelector(state)
+});
+
+export default compose(connect(mapStateToProps, {updateStatus, updateProfile}))(InfoCard);

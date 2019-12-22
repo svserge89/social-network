@@ -1,16 +1,20 @@
 import React from 'react';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
 import {Card, InputGroup, FormControl, FormLabel} from 'react-bootstrap';
 import cn from 'classnames';
 
+import {updatePhoto} from '../../../reducers/profile';
+import {fetchingPhotoSelector, largePhotoSelector} from '../../../selectors/profileSelectors';
 import ComponentLoader from '../../common/ComponentLoader/ComponentLoader';
 
 import style from './AvatarCard.module.css';
 import avatar from '../../../assets/images/avatar.png';
 
-const AvatarCard = ({image, updateImage, editable, fetching}) => {
-  const imageUrl = image ? image : avatar;
+const AvatarCard = ({photo, updatePhoto, fetching, editable = false}) => {
+  const imageUrl = photo ? photo : avatar;
 
-  const onSelectImage = ({target: {files}}) => files.length && updateImage(files[0]);
+  const onSelectImage = ({target: {files}}) => files.length && updatePhoto(files[0]);
 
   const showImage = () => (
     fetching
@@ -44,4 +48,9 @@ const AvatarCard = ({image, updateImage, editable, fetching}) => {
   );
 };
 
-export default AvatarCard;
+const mapStateToProps = (state) => ({
+  photo: largePhotoSelector(state),
+  fetching: fetchingPhotoSelector(state)
+});
+
+export default compose(connect(mapStateToProps, {updatePhoto}))(AvatarCard);
