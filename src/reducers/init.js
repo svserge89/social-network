@@ -19,11 +19,8 @@ const changeInitialized = (state, initialized) => ({...state, initialized});
 const initialState = {initialized: false};
 
 const initReducer = (state = initialState, action) => {
-  if (action.type === SET_INITIALIZED) {
-    return changeInitialized(state, action.initialized);
-  } else {
-    return state;
-  }
+  if (action.type === SET_INITIALIZED) return changeInitialized(state, action.initialized);
+  else return state;
 };
 
 export default initReducer;

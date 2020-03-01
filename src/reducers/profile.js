@@ -3,6 +3,7 @@ import {stopSubmit} from 'redux-form';
 import {profileAPI} from '../api/api';
 import {SUCCESS} from '../utils/responseCodes';
 import {parseMessages} from '../utils/errorParser';
+import {handleError, handleServerError} from '../utils/errorHandler';
 
 const PREFIX = 'social-network/profile/';
 
@@ -37,6 +38,8 @@ export const getProfile = (userId) => async (dispatch) => {
     const profile = await profileAPI.get(userId);
 
     dispatch(setProfile(profile));
+  } catch (error) {
+    handleError(dispatch, error);
   } finally {
     dispatch(setFetching(false));
   }
@@ -55,6 +58,8 @@ export const updateProfile = (profile) => async (dispatch) => {
     }
 
     await dispatch(getProfile(profile.userId));
+  } catch (error) {
+    handleError(dispatch, error);
   } finally {
     dispatch(setUpdating(false));
   }
@@ -74,11 +79,12 @@ export const updateStatus = (status) => async (dispatch) => {
   dispatch(setFetchingStatus(true));
 
   try {
-    const {resultCode} = await profileAPI.updateStatus(status);
+    const {resultCode, messages} = await profileAPI.updateStatus(status);
 
-    if (resultCode !== SUCCESS) return;
-
-    dispatch(setStatus(status));
+    if (resultCode !== SUCCESS) handleServerError(dispatch, messages);
+    else dispatch(setStatus(status));
+  } catch (error) {
+    handleError(dispatch, error);
   } finally {
     dispatch(setFetchingStatus(false));
   }
@@ -88,11 +94,12 @@ export const updatePhoto = (image) => async (dispatch) => {
   dispatch(setFetchingPhoto(true));
 
   try {
-    const {resultCode, data: {photos}} = await profileAPI.updatePhoto(image);
+    const {resultCode, data: {photos}, messages} = await profileAPI.updatePhoto(image);
 
-    if (resultCode !== SUCCESS) return;
-
-    dispatch(setPhoto(photos));
+    if (resultCode !== SUCCESS) handleServerError(dispatch, messages);
+    else dispatch(setPhoto(photos));
+  } catch (error) {
+    handleError(dispatch, error);
   } finally {
     dispatch(setFetchingPhoto(false));
   }

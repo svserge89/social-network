@@ -3,6 +3,7 @@ import {stopSubmit} from 'redux-form';
 import {authAPI, securityAPI} from '../api/api';
 import {CAPTCHA_REQUIRED, SUCCESS} from '../utils/responseCodes';
 import {parseMessages} from '../utils/errorParser';
+import {handleError, handleServerError} from '../utils/errorHandler';
 
 const PREFIX = 'social-network/auth/';
 
@@ -28,11 +29,12 @@ export const getCurrentUser = () => async (dispatch) => {
   dispatch(setFetching(true));
 
   try {
-    const {resultCode, data: {id, email, login}} = await authAPI.getCurrentUser();
+    const {resultCode, data: {id, email, login}, messages} = await authAPI.getCurrentUser();
 
-    if (resultCode !== SUCCESS) return;
-
-    dispatch(setCurrentUser(id, email, login));
+    if (resultCode !== SUCCESS) handleServerError(dispatch, messages);
+    else dispatch(setCurrentUser(id, email, login));
+  } catch (error) {
+    handleError(dispatch, error);
   } finally {
     dispatch(setFetching(false));
   }
@@ -48,7 +50,7 @@ export const login = ({email, password, rememberMe, captcha}) => async (dispatch
   dispatch(setUpdating(true));
 
   try {
-    const {messages, resultCode} = await authAPI.login(email, password, rememberMe, captcha);
+    const {resultCode, messages} = await authAPI.login(email, password, rememberMe, captcha);
 
     switch (resultCode) {
       case SUCCESS:
@@ -62,6 +64,8 @@ export const login = ({email, password, rememberMe, captcha}) => async (dispatch
         dispatch(stopSubmit('login', parseMessages(messages)));
         break;
     }
+  } catch (error) {
+    handleError(dispatch, error);
   } finally {
     dispatch(setUpdating(false));
   }
@@ -71,11 +75,12 @@ export const logout = () => async (dispatch) => {
   dispatch(setUpdating(true));
 
   try {
-    const {resultCode} = await authAPI.logout();
+    const {resultCode, messages} = await authAPI.logout();
 
-    if (resultCode !== SUCCESS) return;
-
-    dispatch(setCurrentUser());
+    if (resultCode !== SUCCESS) handleServerError(dispatch, messages);
+    else dispatch(setCurrentUser());
+  } catch (error) {
+    handleError(dispatch, error);
   } finally {
     dispatch(setUpdating(false));
   }

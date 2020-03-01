@@ -6,12 +6,14 @@ import authReducer from '../reducers/auth';
 import initReducer from '../reducers/init';
 import profileReducer from '../reducers/profile';
 import usersReducer from '../reducers/users';
+import errorReducer from '../reducers/error';
 
 const reducers = combineReducers({
   auth: authReducer,
   init: initReducer,
   profile: profileReducer,
   users: usersReducer,
+  error: errorReducer,
   form: formReducer
 });
 

@@ -1,5 +1,9 @@
 import React from 'react';
 
-const NotMatch = () => (<div>404 page</div>);
+import Error from '../Error/Error';
+
+const NotMatch = () => (
+  <Error code={404} description={`Bad URL path: "${window.location.href}"`}/>
+);
 
 export default NotMatch;

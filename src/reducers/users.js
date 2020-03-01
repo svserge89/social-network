@@ -1,5 +1,6 @@
 import {usersAPI} from '../api/api';
 import {SUCCESS} from '../utils/responseCodes';
+import {handleError, handleServerError} from '../utils/errorHandler';
 
 const PREFIX = 'social-network/users/';
 
@@ -34,6 +35,8 @@ export const getUsers = (page, size) => async (dispatch) => {
     const {items, totalCount} = await usersAPI.get(size, page);
 
     dispatch(setUsers(items, totalCount));
+  } catch (error) {
+    handleError(dispatch, error);
   } finally {
     dispatch(setFetching(false));
   }
@@ -45,11 +48,12 @@ export const follow = (userId) => async (dispatch) => {
   dispatch(setFollowing(true, userId));
 
   try {
-    const {resultCode} = await usersAPI.follow(userId);
+    const {resultCode, messages} = await usersAPI.follow(userId);
 
-    if (resultCode !== SUCCESS) return;
-
-    dispatch(setFollow(userId));
+    if (resultCode !== SUCCESS) handleServerError(dispatch, messages);
+    else dispatch(setFollow(userId));
+  } catch (error) {
+    handleError(dispatch, error);
   } finally {
     dispatch(setFollowing(false, userId));
   }
@@ -59,11 +63,12 @@ export const unfollow = (userId) => async (dispatch) => {
   dispatch(setFollowing(true, userId));
 
   try {
-    const {resultCode} = await usersAPI.unFollow(userId);
+    const {resultCode, messages} = await usersAPI.unFollow(userId);
 
-    if (resultCode !== SUCCESS) return;
-
-    dispatch(setUnfollow(userId));
+    if (resultCode !== SUCCESS) handleServerError(dispatch, messages);
+    else dispatch(setUnfollow(userId));
+  } catch (error) {
+    handleError(dispatch, error);
   } finally {
     dispatch(setFollowing(false, userId));
   }
