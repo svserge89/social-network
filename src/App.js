@@ -18,6 +18,7 @@ import Profile from './components/Profile/Profile';
 import Users from './components/Users/Users';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
+import Footer from './components/Footer/Footer';
 import Error from './components/Error/Error';
 import PageLoader from './components/common/PageLoader/PageLoader';
 
@@ -47,11 +48,12 @@ const App = ({initialized, initialization, isError, errorCode, errorDescription}
   return (
     <>
       <Header/>
-      <Layout>
+      <Layout className="flex-fill">
         <div className="px-2">
           {showComponent()}
         </div>
       </Layout>
+      <Footer/>
     </>
   );
 };
