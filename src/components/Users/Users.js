@@ -3,7 +3,8 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {Row, Col} from 'react-bootstrap';
 
-import {setPage, setSize, getUsers, cleanUsers, follow, unfollow} from '../../reducers/users';
+import {getUsers, cleanUsers, follow, unfollow} from '../../reducers/users/thunks';
+import {setPage, setSize} from '../../reducers/users/actionCreators';
 import {
   availableSelector,
   fetchingSelector,

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {withRouter, Redirect} from 'react-router-dom';
 import {Row, Col} from 'react-bootstrap';
 
-import {getProfile, cleanProfile, getStatus} from '../../reducers/profile';
+import {getProfile, cleanProfile, getStatus} from '../../reducers/profile/thunks';
 import {userIdSelector as currentUserIdSelector} from '../../selectors/authSelectors';
 import {fetchingSelector, userIdSelector} from '../../selectors/profileSelectors';
 import {LOGIN} from '../../utils/routes';

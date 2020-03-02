@@ -2,11 +2,11 @@ import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import {reducer as formReducer} from 'redux-form';
 import thunk from 'redux-thunk';
 
-import authReducer from '../reducers/auth';
-import initReducer from '../reducers/init';
-import profileReducer from '../reducers/profile';
-import usersReducer from '../reducers/users';
-import errorReducer from '../reducers/error';
+import authReducer from '../reducers/auth/reducer';
+import initReducer from '../reducers/init/reducer';
+import profileReducer from '../reducers/profile/reducer';
+import usersReducer from '../reducers/users/users';
+import errorReducer from '../reducers/error/reducer';
 
 const reducers = combineReducers({
   auth: authReducer,

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Card, InputGroup, FormControl, FormLabel} from 'react-bootstrap';
 import cn from 'classnames';
 
-import {updatePhoto} from '../../../reducers/profile';
+import {updatePhoto} from '../../../reducers/profile/thunks';
 import {fetchingPhotoSelector, largePhotoSelector} from '../../../selectors/profileSelectors';
 import ComponentLoader from '../../common/ComponentLoader/ComponentLoader';
 

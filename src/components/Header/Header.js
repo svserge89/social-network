@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Navbar, Nav} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
-import {logout} from '../../reducers/auth';
+import {logout} from '../../reducers/auth/thunks';
 import {authenticatedSelector, loadingSelector, loginSelector} from '../../selectors/authSelectors';
 import {isErrorSelector} from '../../selectors/errorSelectors';
 import {HOME, LOGIN, PROFILE, USERS} from '../../utils/routes';

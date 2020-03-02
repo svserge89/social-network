@@ -4,7 +4,7 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {Card, Row, Col} from 'react-bootstrap';
 
-import {login} from '../../reducers/auth';
+import {login} from '../../reducers/auth/thunks';
 import {
   authenticatedSelector,
   captchaSelector,

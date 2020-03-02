@@ -3,7 +3,7 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {Card, Button} from 'react-bootstrap';
 
-import {updateProfile, updateStatus} from '../../../reducers/profile';
+import {updateProfile, updateStatus} from '../../../reducers/profile/thunks';
 import {
   aboutMeSelector,
   contactLabelsSelector,

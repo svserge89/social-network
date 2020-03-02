@@ -3,7 +3,7 @@ import {Route, Switch, withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 
-import {initialization} from './reducers/init';
+import {initialization} from './reducers/init/thunks';
 import {initializedSelector} from './selectors/initSelectors';
 import {
   errorCodeSelector,

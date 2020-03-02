@@ -1,4 +1,4 @@
-import {setError} from '../reducers/error';
+import {setError} from '../reducers/error/actionCreators';
 
 const ERROR_CODE = 400;
 
