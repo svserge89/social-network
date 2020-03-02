@@ -6,7 +6,7 @@ const LookingForAJob = ({answer, description}) => {
     answer ? (<span className="text-success">Yes</span>) : (<span className="text-danger">No</span>)
   );
 
-  const showDescription = () => (answer && (<p>{description}</p>));
+  const showDescription = () => (answer && (<pre>{description}</pre>));
 
   return (
     <Card.Text as="div"><h5>Looking for a job: {showAnswer()}</h5>{showDescription()}</Card.Text>

@@ -37,7 +37,7 @@ const InfoCard = ({
   const [editMode, setEditMode] = useState(false);
 
   const showAboutMe = () => (
-    aboutMe ? (<p>{aboutMe}</p>) : (<p className="text-secondary">Empty.</p>)
+    aboutMe ? (<pre>{aboutMe}</pre>) : (<p className="text-secondary">Empty.</p>)
   );
 
   const onEdit = () => setEditMode(true);
