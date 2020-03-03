@@ -1,14 +1,14 @@
-import {InitStateAction, SET_INITIALIZED} from './types';
+import {InitAction, InitState, SET_INITIALIZED} from './types';
 
-const changeInitialized = (state: InitStateAction, initialized: boolean): InitStateAction => ({
+const changeInitialized = (state: InitState, {data: {initialized}}: InitAction): InitState => ({
   ...state,
   initialized
 });
 
-const initialState: InitStateAction = {initialized: false};
+const initialState: InitState = {initialized: false};
 
-const initReducer = (state = initialState, action: any): InitStateAction => {
-  if (action.type === SET_INITIALIZED) return changeInitialized(state, action.initialized);
+const initReducer = (state = initialState, action: InitAction): InitState => {
+  if (action.type === SET_INITIALIZED) return changeInitialized(state, action);
   else return state;
 };
 

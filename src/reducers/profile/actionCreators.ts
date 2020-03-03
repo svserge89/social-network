@@ -23,7 +23,7 @@ export const setProfile = (profile: Profile): SetProfileAction => ({
 
 export const setStatus = (status: string): SetStatusAction => ({type: SET_STATUS, data: {status}});
 
-export const setPhoto = (photos: Photos): SetPhotoAction => ({type: SET_PHOTO, photos});
+export const setPhoto = (photos: Photos): SetPhotoAction => ({type: SET_PHOTO, data: {photos}});
 
 export const setFetching = (fetching: boolean): SetFetchingAction => ({
   type: SET_FETCHING,

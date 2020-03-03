@@ -22,7 +22,7 @@ export type SetStatusAction = {
 
 export type SetPhotoAction = {
   type: typeof SET_PHOTO
-  photos: Photos
+  data: { photos: Photos }
 }
 
 export type SetFetchingAction = {
@@ -45,6 +45,14 @@ export type SetUpdatingAction = {
   data: { updating: boolean }
 }
 
+export type ProfileAction = SetProfileAction
+  | SetStatusAction
+  | SetPhotoAction
+  | SetFetchingAction
+  | SetFetchingStatusAction
+  | SetFetchingPhotoAction
+  | SetUpdatingAction;
+
 export type ProfileState = {
   profile: Profile
   contactLabels: Map<string, string>
@@ -54,21 +62,3 @@ export type ProfileState = {
   updating: boolean
   status: string | null
 }
-
-export const emptyProfile: Profile = {
-  userId: 0,
-  lookingForAJob: false,
-  lookingForAJobDescription: '',
-  fullName: '',
-  contacts: {
-    github: null,
-    vk: null,
-    facebook: null,
-    instagram: null,
-    twitter: null,
-    website: null,
-    youtube: null,
-    mainLink: null
-  },
-  photos: {small: null, large: null}
-};

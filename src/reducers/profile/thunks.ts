@@ -13,8 +13,8 @@ import {
   setStatus,
   setUpdating
 } from './actionCreators';
-import {emptyProfile} from './types';
 import {Profile} from '../../models/types';
+import emptyProfile from './emptyProfile';
 
 export const getProfile = (userId: number) => async (dispatch: any) => {
   dispatch(setFetching(true));

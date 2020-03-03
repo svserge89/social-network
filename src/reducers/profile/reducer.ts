@@ -1,5 +1,5 @@
 import {
-  emptyProfile,
+  ProfileAction,
   ProfileState,
   SET_FETCHING,
   SET_FETCHING_PHOTO,
@@ -7,13 +7,17 @@ import {
   SET_PHOTO,
   SET_PROFILE,
   SET_STATUS,
-  SET_UPDATING
+  SET_UPDATING,
+  SetPhotoAction
 } from './types';
-import {Photos} from '../../models/types';
+import emptyProfile from './emptyProfile';
 
-const changeData = (state: ProfileState, data: any): ProfileState => ({...state, ...data});
+const changeData = (state: ProfileState, {data}: ProfileAction): ProfileState => ({
+  ...state,
+  ...data
+});
 
-const changePhoto = (state: ProfileState, photos: Photos): ProfileState => ({
+const changePhoto = (state: ProfileState, {data: {photos}}: SetPhotoAction): ProfileState => ({
   ...state,
   profile: {...state.profile, photos}
 });
@@ -37,7 +41,7 @@ const initialState: ProfileState = {
   status: null
 };
 
-const profileReducer = (state = initialState, action: any): ProfileState => {
+const profileReducer = (state = initialState, action: ProfileAction): ProfileState => {
   switch (action.type) {
     case SET_PROFILE:
     case SET_STATUS:
@@ -45,9 +49,9 @@ const profileReducer = (state = initialState, action: any): ProfileState => {
     case SET_FETCHING_STATUS:
     case SET_FETCHING_PHOTO:
     case SET_UPDATING:
-      return changeData(state, action.data);
+      return changeData(state, action);
     case SET_PHOTO:
-      return changePhoto(state, action.photos);
+      return changePhoto(state, action as SetPhotoAction);
     default:
       return state;
   }

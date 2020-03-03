@@ -16,9 +16,12 @@ import {
   UNFOLLOW
 } from './types';
 
-export const setFollow = (userId: number): SetFollowAction => ({type: FOLLOW, userId});
+export const setFollow = (userId: number): SetFollowAction => ({type: FOLLOW, data: {userId}});
 
-export const setUnfollow = (userId: number): SetUnfollowAction => ({type: UNFOLLOW, userId});
+export const setUnfollow = (userId: number): SetUnfollowAction => ({
+  type: UNFOLLOW,
+  data: {userId}
+});
 
 export const setUsers = (users: Array<User>, total: number): SetUsersAction => ({
   type: SET_USERS,
@@ -36,6 +39,5 @@ export const setFetching = (fetching: boolean): SetFetchingAction => ({
 
 export const setFollowing = (status: boolean, userId: number): SetFollowingAction => ({
   type: SET_FOLLOWING,
-  status,
-  userId
+  data: {status, userId}
 });

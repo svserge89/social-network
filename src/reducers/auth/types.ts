@@ -25,6 +25,11 @@ export type SetUpdatingAction = {
   data: { updating: boolean }
 }
 
+export type AuthAction = SetCurrentUserAction
+  | SetCaptchaAction
+  | SetFetchingAction
+  | SetUpdatingAction;
+
 export type AuthState = {
   userId: number | null
   email: string | null

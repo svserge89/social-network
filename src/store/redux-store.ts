@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import auth from '../reducers/auth/reducer';
 import init from '../reducers/init/reducer';
 import profile from '../reducers/profile/reducer';
-import users from '../reducers/users/users';
+import users from '../reducers/users/reducer';
 import error from '../reducers/error/reducer';
 
 const reducers = combineReducers({auth, init, profile, users, error, form});

@@ -1,11 +1,11 @@
-import {ErrorState, SET_ERROR} from './types';
+import {ErrorAction, ErrorState, SET_ERROR} from './types';
 
-const changeData = (state: ErrorState, data: any): ErrorState => ({...state, ...data});
+const changeData = (state: ErrorState, {data}: ErrorAction): ErrorState => ({...state, ...data});
 
 const initialState: ErrorState = {code: 0, description: null};
 
-const errorReducer = (state = initialState, action: any): ErrorState => {
-  if (action.type === SET_ERROR) return changeData(state, action.data);
+const errorReducer = (state = initialState, action: ErrorAction): ErrorState => {
+  if (action.type === SET_ERROR) return changeData(state, action);
   else return state;
 };
 

@@ -4,9 +4,11 @@ export const SET_INITIALIZED = PREFIX + 'SET-INITIALIZED';
 
 export type SetInitializedAction = {
   type: typeof SET_INITIALIZED
-  initialized: boolean
+  data: { initialized: boolean }
 }
 
-export type InitStateAction = {
+export type InitAction = SetInitializedAction;
+
+export type InitState = {
   initialized: boolean
 }

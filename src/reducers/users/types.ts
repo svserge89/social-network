@@ -12,12 +12,12 @@ export const UNFOLLOW = PREFIX + 'UNFOLLOW';
 
 export type SetFollowAction = {
   type: typeof FOLLOW
-  userId: number
+  data: { userId: number }
 }
 
 export type SetUnfollowAction = {
   type: typeof UNFOLLOW
-  userId: number
+  data: { userId: number }
 }
 
 export type SetUsersAction = {
@@ -42,9 +42,16 @@ export type SetFetchingAction = {
 
 export type SetFollowingAction = {
   type: typeof SET_FOLLOWING
-  status: boolean
-  userId: number
+  data: { status: boolean, userId: number }
 }
+
+export type UsersAction = SetFollowAction
+  | SetUnfollowAction
+  | SetUsersAction
+  | SetPageAction
+  | SetSizeAction
+  | SetFetchingAction
+  | SetFollowingAction;
 
 export type UsersState = {
   users: Array<User>
