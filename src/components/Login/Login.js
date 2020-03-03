@@ -6,10 +6,10 @@ import {Card, Row, Col} from 'react-bootstrap';
 
 import {login} from '../../reducers/auth/thunks';
 import {
-  authenticatedSelector,
-  captchaSelector,
-  updatingSelector
-} from '../../selectors/authSelectors';
+  selectAuthenticated,
+  selectCaptcha,
+  selectUpdating
+} from '../../selectors/auth';
 import {PROFILE} from '../../utils/routes';
 import LoginForm from './LoginForm/LoginForm';
 
@@ -35,9 +35,9 @@ const Login = ({authenticated, updating, login, captcha}) => {
 };
 
 const mapStateToProps = (state) => ({
-  authenticated: authenticatedSelector(state),
-  updating: updatingSelector(state),
-  captcha: captchaSelector(state)
+  authenticated: selectAuthenticated(state),
+  updating: selectUpdating(state),
+  captcha: selectCaptcha(state)
 });
 
 export default compose(connect(mapStateToProps, {login}))(Login);

@@ -5,16 +5,16 @@ import {Card, Button} from 'react-bootstrap';
 
 import {updateProfile, updateStatus} from '../../../reducers/profile/thunks';
 import {
-  aboutMeSelector,
-  contactLabelsSelector,
-  contactsSelector,
-  fetchingStatusSelector,
-  fullNameSelector,
-  lookingForAJobDescriptionSelector,
-  lookingForAJobSelector,
-  statusSelector,
-  updatingSelector
-} from '../../../selectors/profileSelectors';
+  selectAboutMe,
+  selectContactLabels,
+  selectContacts,
+  selectFetchingStatus,
+  selectFullName,
+  selectLookingForAJobDescription,
+  selectLookingForAJob,
+  selectStatus,
+  selectUpdating
+} from '../../../selectors/profile';
 import ContactList from './ContactList/ContactList';
 import Status from './Status/Status';
 import LookingForAJob from './LookingForAJob/LookingForAJob';
@@ -88,15 +88,15 @@ const InfoCard = ({
 };
 
 const mapStateToProps = (state) => ({
-  fullName: fullNameSelector(state),
-  status: statusSelector(state),
-  contacts: contactsSelector(state),
-  lookingForAJob: lookingForAJobSelector(state),
-  lookingForAJobDescription: lookingForAJobDescriptionSelector(state),
-  aboutMe: aboutMeSelector(state),
-  contactLabels: contactLabelsSelector(state),
-  fetchingStatus: fetchingStatusSelector(state),
-  updating: updatingSelector(state)
+  fullName: selectFullName(state),
+  status: selectStatus(state),
+  contacts: selectContacts(state),
+  lookingForAJob: selectLookingForAJob(state),
+  lookingForAJobDescription: selectLookingForAJobDescription(state),
+  aboutMe: selectAboutMe(state),
+  contactLabels: selectContactLabels(state),
+  fetchingStatus: selectFetchingStatus(state),
+  updating: selectUpdating(state)
 });
 
 export default compose(connect(mapStateToProps, {updateStatus, updateProfile}))(InfoCard);

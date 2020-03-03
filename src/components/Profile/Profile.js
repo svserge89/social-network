@@ -5,8 +5,8 @@ import {withRouter, Redirect} from 'react-router-dom';
 import {Row, Col} from 'react-bootstrap';
 
 import {getProfile, cleanProfile, getStatus} from '../../reducers/profile/thunks';
-import {userIdSelector as currentUserIdSelector} from '../../selectors/authSelectors';
-import {fetchingSelector, userIdSelector} from '../../selectors/profileSelectors';
+import {selectUserId as currentUserIdSelector} from '../../selectors/auth';
+import {selectFetching, selectUserId} from '../../selectors/profile';
 import {LOGIN} from '../../utils/routes';
 import AvatarCard from './AvatarCard/AvatarCard';
 import InfoCard from './InfoCard/InfoCard';
@@ -56,8 +56,8 @@ const Profile = ({
 
 const mapStateToProps = (state) => ({
   currentUserId: currentUserIdSelector(state),
-  userId: userIdSelector(state),
-  fetching: fetchingSelector(state)
+  userId: selectUserId(state),
+  fetching: selectFetching(state)
 });
 
 export default compose(

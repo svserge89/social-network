@@ -5,7 +5,7 @@ import {Card, InputGroup, FormControl, FormLabel} from 'react-bootstrap';
 import cn from 'classnames';
 
 import {updatePhoto} from '../../../reducers/profile/thunks';
-import {fetchingPhotoSelector, largePhotoSelector} from '../../../selectors/profileSelectors';
+import {selectFetchingPhoto, selectLargePhoto} from '../../../selectors/profile';
 import ComponentLoader from '../../common/ComponentLoader/ComponentLoader';
 
 import style from './AvatarCard.module.css';
@@ -49,8 +49,8 @@ const AvatarCard = ({photo, updatePhoto, fetching, editable = false}) => {
 };
 
 const mapStateToProps = (state) => ({
-  photo: largePhotoSelector(state),
-  fetching: fetchingPhotoSelector(state)
+  photo: selectLargePhoto(state),
+  fetching: selectFetchingPhoto(state)
 });
 
 export default compose(connect(mapStateToProps, {updatePhoto}))(AvatarCard);

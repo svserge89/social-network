@@ -6,18 +6,18 @@ import {Row, Col} from 'react-bootstrap';
 import {getUsers, cleanUsers, follow, unfollow} from '../../reducers/users/thunks';
 import {setPage, setSize} from '../../reducers/users/actionCreators';
 import {
-  availableSelector,
-  fetchingSelector,
-  followingSelector,
-  pageSelector,
-  sizeSelector,
-  totalSelector,
-  usersSelector
-} from '../../selectors/usersSelectors';
+  selectAvailable,
+  selectFetching,
+  selectFollowing,
+  selectPage,
+  selectSize,
+  selectTotal,
+  selectUsers
+} from '../../selectors/users';
 import UserCard from './UserCard/UserCard';
 import PageNavToolbar from '../common/PageNavToolbar/PageNavToolbar';
 import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
-import {userIdSelector} from '../../selectors/authSelectors';
+import {selectUserId} from '../../selectors/auth';
 
 const Users = ({
                  currentUserId,
@@ -86,14 +86,14 @@ const Users = ({
 };
 
 const mapStateToProps = (state) => ({
-  currentUserId: userIdSelector(state),
-  users: usersSelector(state),
-  size: sizeSelector(state),
-  total: totalSelector(state),
-  page: pageSelector(state),
-  fetching: fetchingSelector(state),
-  following: followingSelector(state),
-  available: availableSelector(state)
+  currentUserId: selectUserId(state),
+  users: selectUsers(state),
+  size: selectSize(state),
+  total: selectTotal(state),
+  page: selectPage(state),
+  fetching: selectFetching(state),
+  following: selectFollowing(state),
+  available: selectAvailable(state)
 });
 
 export default compose(

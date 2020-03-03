@@ -4,12 +4,13 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 
 import {initialization} from './reducers/init/thunks';
-import {initializedSelector} from './selectors/initSelectors';
+import {selectInitialized} from './selectors/init';
 import {
-  errorCodeSelector,
-  errorDescriptionSelector,
-  isErrorSelector
-} from './selectors/errorSelectors';
+  selectErrorCode,
+  selectErrorDescription,
+  selectIsError
+} from './selectors/error';
+import {RootState} from './store/types';
 import {HOME, LOGIN, PROFILE, USERS} from './utils/routes';
 import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
@@ -24,7 +25,21 @@ import PageLoader from './components/common/PageLoader/PageLoader';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const App = ({initialized, initialization, isError, errorCode, errorDescription}) => {
+type AppProps = {
+  initialized: boolean
+  initialization: () => void
+  isError: boolean
+  errorCode: number
+  errorDescription: string
+}
+
+const App: React.FC<AppProps> = ({
+                                   initialized,
+                                   initialization,
+                                   isError,
+                                   errorCode,
+                                   errorDescription
+                                 }) => {
   useEffect(() => {
     initialization();
   }, [initialization]);
@@ -58,11 +73,11 @@ const App = ({initialized, initialization, isError, errorCode, errorDescription}
   );
 };
 
-const mapStateToProps = (state) => ({
-  initialized: initializedSelector(state),
-  isError: isErrorSelector(state),
-  errorCode: errorCodeSelector(state),
-  errorDescription: errorDescriptionSelector(state)
+const mapStateToProps = (state: RootState) => ({
+  initialized: selectInitialized(state),
+  isError: selectIsError(state),
+  errorCode: selectErrorCode(state),
+  errorDescription: selectErrorDescription(state)
 });
 
 export default compose(connect(mapStateToProps, {initialization}), withRouter)(App);

@@ -5,8 +5,8 @@ import {Navbar, Nav} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
 import {logout} from '../../reducers/auth/thunks';
-import {authenticatedSelector, loadingSelector, loginSelector} from '../../selectors/authSelectors';
-import {isErrorSelector} from '../../selectors/errorSelectors';
+import {selectAuthenticated, selectLoading, selectLogin} from '../../selectors/auth';
+import {selectIsError} from '../../selectors/error';
 import {HOME, LOGIN, PROFILE, USERS} from '../../utils/routes';
 import LoginLink from './LoginLink/LoginLink';
 import UserDropdown from './UserDropdown/UserDropdown';
@@ -44,10 +44,10 @@ const Header = ({authenticated, login, logout, loading, isError}) => {
 };
 
 const mapStateToProps = (state) => ({
-  authenticated: authenticatedSelector(state),
-  login: loginSelector(state),
-  loading: loadingSelector(state),
-  isError: isErrorSelector(state)
+  authenticated: selectAuthenticated(state),
+  login: selectLogin(state),
+  loading: selectLoading(state),
+  isError: selectIsError(state)
 });
 
 export default compose(connect(mapStateToProps, {logout}))(Header);
