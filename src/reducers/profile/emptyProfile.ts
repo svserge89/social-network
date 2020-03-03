@@ -15,7 +15,8 @@ const emptyProfile: Profile = {
     youtube: null,
     mainLink: null
   },
-  photos: {small: null, large: null}
+  photos: {small: null, large: null},
+  aboutMe: ''
 };
 
 export default emptyProfile;
