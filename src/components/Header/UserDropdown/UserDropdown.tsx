@@ -1,7 +1,9 @@
 import React from 'react';
 import {DropdownButton, Dropdown} from 'react-bootstrap';
 
-const UserDropdown = ({userName, logout, disabled = false}) => {
+import {UserDropdownProps} from './types';
+
+const UserDropdown: React.FC<UserDropdownProps> = ({userName, logout, disabled = false}) => {
   const onClick = () => logout();
 
   return (

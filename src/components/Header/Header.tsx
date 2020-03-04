@@ -8,13 +8,15 @@ import {logout} from '../../reducers/auth/thunks';
 import {selectAuthenticated, selectLoading, selectLogin} from '../../selectors/auth';
 import {selectIsError} from '../../selectors/error';
 import {HOME, LOGIN, PROFILE, USERS} from '../../utils/routes';
+import {HeaderDispatchProps, HeaderOwnProps, HeaderProps, HeaderStateProps} from './types';
+import {RootState} from '../../store/types';
 import LoginLink from './LoginLink/LoginLink';
 import UserDropdown from './UserDropdown/UserDropdown';
 import Layout from '../Layout/Layout';
 import ButtonLoader from '../common/ButtonLoader/ButtonLoader';
 
-const Header = ({authenticated, login, logout, loading, isError}) => {
-  const showLogin = () => (
+const Header: React.FC<HeaderProps> = ({authenticated, login, logout, loading, isError}) => {
+  const showLogin = (): JSX.Element => (
     loading
       ? (<ButtonLoader outline={true}/>)
       : authenticated
@@ -43,11 +45,16 @@ const Header = ({authenticated, login, logout, loading, isError}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState): HeaderStateProps => ({
   authenticated: selectAuthenticated(state),
   login: selectLogin(state),
   loading: selectLoading(state),
   isError: selectIsError(state)
 });
 
-export default compose(connect(mapStateToProps, {logout}))(Header);
+export default compose(
+  connect<HeaderStateProps, HeaderDispatchProps, HeaderOwnProps, RootState>(
+    mapStateToProps,
+    {logout}
+  )
+)(Header);

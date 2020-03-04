@@ -4,7 +4,7 @@ import {RootState} from '../store/types';
 
 export const selectUserId = ({auth}: RootState): number | null => auth.userId;
 
-export const selectLogin = ({auth}: RootState): string | null => auth.login;
+export const selectLogin = ({auth}: RootState): string => auth.login || '';
 
 export const selectFetching = ({auth}: RootState): boolean => auth.fetching;
 
