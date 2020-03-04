@@ -11,6 +11,7 @@ import {
   selectIsError
 } from './selectors/error';
 import {RootState} from './store/types';
+import {AppDispatchProps, AppOwnProps, AppProps, AppStateProps} from './types';
 import {HOME, LOGIN, PROFILE, USERS} from './utils/routes';
 import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
@@ -24,14 +25,6 @@ import Error from './components/Error/Error';
 import PageLoader from './components/common/PageLoader/PageLoader';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-type AppProps = {
-  initialized: boolean
-  initialization: () => void
-  isError: boolean
-  errorCode: number
-  errorDescription: string
-}
 
 const App: React.FC<AppProps> = ({
                                    initialized,
@@ -73,11 +66,17 @@ const App: React.FC<AppProps> = ({
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
+const mapStateToProps = (state: RootState): AppStateProps => ({
   initialized: selectInitialized(state),
   isError: selectIsError(state),
   errorCode: selectErrorCode(state),
   errorDescription: selectErrorDescription(state)
 });
 
-export default compose(connect(mapStateToProps, {initialization}), withRouter)(App);
+export default compose(
+  connect<AppStateProps, AppDispatchProps, AppOwnProps, RootState>(
+    mapStateToProps,
+    {initialization}
+  ),
+  withRouter
+)(App) as React.ComponentClass<AppOwnProps>;
