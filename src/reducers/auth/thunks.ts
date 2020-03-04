@@ -11,9 +11,9 @@ export const getCurrentUser = () => async (dispatch: any) => {
   dispatch(setFetching(true));
 
   try {
-    const {resultCode, data: {id, email, login}, messages} = await authAPI.getCurrentUser();
+    const {resultCode, data: {id, email, login}} = await authAPI.getCurrentUser();
 
-    if (resultCode !== SUCCESS) handleServerError(dispatch, messages);
+    if (resultCode !== SUCCESS) return;
     else dispatch(setCurrentUser(id, email, login));
   } catch (error) {
     handleError(dispatch, error);
