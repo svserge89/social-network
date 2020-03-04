@@ -4,8 +4,9 @@ import {ButtonToolbar} from 'react-bootstrap';
 import Paginator from '../Paginator/Paginator';
 import PageSizeSelector from '../PageSizeSelector/PageSizeSelector';
 import ButtonLoader from '../ButtonLoader/ButtonLoader';
+import {PageNavToolbarProps} from './types';
 
-const PageNavToolbar = ({
+const PageNavToolbar: React.FC<PageNavToolbarProps> = ({
                           total,
                           size,
                           page,
@@ -14,7 +15,7 @@ const PageNavToolbar = ({
                           available,
                           sideLength = 3,
                           buttonSize = 'sm',
-                          fetching
+                          fetching = false
                         }) => {
   const showPaginator = () => (
     total
@@ -32,7 +33,7 @@ const PageNavToolbar = ({
     <ButtonToolbar className="justify-content-between px-0 mt-3">
       {showPaginator()}
       <PageSizeSelector available={available}
-                        current={size}
+                        current={'' + size}
                         change={setSize}
                         size={buttonSize}
                         disabled={fetching}/>

@@ -2,8 +2,10 @@ import React from 'react';
 import {Spinner} from 'react-bootstrap';
 import cn from 'classnames';
 
-const ComponentLoader = ({size, center = true}) => {
-  const showLabel = () => (
+import {ComponentLoaderProps} from './types';
+
+const ComponentLoader: React.FC<ComponentLoaderProps> = ({size, center = true}) => {
+  const showLabel: () => JSX.Element = () => (
     size === 'sm'
       ? (<strong className="text-secondary mr-1">Loading...</strong>)
       : (<h4 className="text-secondary mr-2">Loading...</h4>)

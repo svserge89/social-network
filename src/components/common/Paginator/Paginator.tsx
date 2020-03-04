@@ -1,7 +1,9 @@
 import React from 'react';
 import {Pagination} from 'react-bootstrap';
 
-const Paginator = ({
+import {PaginatorProps} from './types';
+
+const Paginator: React.FC<PaginatorProps> = ({
                      totalItems,
                      pageSize,
                      currentPage,
@@ -12,9 +14,9 @@ const Paginator = ({
                    }) => {
   const pagesCount = Math.ceil(totalItems / pageSize);
 
-  const onClick = page => () => setPage(page);
+  const onClick = (page: number) => () => setPage(page);
 
-  const createItem = (page, active = false) => (
+  const createItem = (page: number, active = false): JSX.Element => (
     <Pagination.Item key={page}
                      onClick={onClick(page)}
                      active={active}
@@ -23,30 +25,30 @@ const Paginator = ({
     </Pagination.Item>
   );
 
-  const createEllipsis = (page) => (
+  const createEllipsis = (page: number): JSX.Element => (
     <Pagination.Ellipsis key={page} onClick={onClick(page)} disabled={disabled}/>
   );
 
-  const createFirst = () => (
+  const createFirst = (): JSX.Element => (
     <Pagination.First onClick={onClick(1)} disabled={disabled || currentPage <= 1}/>
   );
 
-  const createPrev = () => (
+  const createPrev = (): JSX.Element => (
     <Pagination.Prev onClick={onClick(currentPage - 1)}
                      disabled={disabled || currentPage <= 1}/>
   );
 
-  const createNext = () => (
+  const createNext = (): JSX.Element => (
     <Pagination.Next onClick={onClick(currentPage + 1)}
                      disabled={disabled || currentPage >= pagesCount}/>
   );
 
-  const createLast = () => (
+  const createLast = (): JSX.Element => (
     <Pagination.Last onClick={onClick(pagesCount)}
                      disabled={disabled || currentPage >= pagesCount}/>
   );
 
-  const pageItemsGenerator = function* () {
+  const pageItemsGenerator = function* (): Iterable<JSX.Element> {
     let firstPage = 1;
 
     if (currentPage > sideLength + 1) {
