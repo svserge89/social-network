@@ -2,11 +2,12 @@ import React from 'react';
 import {Button, Card, Col, Row} from 'react-bootstrap';
 
 import {HOME} from '../../utils/routes';
+import {ErrorProps} from './types';
 
-const Error = ({code, description}) => {
-  const reloadHandler = () => window.location.reload();
+const Error: React.FC<ErrorProps> = ({code, description}) => {
+  const reloadHandler = (): void => window.location.reload();
 
-  const showButton = () => (
+  const showButton = (): JSX.Element => (
     code === 404
       ? (<Button variant="success" href={HOME}>Home page</Button>)
       : (<Button variant="success" onClick={reloadHandler}>Reload page</Button>)
