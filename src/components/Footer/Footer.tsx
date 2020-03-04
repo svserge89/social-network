@@ -2,7 +2,7 @@ import React from 'react';
 
 import Layout from '../Layout/Layout';
 
-const Footer = () => (
+const Footer: React.FC = () => (
   <footer className="py-2 bg-light">
     <Layout className="px-2 text-right">
       <span className="text-muted">
