@@ -1,6 +1,5 @@
 import React from 'react';
 import {reduxForm} from 'redux-form';
-import {compose} from 'redux';
 import {Form, Button, Alert, ButtonToolbar} from 'react-bootstrap';
 
 import EmailInput from './EmailInput/EmailInput';
@@ -16,15 +15,19 @@ const minLength6 = minLength(6);
 const maxLength50 = maxLength(50);
 
 const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, error, reset, updating, captcha}) => {
-  const showAlert = () => (error && (<Alert variant="danger">{error}</Alert>));
-
-  const showCaptcha = () => (
-    captcha && (
-      <CaptchaInput name="captcha" url={captcha} validators={[required]} disabled={updating}/>
-    )
+  const showAlert = (): JSX.Element | '' => (
+    error ? (<Alert variant="danger">{error}</Alert>) : ''
   );
 
-  const showLogInButton = () => (
+  const showCaptcha = (): JSX.Element | '' => (
+    captcha
+      ? (
+        <CaptchaInput name="captcha" url={captcha} validators={[required]} disabled={updating}/>
+      )
+      : ''
+  );
+
+  const showLogInButton = (): JSX.Element => (
     updating ? (<ButtonLoader/>) : (<Button variant="success" type="submit">Log In</Button>)
   );
 
@@ -45,4 +48,6 @@ const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, error, reset, updati
   );
 };
 
-export default compose(reduxForm<LoginData, LoginFormOwnProps>({form: 'login'}))(LoginForm);
+const formContainer = reduxForm<LoginData, LoginFormOwnProps>({form: 'login'});
+
+export default formContainer(LoginForm);

@@ -1,5 +1,4 @@
 import React from 'react';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {Navbar, Nav} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
@@ -52,9 +51,9 @@ const mapStateToProps = (state: RootState): HeaderStateProps => ({
   isError: selectIsError(state)
 });
 
-export default compose(
-  connect<HeaderStateProps, HeaderDispatchProps, HeaderOwnProps, RootState>(
-    mapStateToProps,
-    {logout}
-  )
-)(Header);
+const stateContainer = connect<HeaderStateProps, HeaderDispatchProps, HeaderOwnProps, RootState>(
+  mapStateToProps,
+  {logout}
+);
+
+export default stateContainer(Header);

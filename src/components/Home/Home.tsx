@@ -1,5 +1,4 @@
 import React from 'react';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 
@@ -16,6 +15,9 @@ const mapStateToProps = (state: RootState): HomeStateProps => ({
   authenticated: selectAuthenticated(state)
 });
 
-export default compose(
+const stateContainer = (
   connect<HomeStateProps, HomeDispatchProps, HomeOwnProps, RootState>(mapStateToProps)
-)(Home);
+);
+
+
+export default stateContainer(Home);

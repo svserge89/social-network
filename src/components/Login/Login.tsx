@@ -1,15 +1,10 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {Card, Row, Col} from 'react-bootstrap';
 
 import {login} from '../../reducers/auth/thunks';
-import {
-  selectAuthenticated,
-  selectCaptcha,
-  selectUpdating
-} from '../../selectors/auth';
+import {selectAuthenticated, selectCaptcha, selectUpdating} from '../../selectors/auth';
 import {PROFILE} from '../../utils/routes';
 import LoginForm from './LoginForm/LoginForm';
 import {LoginDispatchProps, LoginOwnProps, LoginProps, LoginStateProps} from './types';
@@ -41,6 +36,9 @@ const mapStateToProps = (state: RootState): LoginStateProps => ({
   captcha: selectCaptcha(state)
 });
 
-export default compose(
-  connect<LoginStateProps, LoginDispatchProps, LoginOwnProps, RootState>(mapStateToProps, {login})
-)(Login);
+const stateContainer = connect<LoginStateProps, LoginDispatchProps, LoginOwnProps, RootState>(
+  mapStateToProps,
+  {login}
+);
+
+export default stateContainer(Login);

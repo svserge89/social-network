@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {Route, Switch, withRouter} from 'react-router-dom';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
 
 import {initialization} from './reducers/init/thunks';
@@ -73,10 +72,9 @@ const mapStateToProps = (state: RootState): AppStateProps => ({
   errorDescription: selectErrorDescription(state)
 });
 
-export default compose(
-  connect<AppStateProps, AppDispatchProps, AppOwnProps, RootState>(
-    mapStateToProps,
-    {initialization}
-  ),
-  withRouter
-)(App) as React.ComponentClass<AppOwnProps>;
+const stateContainer = connect<AppStateProps, AppDispatchProps, AppOwnProps, RootState>(
+  mapStateToProps,
+  {initialization}
+);
+
+export default withRouter(stateContainer(App));
