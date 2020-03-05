@@ -75,7 +75,7 @@ export const updateStatus = (status: string) => async (dispatch: any) => {
   }
 };
 
-export const updatePhoto = (image: string) => async (dispatch: any) => {
+export const updatePhoto = (image: File) => async (dispatch: any) => {
   dispatch(setFetchingPhoto(true));
 
   try {

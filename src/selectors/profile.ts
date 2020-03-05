@@ -1,11 +1,11 @@
 import {createSelector, Selector} from 'reselect';
 
 import {RootState} from '../store/types';
-import {Contacts, Profile} from '../models/types';
+import {Profile} from '../models/types';
 
 export const selectProfile = ({profile}: RootState): Profile => profile.profile;
 
-export const selectStatus = ({profile}: RootState): string | null => profile.status;
+export const selectStatus = ({profile}: RootState): string => profile.status || '';
 
 export const selectContactLabels = ({profile}: RootState): Map<string, string> => (
   profile.contactLabels
@@ -27,8 +27,8 @@ export const selectFullName: Selector<RootState, string> = createSelector(
   [selectProfile], ({fullName}) => fullName
 );
 
-export const selectContacts: Selector<RootState, Contacts> = createSelector(
-  [selectProfile], ({contacts}) => contacts
+export const selectContacts: Selector<RootState, Map<string, string | null>> = createSelector(
+  [selectProfile], ({contacts}) => new Map(Object.entries(contacts))
 );
 
 export const selectLookingForAJob: Selector<RootState, boolean> = createSelector(

@@ -19,9 +19,7 @@ import {RootState} from '../../store/types';
 const Login: React.FC<LoginProps> = ({authenticated, updating, login, captcha}) => {
   if (authenticated) return (<Redirect to={PROFILE}/>);
 
-  const onSubmit = (data: LoginData) => {
-    login(data)
-  };
+  const onSubmit = (data: LoginData) => login(data);
 
   return (
     <Row className="mt-3">

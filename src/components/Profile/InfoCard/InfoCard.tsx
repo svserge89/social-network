@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {Card, Button} from 'react-bootstrap';
 
@@ -19,36 +18,42 @@ import ContactList from './ContactList/ContactList';
 import Status from './Status/Status';
 import LookingForAJob from './LookingForAJob/LookingForAJob';
 import EditInfoForm from './EditInfoForm/EditInfoForm';
+import {InfoCardDispatchProps, InfoCardOwnProps, InfoCardProps, InfoCardStateProps} from './types';
+import {Profile} from '../../../models/types';
+import {RootState} from '../../../store/types';
+import {FormSubmitHandler} from 'redux-form';
 
-const InfoCard = ({
-                    fullName,
-                    status,
-                    contacts,
-                    lookingForAJob,
-                    lookingForAJobDescription,
-                    aboutMe,
-                    contactLabels,
-                    fetchingStatus,
-                    updateStatus,
-                    updateProfile,
-                    updating,
-                    editable = false
-                  }) => {
+const InfoCard: React.FC<InfoCardProps> = ({
+                                             fullName,
+                                             status,
+                                             contacts,
+                                             lookingForAJob,
+                                             lookingForAJobDescription,
+                                             aboutMe,
+                                             contactLabels,
+                                             fetchingStatus,
+                                             updateStatus,
+                                             updateProfile,
+                                             updating,
+                                             editable = false
+                                           }) => {
   const [editMode, setEditMode] = useState(false);
 
-  const showAboutMe = () => (
+  const showAboutMe = (): JSX.Element => (
     aboutMe ? (<pre>{aboutMe}</pre>) : (<p className="text-secondary">Empty.</p>)
   );
 
   const onEdit = () => setEditMode(true);
 
-  const onSubmit = (profile) => {
+  const onSubmit: FormSubmitHandler<Profile> = (profile: Profile) => {
     updateProfile(profile)
   };
 
-  const showEditButton = () => editable && (<Button onClick={onEdit}>Edit</Button>);
+  const showEditButton = (): JSX.Element | '' => (
+    editable ? (<Button onClick={onEdit}>Edit</Button>) : ''
+  );
 
-  const showBody = () => (
+  const showBody = (): JSX.Element => (
     !editMode
       ? (
         <Card.Body>
@@ -87,7 +92,7 @@ const InfoCard = ({
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState): InfoCardStateProps => ({
   fullName: selectFullName(state),
   status: selectStatus(state),
   contacts: selectContacts(state),
@@ -99,4 +104,11 @@ const mapStateToProps = (state) => ({
   updating: selectUpdating(state)
 });
 
-export default compose(connect(mapStateToProps, {updateStatus, updateProfile}))(InfoCard);
+const stateContainer = (
+  connect<InfoCardStateProps, InfoCardDispatchProps, InfoCardOwnProps, RootState>(
+    mapStateToProps,
+    {updateStatus, updateProfile}
+  )
+);
+
+export default stateContainer(InfoCard);

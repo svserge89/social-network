@@ -3,8 +3,15 @@ import {Form, Row, Col} from 'react-bootstrap';
 import {Field} from 'redux-form';
 
 import InputField from '../../../../common/InputField/InputField';
+import {ContactInputProps} from './types';
 
-const ContactInput = ({label, placeholder, name, validators, disabled}) => (
+const ContactInput: React.FC<ContactInputProps> = ({
+                                                     label,
+                                                     placeholder,
+                                                     name,
+                                                     validators,
+                                                     disabled = false
+                                                   }) => (
   <Form.Group as={Row} className="my-1">
     <Form.Label column={true} xs={4} md={4} lg={3} className="font-weight-bold">{label}</Form.Label>
     <Col>

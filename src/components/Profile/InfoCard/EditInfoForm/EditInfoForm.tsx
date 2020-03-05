@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {reduxForm, formValueSelector} from 'redux-form';
-import {compose} from 'redux';
+import {reduxForm, formValueSelector,} from 'redux-form';
 import {Form, Card, Button, ButtonToolbar, ButtonGroup, Alert} from 'react-bootstrap';
 
 import ContactInput from './ContactInput/ContactInput';
@@ -9,18 +8,28 @@ import LookingForAJobInput from './LookingForAJobInput/LookingForAJobInput';
 import FullNameInput from './FullNameInput/FullNameInput';
 import AboutMeInput from './AboutMeInput/AboutMeInput';
 import ButtonLoader from '../../../common/ButtonLoader/ButtonLoader';
+import {selectProfile} from '../../../../selectors/profile';
+import {
+  EditInfoFormDispatchProps,
+  EditInfoFormNonInjectedProps,
+  EditInfoFormOwnProps,
+  EditInfoFormProps,
+  EditInfoFormStateProps
+} from './types';
+import {RootState} from '../../../../store/types';
+import {Profile} from '../../../../models/types';
 
-const EditInfoForm = ({
-                        handleSubmit,
-                        error,
-                        reset,
-                        setEditMode,
-                        contactLabels,
-                        lookingForAJobValue,
-                        change,
-                        updating
-                      }) => {
-  const showContactInputs = () => (
+const EditInfoForm: React.FC<EditInfoFormProps> = ({
+                                                     handleSubmit,
+                                                     error,
+                                                     reset,
+                                                     setEditMode,
+                                                     contactLabels,
+                                                     lookingForAJobValue,
+                                                     change,
+                                                     updating
+                                                   }) => {
+  const showContactInputs = (): JSX.Element[] => (
     [...contactLabels.entries()].map(([key, value]) => (
       <ContactInput key={key}
                     label={value}
@@ -30,9 +39,9 @@ const EditInfoForm = ({
     ))
   );
 
-  const showAlert = () => (error && (<Alert variant="danger">{error}</Alert>));
+  const showAlert = (): JSX.Element | '' => (error && (<Alert variant="danger">{error}</Alert>));
 
-  const showSaveButton = () => (
+  const showSaveButton = (): JSX.Element => (
     updating ? (<ButtonLoader/>) : (<Button variant="success" type="submit">Save</Button>)
   );
 
@@ -71,9 +80,17 @@ const EditInfoForm = ({
 
 const selector = formValueSelector('profileInfo');
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState): EditInfoFormStateProps => ({
   lookingForAJobValue: selector(state, 'lookingForAJob'),
-  initialValues: state.profile.profile
+  initialValues: selectProfile(state)
 });
 
-export default compose(connect(mapStateToProps), reduxForm({form: 'profileInfo'}))(EditInfoForm);
+const formContainer = reduxForm<Profile, EditInfoFormNonInjectedProps>({form: 'profileInfo'});
+
+const stateContainer = (
+  connect<EditInfoFormStateProps, EditInfoFormDispatchProps, EditInfoFormOwnProps, RootState>(
+    mapStateToProps
+  )
+);
+
+export default stateContainer(formContainer(EditInfoForm));

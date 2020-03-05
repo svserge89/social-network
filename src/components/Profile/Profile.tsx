@@ -1,28 +1,29 @@
 import React, {useEffect} from 'react';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {withRouter, Redirect} from 'react-router-dom';
 import {Row, Col} from 'react-bootstrap';
 
 import {getProfile, cleanProfile, getStatus} from '../../reducers/profile/thunks';
-import {selectUserId as currentUserIdSelector} from '../../selectors/auth';
+import {selectUserId as selectCurrentUserId} from '../../selectors/auth';
 import {selectFetching, selectUserId} from '../../selectors/profile';
 import {LOGIN} from '../../utils/routes';
 import AvatarCard from './AvatarCard/AvatarCard';
 import InfoCard from './InfoCard/InfoCard';
 import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
+import {ProfileDispatchProps, ProfileOwnProps, ProfileProps, ProfileStateProps} from './types';
+import {RootState} from '../../store/types';
 
-const Profile = ({
-                   currentUserId,
-                   userId,
-                   fetching,
-                   getProfile,
-                   getStatus,
-                   cleanProfile,
-                   match: {params}
-                 }) => {
+const Profile: React.FC<ProfileProps> = ({
+                                           currentUserId,
+                                           userId,
+                                           fetching,
+                                           getProfile,
+                                           getStatus,
+                                           cleanProfile,
+                                           match: {params}
+                                         }) => {
   useEffect(() => {
-    const id = params.userId ? params.userId : currentUserId;
+    const id = Number(params.userId || currentUserId);
 
     if (id) {
       getProfile(id);
@@ -39,7 +40,7 @@ const Profile = ({
   );
 
   const isCurrentUser = () => (
-    (currentUserId && !params.userId) || (currentUserId === params.userId)
+    (currentUserId && !params.userId) || (currentUserId === Number(params.userId))
   );
 
   return (
@@ -54,12 +55,15 @@ const Profile = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  currentUserId: currentUserIdSelector(state),
+const mapStateToProps = (state: RootState): ProfileStateProps => ({
+  currentUserId: selectCurrentUserId(state),
   userId: selectUserId(state),
   fetching: selectFetching(state)
 });
 
-export default compose(
-  connect(mapStateToProps, {getProfile, getStatus, cleanProfile}), withRouter
-)(Profile);
+const stateContainer = connect<ProfileStateProps, ProfileDispatchProps, ProfileOwnProps, RootState>(
+  mapStateToProps,
+  {getProfile, getStatus, cleanProfile}
+);
+
+export default withRouter(stateContainer(Profile));

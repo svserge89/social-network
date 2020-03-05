@@ -1,5 +1,4 @@
 import React from 'react';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {Card, InputGroup, FormControl, FormLabel} from 'react-bootstrap';
 import cn from 'classnames';
@@ -7,14 +6,28 @@ import cn from 'classnames';
 import {updatePhoto} from '../../../reducers/profile/thunks';
 import {selectFetchingPhoto, selectLargePhoto} from '../../../selectors/profile';
 import ComponentLoader from '../../common/ComponentLoader/ComponentLoader';
+import {
+  AvatarCardDispatchProps,
+  AvatarCardOwnProps,
+  AvatarCardProps,
+  AvatarCardStateProps
+} from './types';
+import {RootState} from '../../../store/types';
 
 import style from './AvatarCard.module.css';
 import avatar from '../../../assets/images/avatar.png';
 
-const AvatarCard = ({photo, updatePhoto, fetching, editable = false}) => {
-  const imageUrl = photo ? photo : avatar;
+const AvatarCard: React.FC<AvatarCardProps> = ({
+                                                 photo,
+                                                 updatePhoto,
+                                                 fetching,
+                                                 editable = false
+                                               }) => {
+  const imageUrl = photo || avatar;
 
-  const onSelectImage = ({target: {files}}) => files.length && updatePhoto(files[0]);
+  const onSelectImage = ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => (
+    files && files.length && updatePhoto(files[0])
+  );
 
   const showImage = () => (
     fetching
@@ -48,9 +61,16 @@ const AvatarCard = ({photo, updatePhoto, fetching, editable = false}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState): AvatarCardStateProps => ({
   photo: selectLargePhoto(state),
   fetching: selectFetchingPhoto(state)
 });
 
-export default compose(connect(mapStateToProps, {updatePhoto}))(AvatarCard);
+const stateContainer = (
+  connect<AvatarCardStateProps, AvatarCardDispatchProps, AvatarCardOwnProps, RootState>(
+    mapStateToProps,
+    {updatePhoto}
+  )
+);
+
+export default stateContainer(AvatarCard);
