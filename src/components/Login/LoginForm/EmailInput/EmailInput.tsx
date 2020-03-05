@@ -3,8 +3,9 @@ import {Form} from 'react-bootstrap';
 import {Field} from 'redux-form';
 
 import InputField from '../../../common/InputField/InputField';
+import {EmailInputProps} from './types';
 
-const EmailInput = ({name, validators, disabled}) => (
+const EmailInput: React.FC<EmailInputProps> = ({name, validators, disabled = false}) => (
   <Form.Group>
     <Form.Label column={false}>Email address</Form.Label>
     <Field type="email"

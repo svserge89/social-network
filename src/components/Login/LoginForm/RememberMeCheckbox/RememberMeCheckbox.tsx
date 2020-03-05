@@ -2,7 +2,9 @@ import React from 'react';
 import {Form} from 'react-bootstrap';
 import {Field} from 'redux-form';
 
-const RememberMeCheckbox = ({name, disabled}) => (
+import {RememberMeCheckboxProps} from './types';
+
+const RememberMeCheckbox: React.FC<RememberMeCheckboxProps> = ({name, disabled}) => (
   <Form.Group>
     <Field type="checkbox"
            label="Remember me"

@@ -9,11 +9,13 @@ import RememberMeCheckbox from './RememberMeCheckbox/RememberMeCheckbox';
 import CaptchaInput from './CapthaInput/CaptchaInput';
 import ButtonLoader from '../../common/ButtonLoader/ButtonLoader';
 import {required, isEmail, minLength, maxLength} from '../../../utils/validators';
+import {LoginFormOwnProps, LoginFormProps} from './types';
+import {LoginData} from '../../../models/types';
 
 const minLength6 = minLength(6);
 const maxLength50 = maxLength(50);
 
-const LoginForm = ({handleSubmit, error, reset, updating, captcha}) => {
+const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, error, reset, updating, captcha}) => {
   const showAlert = () => (error && (<Alert variant="danger">{error}</Alert>));
 
   const showCaptcha = () => (
@@ -43,4 +45,4 @@ const LoginForm = ({handleSubmit, error, reset, updating, captcha}) => {
   );
 };
 
-export default compose(reduxForm({form: 'login'}))(LoginForm);
+export default compose(reduxForm<LoginData, LoginFormOwnProps>({form: 'login'}))(LoginForm);

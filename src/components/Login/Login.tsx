@@ -12,11 +12,14 @@ import {
 } from '../../selectors/auth';
 import {PROFILE} from '../../utils/routes';
 import LoginForm from './LoginForm/LoginForm';
+import {LoginDispatchProps, LoginOwnProps, LoginProps, LoginStateProps} from './types';
+import {LoginData} from '../../models/types';
+import {RootState} from '../../store/types';
 
-const Login = ({authenticated, updating, login, captcha}) => {
+const Login: React.FC<LoginProps> = ({authenticated, updating, login, captcha}) => {
   if (authenticated) return (<Redirect to={PROFILE}/>);
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: LoginData) => {
     login(data)
   };
 
@@ -34,10 +37,12 @@ const Login = ({authenticated, updating, login, captcha}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState): LoginStateProps => ({
   authenticated: selectAuthenticated(state),
   updating: selectUpdating(state),
   captcha: selectCaptcha(state)
 });
 
-export default compose(connect(mapStateToProps, {login}))(Login);
+export default compose(
+  connect<LoginStateProps, LoginDispatchProps, LoginOwnProps, RootState>(mapStateToProps, {login})
+)(Login);
