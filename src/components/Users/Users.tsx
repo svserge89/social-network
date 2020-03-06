@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {Row, Col} from 'react-bootstrap';
 
@@ -18,32 +17,34 @@ import UserCard from './UserCard/UserCard';
 import PageNavToolbar from '../common/PageNavToolbar/PageNavToolbar';
 import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
 import {selectUserId} from '../../selectors/auth';
+import {UsersDispatchProps, UsersOwnProps, UsersProps, UsersStateProps} from './types';
+import {RootState} from '../../store/types';
 
-const Users = ({
-                 currentUserId,
-                 users,
-                 size,
-                 total,
-                 page,
-                 fetching,
-                 following,
-                 available,
-                 setPage,
-                 setSize,
-                 getUsers,
-                 cleanUsers,
-                 follow,
-                 unfollow
-               }) => {
+const Users: React.FC<UsersProps> = ({
+                                       currentUserId,
+                                       users,
+                                       size,
+                                       total,
+                                       page,
+                                       fetching,
+                                       following,
+                                       available,
+                                       setPage,
+                                       setSize,
+                                       getUsers,
+                                       cleanUsers,
+                                       follow,
+                                       unfollow
+                                     }) => {
   useEffect(() => {
     getUsers(page, size);
   }, [getUsers, page, size]);
 
   useEffect(() => () => cleanUsers(), [cleanUsers]);
 
-  const isFollowing = (userId) => following.includes(userId);
+  const isFollowing = (userId: number): boolean => following.includes(userId);
 
-  const showUserCards = () => {
+  const showUserCards = (): JSX.Element | JSX.Element[] => {
     if (fetching || !users) return (
       <Row><Col className="col-12 p-0"><ComponentLoader/></Col></Row>
     );
@@ -54,7 +55,7 @@ const Users = ({
           <Col className="col-12 p-0">
             <UserCard userId={id}
                       name={name}
-                      status={status}
+                      status={status || ''}
                       image={small}
                       followed={followed}
                       following={isFollowing(id)}
@@ -82,10 +83,10 @@ const Users = ({
       </Row>
       {showUserCards()}
     </>
-  )
+  );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState): UsersStateProps => ({
   currentUserId: selectUserId(state),
   users: selectUsers(state),
   size: selectSize(state),
@@ -96,6 +97,9 @@ const mapStateToProps = (state) => ({
   available: selectAvailable(state)
 });
 
-export default compose(
-  connect(mapStateToProps, {setPage, setSize, getUsers, cleanUsers, follow, unfollow})
-)(Users);
+const stateContainer = connect<UsersStateProps, UsersDispatchProps, UsersOwnProps, RootState>(
+  mapStateToProps,
+  {setPage, setSize, getUsers, cleanUsers, follow, unfollow}
+);
+
+export default stateContainer(Users);

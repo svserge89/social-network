@@ -5,27 +5,28 @@ import cn from 'classnames';
 
 import {PROFILE} from '../../../utils/routes';
 import ButtonLoader from '../../common/ButtonLoader/ButtonLoader';
+import {UserCardProps} from './types';
 
 import smallAvatar from '../../../assets/images/small-avatar.png';
 import style from './UserCard.module.css';
 
-const UserCard = ({
-                    image,
-                    name,
-                    status,
-                    follow,
-                    unfollow,
-                    followed,
-                    currentUserId,
-                    following,
-                    userId
-                  }) => {
+const UserCard: React.FC<UserCardProps> = ({
+                                             image,
+                                             name,
+                                             status,
+                                             follow,
+                                             unfollow,
+                                             followed,
+                                             currentUserId,
+                                             following,
+                                             userId
+                                           }) => {
   const onFollow = () => follow(userId);
 
   const onUnfollow = () => unfollow(userId);
 
-  const showButton = () => {
-    if (!currentUserId || currentUserId === userId) return;
+  const showButton = (): JSX.Element | '' => {
+    if (!currentUserId || currentUserId === userId) return '';
 
     if (following) return (<ButtonLoader/>);
 
