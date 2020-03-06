@@ -6,7 +6,7 @@ export type PageNavToolbarProps = {
   page: number
   setPage: (page: number) => void
   setSize: (size: number) => void
-  available: Array<string>
+  available: string[]
   sideLength?: number
   buttonSize?: ButtonProps['size']
   fetching?: boolean

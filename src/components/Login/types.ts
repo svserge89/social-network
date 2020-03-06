@@ -12,4 +12,4 @@ export type LoginDispatchProps = {
 
 export type LoginOwnProps = {}
 
-export type LoginProps = LoginStateProps & LoginDispatchProps & LoginOwnProps;
+export type LoginProps = LoginStateProps & LoginDispatchProps & LoginOwnProps

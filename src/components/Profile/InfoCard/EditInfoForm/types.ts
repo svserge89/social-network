@@ -1,5 +1,6 @@
-import {Profile} from '../../../../models/types';
 import {InjectedFormProps} from 'redux-form';
+
+import {Profile} from '../../../../models/types';
 
 export type EditInfoFormStateProps = {
   lookingForAJobValue: boolean
@@ -16,7 +17,7 @@ export type EditInfoFormOwnProps = {
 
 export type EditInfoFormNonInjectedProps = EditInfoFormStateProps
   & EditInfoFormDispatchProps
-  & EditInfoFormOwnProps;
+  & EditInfoFormOwnProps
 
 export type EditInfoFormProps = InjectedFormProps<Profile, EditInfoFormNonInjectedProps>
-  & EditInfoFormNonInjectedProps;
+  & EditInfoFormNonInjectedProps

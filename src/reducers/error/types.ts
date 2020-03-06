@@ -7,6 +7,6 @@ export type SetErrorAction = {
   data: { code: number, description: string | null }
 }
 
-export type ErrorAction = SetErrorAction;
+export type ErrorAction = SetErrorAction
 
 export type ErrorState = { code: number, description: string | null }

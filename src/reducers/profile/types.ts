@@ -55,12 +55,12 @@ export type ProfileAction = SetProfileAction
   | SetFetchingAction
   | SetFetchingStatusAction
   | SetFetchingPhotoAction
-  | SetUpdatingAction;
+  | SetUpdatingAction
 
-export type ProfileThunkAction = ThunkAction<void, RootState, unknown, ProfileAction>;
+export type ProfileThunkAction = ThunkAction<void, RootState, unknown, ProfileAction>
 
 export type ProfileAsyncThunkAction =
-  ThunkAction<Promise<void>, RootState, unknown, ProfileAction | FormAction>;
+  ThunkAction<Promise<void>, RootState, unknown, ProfileAction | FormAction>
 
 export type ProfileState = {
   profile: Profile

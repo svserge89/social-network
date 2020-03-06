@@ -8,4 +8,4 @@ type InputFieldOwnProps = {
   type: FormControlProps['type']
 }
 
-export type InputFieldProps = WrappedFieldProps & InputFieldOwnProps;
+export type InputFieldProps = WrappedFieldProps & InputFieldOwnProps

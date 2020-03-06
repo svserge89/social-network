@@ -14,6 +14,6 @@ export type ProfileDispatchProps = {
 
 export type ProfileOwnProps = {}
 
-export type ProfileNonInjectedProps = ProfileStateProps & ProfileDispatchProps & ProfileOwnProps;
+export type ProfileNonInjectedProps = ProfileStateProps & ProfileDispatchProps & ProfileOwnProps
 
-export type ProfileProps = RouteComponentProps<{ userId?: string }> & ProfileNonInjectedProps;
+export type ProfileProps = RouteComponentProps<{ userId?: string }> & ProfileNonInjectedProps

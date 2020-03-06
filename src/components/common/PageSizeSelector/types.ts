@@ -1,7 +1,7 @@
 import {InputGroupProps} from 'react-bootstrap';
 
 export type PageSizeSelectorProps = {
-  available: Array<string>
+  available: string[]
   current: string
   change: (value: number) => void
   disabled?: boolean

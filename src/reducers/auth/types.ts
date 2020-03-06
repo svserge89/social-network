@@ -33,10 +33,10 @@ export type SetUpdatingAction = {
 export type AuthAction = SetCurrentUserAction
   | SetCaptchaAction
   | SetFetchingAction
-  | SetUpdatingAction;
+  | SetUpdatingAction
 
 export type AuthAsyncThunkAction =
-  ThunkAction<Promise<void>, RootState, unknown, AuthAction | FormAction>;
+  ThunkAction<Promise<void>, RootState, unknown, AuthAction | FormAction>
 
 export type AuthState = {
   userId: number | null

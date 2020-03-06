@@ -25,7 +25,7 @@ export type SetUnfollowAction = {
 
 export type SetUsersAction = {
   type: typeof SET_USERS
-  data: { users: Array<User>, total: number }
+  data: { users: User[], total: number }
 }
 
 export type SetPageAction = {
@@ -54,18 +54,18 @@ export type UsersAction = SetFollowAction
   | SetPageAction
   | SetSizeAction
   | SetFetchingAction
-  | SetFollowingAction;
+  | SetFollowingAction
 
-export type UsersThunkAction = ThunkAction<void, RootState, unknown, UsersAction>;
+export type UsersThunkAction = ThunkAction<void, RootState, unknown, UsersAction>
 
-export type UsersAsyncThunkAction = ThunkAction<Promise<void>, RootState, unknown, UsersAction>;
+export type UsersAsyncThunkAction = ThunkAction<Promise<void>, RootState, unknown, UsersAction>
 
 export type UsersState = {
-  users: Array<User>
+  users: User[]
   size: number
   total: number
   page: number
   fetching: boolean
-  following: Array<number>
-  available: Array<number>
+  following: number[]
+  available: number[]
 }

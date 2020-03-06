@@ -11,4 +11,4 @@ export type AppDispatchProps = {
 
 export type AppOwnProps = {}
 
-export type AppProps = AppStateProps & AppDispatchProps & AppOwnProps;
+export type AppProps = AppStateProps & AppDispatchProps & AppOwnProps

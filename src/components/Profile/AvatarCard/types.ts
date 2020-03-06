@@ -11,4 +11,4 @@ export type AvatarCardOwnProps = {
   editable?: boolean
 }
 
-export type AvatarCardProps = AvatarCardStateProps & AvatarCardDispatchProps & AvatarCardOwnProps;
+export type AvatarCardProps = AvatarCardStateProps & AvatarCardDispatchProps & AvatarCardOwnProps

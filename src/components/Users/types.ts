@@ -22,4 +22,4 @@ export type UsersDispatchProps = {
 
 export type UsersOwnProps = {}
 
-export type UsersProps = UsersStateProps & UsersDispatchProps & UsersOwnProps;
+export type UsersProps = UsersStateProps & UsersDispatchProps & UsersOwnProps

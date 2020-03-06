@@ -7,4 +7,4 @@ export type LoginFormOwnProps = {
   captcha?: string | null
 }
 
-export type LoginFormProps = InjectedFormProps<LoginData, LoginFormOwnProps> & LoginFormOwnProps;
+export type LoginFormProps = InjectedFormProps<LoginData, LoginFormOwnProps> & LoginFormOwnProps

@@ -1,19 +1,22 @@
 import {Photos, Profile, User} from '../models/types';
+import {CaptchaResultCode, ResultCode} from '../utils/responseCodes';
 
 export type ResponseData<T> = {
   data: T
 }
 
-type DefaultResponse = {
-  resultCode: number
+type LoginResultCode = ResultCode | CaptchaResultCode
+
+type DefaultResponse<T> = {
+  resultCode: T
   messages: string[]
 }
 
-type DefaultResponseWithEmptyData = DefaultResponse & {
+type DefaultResponseWithEmptyData = DefaultResponse<ResultCode> & {
   data: {}
 }
 
-export type GetCurrentUserResponse = DefaultResponse & {
+export type GetCurrentUserResponse = DefaultResponse<ResultCode> & {
   data: {
     id: number
     email: string
@@ -21,7 +24,7 @@ export type GetCurrentUserResponse = DefaultResponse & {
   }
 }
 
-export type LoginResponse = DefaultResponse & {
+export type LoginResponse = DefaultResponse<LoginResultCode> & {
   data: {
     userId: number
   }
@@ -47,7 +50,7 @@ export type GetStatusResponse = string
 
 export type UpdateStatusResponse = DefaultResponseWithEmptyData
 
-export type UpdatePhotoResponse = DefaultResponse & {
+export type UpdatePhotoResponse = DefaultResponse<ResultCode> & {
   data: {
     photos: Photos
   }

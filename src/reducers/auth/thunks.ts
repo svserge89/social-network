@@ -2,7 +2,7 @@ import {stopSubmit} from 'redux-form';
 
 import {setCaptcha, setCurrentUser, setFetching, setUpdating} from './actionCreators';
 import {authAPI, securityAPI} from '../../api/api';
-import {CAPTCHA_REQUIRED, SUCCESS} from '../../utils/responseCodes';
+import {CaptchaResultCode, ResultCode} from '../../utils/responseCodes';
 import {handleError, handleServerError} from '../../utils/errorHandler';
 import {LoginData} from '../../models/types';
 import {parseMessages} from '../../utils/errorParser';
@@ -14,7 +14,7 @@ export const getCurrentUser = (): AuthAsyncThunkAction => async (dispatch) => {
   try {
     const {resultCode, data: {id, email, login}} = await authAPI.getCurrentUser();
 
-    if (resultCode !== SUCCESS) return;
+    if (resultCode !== ResultCode.SUCCESS) return;
     else dispatch(setCurrentUser(id, email, login));
   } catch (error) {
     handleError(dispatch, error);
@@ -24,9 +24,13 @@ export const getCurrentUser = (): AuthAsyncThunkAction => async (dispatch) => {
 };
 
 const getCaptcha = (): AuthAsyncThunkAction => async (dispatch) => {
-  const {url} = await securityAPI.getCaptcha();
+  try {
+    const {url} = await securityAPI.getCaptcha();
 
-  dispatch(setCaptcha(url));
+    dispatch(setCaptcha(url));
+  } catch (error) {
+    handleError(dispatch, error);
+  }
 };
 
 export const login = ({
@@ -41,14 +45,14 @@ export const login = ({
     const {resultCode, messages} = await authAPI.login(email, password, rememberMe, captcha);
 
     switch (resultCode) {
-      case SUCCESS:
+      case ResultCode.SUCCESS:
         await dispatch(getCurrentUser());
         dispatch(setCaptcha());
         break;
-      case CAPTCHA_REQUIRED:
+      case CaptchaResultCode.CAPTCHA_REQUIRED:
         await dispatch(getCaptcha());
       // eslint-disable-next-line no-fallthrough
-      default:
+      case ResultCode.ERROR:
         dispatch(stopSubmit('login', parseMessages(messages)));
         break;
     }
@@ -65,7 +69,7 @@ export const logout = (): AuthAsyncThunkAction => async (dispatch) => {
   try {
     const {resultCode, messages} = await authAPI.logout();
 
-    if (resultCode !== SUCCESS) handleServerError(dispatch, messages);
+    if (resultCode !== ResultCode.SUCCESS) handleServerError(dispatch, messages);
     else dispatch(setCurrentUser());
   } catch (error) {
     handleError(dispatch, error);

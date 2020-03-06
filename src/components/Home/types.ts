@@ -6,4 +6,4 @@ export type HomeDispatchProps = {}
 
 export type HomeOwnProps = {}
 
-export type HomeProps = HomeStateProps & HomeDispatchProps & HomeOwnProps;
+export type HomeProps = HomeStateProps & HomeDispatchProps & HomeOwnProps

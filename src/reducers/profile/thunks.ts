@@ -2,7 +2,7 @@ import {stopSubmit} from 'redux-form';
 
 import {profileAPI} from '../../api/api';
 import {handleError, handleServerError} from '../../utils/errorHandler';
-import {SUCCESS} from '../../utils/responseCodes';
+import {ResultCode} from '../../utils/responseCodes';
 import {parseMessages} from '../../utils/errorParser';
 import {
   setFetching,
@@ -37,7 +37,7 @@ export const updateProfile = (profile: Profile): ProfileAsyncThunkAction => asyn
   try {
     const {resultCode, messages} = await profileAPI.update(profile);
 
-    if (resultCode !== SUCCESS) {
+    if (resultCode !== ResultCode.SUCCESS) {
       dispatch(stopSubmit('profileInfo', parseMessages(messages)));
 
       return;
@@ -56,9 +56,13 @@ export const cleanProfile = (): ProfileThunkAction => (dispatch) => (
 );
 
 export const getStatus = (userId: number): ProfileAsyncThunkAction => async (dispatch) => {
-  const status = await profileAPI.getStatus(userId);
+  try {
+    const status = await profileAPI.getStatus(userId);
 
-  dispatch(setStatus(status));
+    dispatch(setStatus(status));
+  } catch (error) {
+    handleError(dispatch, error);
+  }
 };
 
 export const updateStatus = (status: string): ProfileAsyncThunkAction => async (dispatch) => {
@@ -67,7 +71,7 @@ export const updateStatus = (status: string): ProfileAsyncThunkAction => async (
   try {
     const {resultCode, messages} = await profileAPI.updateStatus(status);
 
-    if (resultCode !== SUCCESS) handleServerError(dispatch, messages);
+    if (resultCode !== ResultCode.SUCCESS) handleServerError(dispatch, messages);
     else dispatch(setStatus(status));
   } catch (error) {
     handleError(dispatch, error);
@@ -82,7 +86,7 @@ export const updatePhoto = (image: File): ProfileAsyncThunkAction => async (disp
   try {
     const {resultCode, data: {photos}, messages} = await profileAPI.updatePhoto(image);
 
-    if (resultCode !== SUCCESS) handleServerError(dispatch, messages);
+    if (resultCode !== ResultCode.SUCCESS) handleServerError(dispatch, messages);
     else dispatch(setPhoto(photos));
   } catch (error) {
     handleError(dispatch, error);

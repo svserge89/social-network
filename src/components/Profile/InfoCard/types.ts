@@ -21,4 +21,4 @@ export type InfoCardOwnProps = {
   editable?: boolean
 }
 
-export type InfoCardProps = InfoCardStateProps & InfoCardDispatchProps & InfoCardOwnProps;
+export type InfoCardProps = InfoCardStateProps & InfoCardDispatchProps & InfoCardOwnProps

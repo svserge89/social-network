@@ -11,9 +11,9 @@ export type SetInitializedAction = {
   data: { initialized: boolean }
 }
 
-export type InitAction = SetInitializedAction;
+export type InitAction = SetInitializedAction
 
-export type InitAsyncThunkAction = ThunkAction<Promise<void>, RootState, unknown, InitAction>;
+export type InitAsyncThunkAction = ThunkAction<Promise<void>, RootState, unknown, InitAction>
 
 export type InitState = {
   initialized: boolean

@@ -8,4 +8,4 @@ type TextAreaFieldOwnProps = {
   type: FormControlProps['type']
 }
 
-export type TextAreaFieldProps = TextAreaFieldOwnProps & WrappedFieldProps;
+export type TextAreaFieldProps = TextAreaFieldOwnProps & WrappedFieldProps

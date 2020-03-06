@@ -11,4 +11,4 @@ export type HeaderDispatchProps = {
 
 export type HeaderOwnProps = {}
 
-export type HeaderProps = HeaderStateProps & HeaderDispatchProps & HeaderOwnProps;
+export type HeaderProps = HeaderStateProps & HeaderDispatchProps & HeaderOwnProps
