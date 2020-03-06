@@ -15,8 +15,9 @@ import {
 } from './actionCreators';
 import {Profile} from '../../models/types';
 import emptyProfile from './emptyProfile';
+import {ProfileAsyncThunkAction, ProfileThunkAction} from './types';
 
-export const getProfile = (userId: number) => async (dispatch: any) => {
+export const getProfile = (userId: number): ProfileAsyncThunkAction => async (dispatch) => {
   dispatch(setFetching(true));
 
   try {
@@ -30,7 +31,7 @@ export const getProfile = (userId: number) => async (dispatch: any) => {
   }
 };
 
-export const updateProfile = (profile: Profile) => async (dispatch: any) => {
+export const updateProfile = (profile: Profile): ProfileAsyncThunkAction => async (dispatch) => {
   dispatch(setUpdating(true));
 
   try {
@@ -50,17 +51,17 @@ export const updateProfile = (profile: Profile) => async (dispatch: any) => {
   }
 };
 
-export const cleanProfile = () => (dispatch: any) => (
+export const cleanProfile = (): ProfileThunkAction => (dispatch) => (
   dispatch(setProfile({...emptyProfile}))
 );
 
-export const getStatus = (userId: number) => async (dispatch: any) => {
+export const getStatus = (userId: number): ProfileAsyncThunkAction => async (dispatch) => {
   const status = await profileAPI.getStatus(userId);
 
   dispatch(setStatus(status));
 };
 
-export const updateStatus = (status: string) => async (dispatch: any) => {
+export const updateStatus = (status: string): ProfileAsyncThunkAction => async (dispatch) => {
   dispatch(setFetchingStatus(true));
 
   try {
@@ -75,7 +76,7 @@ export const updateStatus = (status: string) => async (dispatch: any) => {
   }
 };
 
-export const updatePhoto = (image: File) => async (dispatch: any) => {
+export const updatePhoto = (image: File): ProfileAsyncThunkAction => async (dispatch) => {
   dispatch(setFetchingPhoto(true));
 
   try {

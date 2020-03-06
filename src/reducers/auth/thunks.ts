@@ -6,8 +6,9 @@ import {CAPTCHA_REQUIRED, SUCCESS} from '../../utils/responseCodes';
 import {handleError, handleServerError} from '../../utils/errorHandler';
 import {LoginData} from '../../models/types';
 import {parseMessages} from '../../utils/errorParser';
+import {AuthAsyncThunkAction} from './types';
 
-export const getCurrentUser = () => async (dispatch: any) => {
+export const getCurrentUser = (): AuthAsyncThunkAction => async (dispatch) => {
   dispatch(setFetching(true));
 
   try {
@@ -22,7 +23,7 @@ export const getCurrentUser = () => async (dispatch: any) => {
   }
 };
 
-const getCaptcha = () => async (dispatch: any) => {
+const getCaptcha = (): AuthAsyncThunkAction => async (dispatch) => {
   const {url} = await securityAPI.getCaptcha();
 
   dispatch(setCaptcha(url));
@@ -33,7 +34,7 @@ export const login = ({
                         password,
                         rememberMe,
                         captcha
-                      }: LoginData) => async (dispatch: any) => {
+                      }: LoginData): AuthAsyncThunkAction => async (dispatch) => {
   dispatch(setUpdating(true));
 
   try {
@@ -58,7 +59,7 @@ export const login = ({
   }
 };
 
-export const logout = () => async (dispatch: any) => {
+export const logout = (): AuthAsyncThunkAction => async (dispatch) => {
   dispatch(setUpdating(true));
 
   try {

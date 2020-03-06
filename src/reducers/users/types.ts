@@ -1,4 +1,7 @@
+import {ThunkAction} from 'redux-thunk';
+
 import {User} from '../../models/types';
+import {RootState} from '../../store/types';
 
 const PREFIX = 'social-network/users/';
 
@@ -52,6 +55,10 @@ export type UsersAction = SetFollowAction
   | SetSizeAction
   | SetFetchingAction
   | SetFollowingAction;
+
+export type UsersThunkAction = ThunkAction<void, RootState, unknown, UsersAction>;
+
+export type UsersAsyncThunkAction = ThunkAction<Promise<void>, RootState, unknown, UsersAction>;
 
 export type UsersState = {
   users: Array<User>

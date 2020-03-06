@@ -1,3 +1,7 @@
+import {ThunkAction} from 'redux-thunk';
+
+import {RootState} from '../../store/types';
+
 const PREFIX = 'social-network/init/';
 
 export const SET_INITIALIZED = PREFIX + 'SET-INITIALIZED';
@@ -8,6 +12,8 @@ export type SetInitializedAction = {
 }
 
 export type InitAction = SetInitializedAction;
+
+export type InitAsyncThunkAction = ThunkAction<Promise<void>, RootState, unknown, InitAction>;
 
 export type InitState = {
   initialized: boolean

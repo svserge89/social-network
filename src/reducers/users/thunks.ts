@@ -2,8 +2,9 @@ import {usersAPI} from '../../api/api';
 import {handleError, handleServerError} from '../../utils/errorHandler';
 import {SUCCESS} from '../../utils/responseCodes';
 import {setFetching, setFollow, setFollowing, setUnfollow, setUsers} from './actionCreators';
+import {UsersAsyncThunkAction, UsersThunkAction} from './types';
 
-export const getUsers = (page: number, size: number) => async (dispatch: any) => {
+export const getUsers = (page: number, size: number): UsersAsyncThunkAction => async (dispatch) => {
   dispatch(setFetching(true));
 
   try {
@@ -17,9 +18,9 @@ export const getUsers = (page: number, size: number) => async (dispatch: any) =>
   }
 };
 
-export const cleanUsers = () => (dispatch: any) => dispatch(setUsers([], 0));
+export const cleanUsers = (): UsersThunkAction => (dispatch) => dispatch(setUsers([], 0));
 
-export const follow = (userId: number) => async (dispatch: any) => {
+export const follow = (userId: number): UsersAsyncThunkAction => async (dispatch) => {
   dispatch(setFollowing(true, userId));
 
   try {
@@ -34,7 +35,7 @@ export const follow = (userId: number) => async (dispatch: any) => {
   }
 };
 
-export const unfollow = (userId: number) => async (dispatch: any) => {
+export const unfollow = (userId: number): UsersAsyncThunkAction => async (dispatch) => {
   dispatch(setFollowing(true, userId));
 
   try {

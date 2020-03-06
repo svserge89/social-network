@@ -1,4 +1,8 @@
+import {ThunkAction} from 'redux-thunk';
+import {FormAction} from 'redux-form';
+
 import {Photos, Profile} from '../../models/types';
+import {RootState} from '../../store/types';
 
 const PREFIX = 'social-network/profile/';
 
@@ -52,6 +56,11 @@ export type ProfileAction = SetProfileAction
   | SetFetchingStatusAction
   | SetFetchingPhotoAction
   | SetUpdatingAction;
+
+export type ProfileThunkAction = ThunkAction<void, RootState, unknown, ProfileAction>;
+
+export type ProfileAsyncThunkAction =
+  ThunkAction<Promise<void>, RootState, unknown, ProfileAction | FormAction>;
 
 export type ProfileState = {
   profile: Profile

@@ -1,3 +1,8 @@
+import {ThunkAction} from 'redux-thunk';
+import {FormAction} from 'redux-form';
+
+import {RootState} from '../../store/types';
+
 const PREFIX = 'social-network/auth/';
 
 export const SET_CURRENT_USER = PREFIX + 'SET-CURRENT-USER';
@@ -29,6 +34,9 @@ export type AuthAction = SetCurrentUserAction
   | SetCaptchaAction
   | SetFetchingAction
   | SetUpdatingAction;
+
+export type AuthAsyncThunkAction =
+  ThunkAction<Promise<void>, RootState, unknown, AuthAction | FormAction>;
 
 export type AuthState = {
   userId: number | null
