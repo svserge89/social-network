@@ -8,9 +8,10 @@ export const getUsers = (page: number, size: number): UsersAsyncThunkAction => a
   dispatch(setFetching(true));
 
   try {
-    const {items, totalCount} = await usersAPI.get(size, page);
+    const {items, totalCount, error} = await usersAPI.get(size, page);
 
-    dispatch(setUsers(items, totalCount));
+    if (error) handleServerError(dispatch, [error]);
+    else dispatch(setUsers(items, totalCount));
   } catch (error) {
     handleError(dispatch, error);
   } finally {
