@@ -21,8 +21,6 @@ const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, error, reset, updati
     if (error) setLocalError(error);
   }, [error, setLocalError]);
 
-  console.log(error);
-
   const showAlert = (): JSX.Element | '' => (
     localError ? (<Alert variant="danger">{localError}</Alert>) : ''
   );
