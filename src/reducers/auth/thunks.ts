@@ -54,7 +54,7 @@ export const login = ({
       // eslint-disable-next-line no-fallthrough
       case ResultCode.ERROR:
         dispatch(stopSubmit('login', parseMessages(messages)));
-        break;
+        return;
     }
   } catch (error) {
     handleError(dispatch, error);

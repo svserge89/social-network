@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Form} from 'react-bootstrap';
 import {Field} from 'redux-form';
 
@@ -13,7 +13,10 @@ const LookingForAJobInput: React.FC<LookingForAJobInputProps> = ({
                                                                    validators,
                                                                    disabled
                                                                  }) => {
-  const onClick = () => change(checkboxName, !checked);
+  const handleClick = useCallback(
+    () => change(checkboxName, !checked),
+    [change, checkboxName, checked]
+  );
 
   return (
     <>
@@ -23,7 +26,7 @@ const LookingForAJobInput: React.FC<LookingForAJobInputProps> = ({
                name={checkboxName}
                component={Form.Check}
                defaultChecked={checked}
-               onClick={onClick}
+               onClick={handleClick}
                disabled={disabled}/>
       </Form.Group>
       <Form.Group>

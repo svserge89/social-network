@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {connect} from 'react-redux';
-import {reduxForm, formValueSelector,} from 'redux-form';
+import {reduxForm, formValueSelector} from 'redux-form';
 import {Form, Card, Button, ButtonToolbar, ButtonGroup, Alert} from 'react-bootstrap';
 
 import ContactInput from './ContactInput/ContactInput';
@@ -45,7 +45,7 @@ const EditInfoForm: React.FC<EditInfoFormProps> = ({
     updating ? (<ButtonLoader/>) : (<Button variant="success" type="submit">Save</Button>)
   );
 
-  const onCancel = () => setEditMode(false);
+  const handleCancel = useCallback(() => setEditMode(false), [setEditMode]);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -71,7 +71,7 @@ const EditInfoForm: React.FC<EditInfoFormProps> = ({
         {showSaveButton()}
         <ButtonGroup>
           <Button variant="warning" type="reset" onClick={reset} disabled={updating}>Clean</Button>
-          <Button variant="danger" onClick={onCancel} disabled={updating}>Cancel</Button>
+          <Button variant="danger" onClick={handleCancel} disabled={updating}>Cancel</Button>
         </ButtonGroup>
       </ButtonToolbar>
     </Form>

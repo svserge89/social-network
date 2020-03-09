@@ -1,20 +1,28 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Redirect} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Card, Row, Col} from 'react-bootstrap';
+import {FormErrors} from 'redux-form';
 
 import {login} from '../../reducers/auth/thunks';
 import {selectAuthenticated, selectCaptcha, selectUpdating} from '../../selectors/auth';
 import {PROFILE} from '../../utils/routes';
 import LoginForm from './LoginForm/LoginForm';
-import {LoginDispatchProps, LoginOwnProps, LoginProps, LoginStateProps} from './types';
 import {LoginData} from '../../models/types';
-import {RootState} from '../../store/types';
 
-const Login: React.FC<LoginProps> = ({authenticated, updating, login, captcha}) => {
+const Login: React.FC = () => {
+  const authenticated = useSelector(selectAuthenticated);
+  const updating = useSelector(selectUpdating);
+  const captcha = useSelector(selectCaptcha);
+
+  const dispatch = useDispatch();
+
+  const handleLogin = useCallback(
+    (loginData: LoginData): FormErrors => dispatch(login(loginData)),
+    [dispatch]
+  );
+
   if (authenticated) return (<Redirect to={PROFILE}/>);
-
-  const onSubmit = (data: LoginData) => login(data);
 
   return (
     <Row className="mt-3">
@@ -22,7 +30,7 @@ const Login: React.FC<LoginProps> = ({authenticated, updating, login, captcha}) 
         <Card>
           <Card.Header><h5>Login</h5></Card.Header>
           <Card.Body>
-            <LoginForm onSubmit={onSubmit} updating={updating} captcha={captcha}/>
+            <LoginForm onSubmit={handleLogin} updating={updating} captcha={captcha}/>
           </Card.Body>
         </Card>
       </Col>
@@ -30,15 +38,4 @@ const Login: React.FC<LoginProps> = ({authenticated, updating, login, captcha}) 
   );
 };
 
-const mapStateToProps = (state: RootState): LoginStateProps => ({
-  authenticated: selectAuthenticated(state),
-  updating: selectUpdating(state),
-  captcha: selectCaptcha(state)
-});
-
-const stateContainer = connect<LoginStateProps, LoginDispatchProps, LoginOwnProps, RootState>(
-  mapStateToProps,
-  {login}
-);
-
-export default stateContainer(Login);
+export default Login;

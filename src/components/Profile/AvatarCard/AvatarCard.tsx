@@ -1,32 +1,28 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React, {useCallback} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Card, InputGroup, FormControl, FormLabel} from 'react-bootstrap';
 import cn from 'classnames';
 
 import {updatePhoto} from '../../../reducers/profile/thunks';
 import {selectFetchingPhoto, selectLargePhoto} from '../../../selectors/profile';
 import ComponentLoader from '../../common/ComponentLoader/ComponentLoader';
-import {
-  AvatarCardDispatchProps,
-  AvatarCardOwnProps,
-  AvatarCardProps,
-  AvatarCardStateProps
-} from './types';
-import {RootState} from '../../../store/types';
+import {AvatarCardProps} from './types';
 
 import style from './AvatarCard.module.css';
 import avatar from '../../../assets/images/avatar.png';
 
-const AvatarCard: React.FC<AvatarCardProps> = ({
-                                                 photo,
-                                                 updatePhoto,
-                                                 fetching,
-                                                 editable = false
-                                               }) => {
+const AvatarCard: React.FC<AvatarCardProps> = ({editable = false}) => {
+  const photo = useSelector(selectLargePhoto);
+  const fetching = useSelector(selectFetchingPhoto);
+  const dispatch = useDispatch();
+
   const imageUrl = photo || avatar;
 
-  const onSelectImage = ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => (
-    files && files.length && updatePhoto(files[0])
+  const handleSelectImage = useCallback(
+    ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => (
+      files && files.length && dispatch(updatePhoto(files[0]))
+    ),
+    [dispatch]
   );
 
   const showImage = () => (
@@ -43,7 +39,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
                        type="file"
                        id="uploadImage"
                        accept="image/x-png,image/jpeg"
-                       onChange={onSelectImage}
+                       onChange={handleSelectImage}
                        disabled={fetching}/>
           <FormLabel column={false} className="custom-file-label" htmlFor="uploadImage">
             Choose image
@@ -61,16 +57,4 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
   );
 };
 
-const mapStateToProps = (state: RootState): AvatarCardStateProps => ({
-  photo: selectLargePhoto(state),
-  fetching: selectFetchingPhoto(state)
-});
-
-const stateContainer = (
-  connect<AvatarCardStateProps, AvatarCardDispatchProps, AvatarCardOwnProps, RootState>(
-    mapStateToProps,
-    {updatePhoto}
-  )
-);
-
-export default stateContainer(AvatarCard);
+export default AvatarCard;

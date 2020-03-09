@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Card, Image, Button} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 import cn from 'classnames';
@@ -21,9 +21,9 @@ const UserCard: React.FC<UserCardProps> = ({
                                              following,
                                              userId
                                            }) => {
-  const onFollow = () => follow(userId);
+  const handleFollow = useCallback(() => follow(userId), [follow, userId]);
 
-  const onUnfollow = () => unfollow(userId);
+  const handleUnfollow = useCallback(() => unfollow(userId), [unfollow, userId]);
 
   const showButton = (): JSX.Element | '' => {
     if (!currentUserId || currentUserId === userId) return '';
@@ -31,10 +31,10 @@ const UserCard: React.FC<UserCardProps> = ({
     if (following) return (<ButtonLoader/>);
 
     if (followed) {
-      return (<Button variant="danger" onClick={onUnfollow}>Unfollow</Button>);
+      return (<Button variant="danger" onClick={handleUnfollow}>Unfollow</Button>);
     }
 
-    return (<Button variant="success" onClick={onFollow}>Follow</Button>);
+    return (<Button variant="success" onClick={handleFollow}>Follow</Button>);
   };
 
   const imageSrc = image ? image : smallAvatar;

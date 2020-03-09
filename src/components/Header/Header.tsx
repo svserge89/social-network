@@ -1,5 +1,5 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React, {useCallback} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Navbar, Nav} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
@@ -7,19 +7,26 @@ import {logout} from '../../reducers/auth/thunks';
 import {selectAuthenticated, selectLoading, selectLogin} from '../../selectors/auth';
 import {selectIsError} from '../../selectors/error';
 import {HOME, LOGIN, PROFILE, USERS} from '../../utils/routes';
-import {HeaderDispatchProps, HeaderOwnProps, HeaderProps, HeaderStateProps} from './types';
-import {RootState} from '../../store/types';
 import LoginLink from './LoginLink/LoginLink';
 import UserDropdown from './UserDropdown/UserDropdown';
 import Layout from '../Layout/Layout';
 import ButtonLoader from '../common/ButtonLoader/ButtonLoader';
 
-const Header: React.FC<HeaderProps> = ({authenticated, login, logout, loading, isError}) => {
+const Header: React.FC = () => {
+  const authenticated = useSelector(selectAuthenticated);
+  const login = useSelector(selectLogin);
+  const loading = useSelector(selectLoading);
+  const isError = useSelector(selectIsError);
+  
+  const dispatch = useDispatch();
+
+  const logoutHandler = useCallback(() => dispatch(logout()), [dispatch]);
+
   const showLogin = (): JSX.Element => (
     loading
       ? (<ButtonLoader outline={true}/>)
       : authenticated
-      ? (<UserDropdown userName={login} logout={logout} disabled={isError}/>)
+      ? (<UserDropdown userName={login} logout={logoutHandler} disabled={isError}/>)
       : (<LoginLink path={LOGIN} disabled={isError}/>)
   );
 
@@ -44,16 +51,4 @@ const Header: React.FC<HeaderProps> = ({authenticated, login, logout, loading, i
   );
 };
 
-const mapStateToProps = (state: RootState): HeaderStateProps => ({
-  authenticated: selectAuthenticated(state),
-  login: selectLogin(state),
-  loading: selectLoading(state),
-  isError: selectIsError(state)
-});
-
-const stateContainer = connect<HeaderStateProps, HeaderDispatchProps, HeaderOwnProps, RootState>(
-  mapStateToProps,
-  {logout}
-);
-
-export default stateContainer(Header);
+export default Header;

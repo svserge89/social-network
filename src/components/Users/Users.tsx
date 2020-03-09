@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
+import React, {useCallback, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Row, Col} from 'react-bootstrap';
 
 import {getUsers, cleanUsers, follow, unfollow} from '../../reducers/users/thunks';
@@ -17,32 +17,39 @@ import UserCard from './UserCard/UserCard';
 import PageNavToolbar from '../common/PageNavToolbar/PageNavToolbar';
 import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
 import {selectUserId} from '../../selectors/auth';
-import {UsersDispatchProps, UsersOwnProps, UsersProps, UsersStateProps} from './types';
-import {RootState} from '../../store/types';
 
-const Users: React.FC<UsersProps> = ({
-                                       currentUserId,
-                                       users,
-                                       size,
-                                       total,
-                                       page,
-                                       fetching,
-                                       following,
-                                       available,
-                                       setPage,
-                                       setSize,
-                                       getUsers,
-                                       cleanUsers,
-                                       follow,
-                                       unfollow
-                                     }) => {
+const Users: React.FC = () => {
+  const currentUserId = useSelector(selectUserId);
+  const users = useSelector(selectUsers);
+  const size = useSelector(selectSize);
+  const total = useSelector(selectTotal);
+  const page = useSelector(selectPage);
+  const fetching = useSelector(selectFetching);
+  const following = useSelector(selectFollowing);
+  const available = useSelector(selectAvailable);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    getUsers(page, size);
-  }, [getUsers, page, size]);
+    dispatch(getUsers(page, size));
+  }, [dispatch, page, size]);
 
-  useEffect(() => () => cleanUsers(), [cleanUsers]);
+  useEffect(() => () => {
+    dispatch(cleanUsers());
+  }, [dispatch]);
 
-  const isFollowing = (userId: number): boolean => following.includes(userId);
+  const isFollowing = useCallback(
+    (userId: number): boolean => following.includes(userId),
+    [following]
+  );
+
+  const followHandler = useCallback((userId) => dispatch(follow(userId)), [dispatch]);
+
+  const unfollowHandler = useCallback((userId) => dispatch(unfollow(userId)), [dispatch]);
+
+  const setPageHandler = useCallback((page) => dispatch(setPage(page)), [dispatch]);
+
+  const setSizeHandler = useCallback((size) => dispatch(setSize(size)), [dispatch]);
 
   const showUserCards = (): JSX.Element | JSX.Element[] => {
     if (fetching || !users) return (
@@ -60,8 +67,8 @@ const Users: React.FC<UsersProps> = ({
                       followed={followed}
                       following={isFollowing(id)}
                       currentUserId={currentUserId}
-                      follow={follow}
-                      unfollow={unfollow}/>
+                      follow={followHandler}
+                      unfollow={unfollowHandler}/>
           </Col>
         </Row>
       ))
@@ -75,8 +82,8 @@ const Users: React.FC<UsersProps> = ({
           <PageNavToolbar total={total}
                           size={size}
                           page={page}
-                          setPage={setPage}
-                          setSize={setSize}
+                          setPage={setPageHandler}
+                          setSize={setSizeHandler}
                           available={available}
                           fetching={fetching}/>
         </Col>
@@ -86,20 +93,4 @@ const Users: React.FC<UsersProps> = ({
   );
 };
 
-const mapStateToProps = (state: RootState): UsersStateProps => ({
-  currentUserId: selectUserId(state),
-  users: selectUsers(state),
-  size: selectSize(state),
-  total: selectTotal(state),
-  page: selectPage(state),
-  fetching: selectFetching(state),
-  following: selectFollowing(state),
-  available: selectAvailable(state)
-});
-
-const stateContainer = connect<UsersStateProps, UsersDispatchProps, UsersOwnProps, RootState>(
-  mapStateToProps,
-  {setPage, setSize, getUsers, cleanUsers, follow, unfollow}
-);
-
-export default stateContainer(Users);
+export default Users;

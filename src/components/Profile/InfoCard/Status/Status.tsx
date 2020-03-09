@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {Card, FormControl} from 'react-bootstrap';
 
 import ComponentLoader from '../../../common/ComponentLoader/ComponentLoader';
@@ -10,30 +10,34 @@ const Status: React.FC<StatusProps> = ({status, editable, setStatus, fetching}) 
 
   useEffect(() => setLocalStatus(status), [status]);
 
-  if (fetching) return (<ComponentLoader size="sm" center={false}/>);
-
-  const onEdit = () => editable && setEditMode(true);
-
-  const onChangeStatus = ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => (
-    setLocalStatus(value)
+  const editStatusHandler = useCallback(
+    () => editable && setEditMode(true),
+    [editable, setEditMode]
   );
 
-  const onSetStatus = () => {
+  const changeStatusHandler = useCallback(
+    ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => (setLocalStatus(value)),
+    [setLocalStatus]
+  );
+
+  const updateStatusHandler = useCallback(() => {
     if (localStatus !== status) setStatus(localStatus);
 
     setEditMode(false);
-  };
+  }, [localStatus, status, setStatus, setEditMode]);
 
-  const onKeyDown = ({key}: React.KeyboardEvent<HTMLInputElement>) => {
-    if (key === 'Enter') onSetStatus();
-  };
+  const keyDownHandler = useCallback(({key}: React.KeyboardEvent<HTMLInputElement>) => {
+    if (key === 'Enter') updateStatusHandler();
+  }, [updateStatusHandler]);
+
+  if (fetching) return (<ComponentLoader size="sm" center={false}/>);
 
   if (editMode) {
     return (
       <FormControl value={localStatus}
-                   onChange={onChangeStatus}
-                   onBlur={onSetStatus}
-                   onKeyDown={onKeyDown}
+                   onChange={changeStatusHandler}
+                   onBlur={updateStatusHandler}
+                   onKeyDown={keyDownHandler}
                    placeholder="Input status"
                    autoFocus/>
     );
@@ -41,14 +45,16 @@ const Status: React.FC<StatusProps> = ({status, editable, setStatus, fetching}) 
 
   if (!status) {
     return (
-      <Card.Subtitle onDoubleClick={onEdit} className="text-secondary">
+      <Card.Subtitle onDoubleClick={editStatusHandler} className="text-secondary">
         Status is not set.
       </Card.Subtitle>
     );
   }
 
   return (
-    <Card.Subtitle onDoubleClick={onEdit} className="text-nowrap text-truncate" title={localStatus}>
+    <Card.Subtitle onDoubleClick={editStatusHandler}
+                   className="text-nowrap text-truncate"
+                   title={localStatus}>
       {localStatus}
     </Card.Subtitle>
   );

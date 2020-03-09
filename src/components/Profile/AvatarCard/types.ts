@@ -1,14 +1,3 @@
-export type AvatarCardStateProps = {
-  photo: string | null
-  fetching: boolean
-}
-
-export type AvatarCardDispatchProps = {
-  updatePhoto: (image: File) => void
-}
-
-export type AvatarCardOwnProps = {
+export type AvatarCardProps = {
   editable?: boolean
 }
-
-export type AvatarCardProps = AvatarCardStateProps & AvatarCardDispatchProps & AvatarCardOwnProps

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
+import React, {useCallback, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Card, Button} from 'react-bootstrap';
 
 import {updateProfile, updateStatus} from '../../../reducers/profile/thunks';
@@ -18,39 +18,39 @@ import ContactList from './ContactList/ContactList';
 import Status from './Status/Status';
 import LookingForAJob from './LookingForAJob/LookingForAJob';
 import EditInfoForm from './EditInfoForm/EditInfoForm';
-import {InfoCardDispatchProps, InfoCardOwnProps, InfoCardProps, InfoCardStateProps} from './types';
+import {InfoCardProps} from './types';
 import {Profile} from '../../../models/types';
-import {RootState} from '../../../store/types';
 import {FormSubmitHandler} from 'redux-form';
 
-const InfoCard: React.FC<InfoCardProps> = ({
-                                             fullName,
-                                             status,
-                                             contacts,
-                                             lookingForAJob,
-                                             lookingForAJobDescription,
-                                             aboutMe,
-                                             contactLabels,
-                                             fetchingStatus,
-                                             updateStatus,
-                                             updateProfile,
-                                             updating,
-                                             editable = false
-                                           }) => {
+const InfoCard: React.FC<InfoCardProps> = ({editable = false}) => {
+  const fullName = useSelector(selectFullName);
+  const status = useSelector(selectStatus);
+  const contacts = useSelector(selectContacts);
+  const lookingForAJob = useSelector(selectLookingForAJob);
+  const lookingForAJobDescription = useSelector(selectLookingForAJobDescription);
+  const aboutMe = useSelector(selectAboutMe);
+  const contactLabels = useSelector(selectContactLabels);
+  const fetchingStatus = useSelector(selectFetchingStatus);
+  const updating = useSelector(selectUpdating);
+
+  const dispatch = useDispatch();
+
   const [editMode, setEditMode] = useState(false);
 
   const showAboutMe = (): JSX.Element => (
     aboutMe ? (<pre>{aboutMe}</pre>) : (<p className="text-secondary">Empty.</p>)
   );
 
-  const onEdit = () => setEditMode(true);
+  const editHandler = useCallback(() => setEditMode(true), [setEditMode]);
 
-  const onSubmit: FormSubmitHandler<Profile> = (profile: Profile) => {
-    updateProfile(profile)
-  };
+  const submitHandler = useCallback<FormSubmitHandler<Profile>>((profile: Profile) => {
+    dispatch(updateProfile(profile))
+  }, [dispatch]);
+
+  const updateStatusHandler = useCallback((status) => dispatch(updateStatus(status)), [dispatch]);
 
   const showEditButton = (): JSX.Element | '' => (
-    editable ? (<Button onClick={onEdit}>Edit</Button>) : ''
+    editable ? (<Button onClick={editHandler}>Edit</Button>) : ''
   );
 
   const showBody = (): JSX.Element => (
@@ -68,7 +68,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
       )
       : (
         <Card.Body>
-          <EditInfoForm onSubmit={onSubmit}
+          <EditInfoForm onSubmit={submitHandler}
                         setEditMode={setEditMode}
                         contactLabels={contactLabels}
                         updating={updating}/>
@@ -84,7 +84,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
         </Card.Title>
         <Status status={status}
                 editable={editable}
-                setStatus={updateStatus}
+                setStatus={updateStatusHandler}
                 fetching={fetchingStatus}/>
       </Card.Header>
       {showBody()}
@@ -92,23 +92,4 @@ const InfoCard: React.FC<InfoCardProps> = ({
   );
 };
 
-const mapStateToProps = (state: RootState): InfoCardStateProps => ({
-  fullName: selectFullName(state),
-  status: selectStatus(state),
-  contacts: selectContacts(state),
-  lookingForAJob: selectLookingForAJob(state),
-  lookingForAJobDescription: selectLookingForAJobDescription(state),
-  aboutMe: selectAboutMe(state),
-  contactLabels: selectContactLabels(state),
-  fetchingStatus: selectFetchingStatus(state),
-  updating: selectUpdating(state)
-});
-
-const stateContainer = (
-  connect<InfoCardStateProps, InfoCardDispatchProps, InfoCardOwnProps, RootState>(
-    mapStateToProps,
-    {updateStatus, updateProfile}
-  )
-);
-
-export default stateContainer(InfoCard);
+export default InfoCard;

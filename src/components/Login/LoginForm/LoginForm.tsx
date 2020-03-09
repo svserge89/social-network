@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {reduxForm} from 'redux-form';
 import {Form, Button, Alert, ButtonToolbar} from 'react-bootstrap';
 
@@ -15,14 +15,24 @@ const minLength6 = minLength(6);
 const maxLength50 = maxLength(50);
 
 const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, error, reset, updating, captcha}) => {
+  const [localError, setLocalError] = useState(error);
+
+  useEffect(() => {
+    if (error) setLocalError(error);
+  }, [error, setLocalError]);
+
+  console.log(error);
+
   const showAlert = (): JSX.Element | '' => (
-    error ? (<Alert variant="danger">{error}</Alert>) : ''
+    localError ? (<Alert variant="danger">{localError}</Alert>) : ''
   );
 
   const showCaptcha = (): JSX.Element | '' => (
     captcha
       ? (
-        <CaptchaInput name="captcha" url={captcha} validators={[required]} disabled={updating}/>
+        <CaptchaInput name="captcha" url={captcha}
+                      validators={[required]}
+                      disabled={updating}/>
       )
       : ''
   );
@@ -34,7 +44,9 @@ const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, error, reset, updati
   return (
     <Form onSubmit={handleSubmit}>
       {showAlert()}
-      <EmailInput name="email" validators={[required, isEmail, maxLength50]} disabled={updating}/>
+      <EmailInput name="email"
+                  validators={[required, isEmail, maxLength50]}
+                  disabled={updating}/>
       <PasswordInput name="password"
                      validators={[required, minLength6, maxLength50]}
                      disabled={updating}/>

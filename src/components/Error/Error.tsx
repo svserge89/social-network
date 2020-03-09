@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Button, Card, Col, Row} from 'react-bootstrap';
 
 import {HOME} from '../../utils/routes';
 import {ErrorProps} from './types';
 
 const Error: React.FC<ErrorProps> = ({code, description}) => {
-  const reloadHandler = (): void => window.location.reload();
+  const reloadHandler = useCallback((): void => window.location.reload(), []);
 
   const showButton = (): JSX.Element => (
     code === 404
