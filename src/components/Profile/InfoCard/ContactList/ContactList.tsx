@@ -1,9 +1,12 @@
 import React from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {ContactListProps} from './types';
+import resolveBrandIcon from '../../../../utils/resolveBrandIcon';
 
 const ContactList: React.FC<ContactListProps> = ({contacts, labels}) => {
+
   const emptyContacts = ![...contacts.values()]
     .map(value => !!value)
     .reduce((prev, current) => prev || current, false);
@@ -14,7 +17,10 @@ const ContactList: React.FC<ContactListProps> = ({contacts, labels}) => {
     link
       ? (
         <Row className="flex-nowrap" key={key}>
-          <Col xs={4} md={4} lg={3}><span className="font-weight-bold">{label}:</span></Col>
+          <Col xs={4} md={4} lg={3}><span className="font-weight-bold">
+            <FontAwesomeIcon icon={resolveBrandIcon(key)}/>
+            &nbsp;{label}:
+          </span></Col>
           <Col className="text-nowrap text-truncate" title={link}><a href={link}>{link}</a></Col>
         </Row>
       )

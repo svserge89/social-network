@@ -1,6 +1,9 @@
 import React, {useCallback, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Card, Button} from 'react-bootstrap';
+import {FormSubmitHandler} from 'redux-form';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faEdit, faAddressCard, faUser} from '@fortawesome/free-solid-svg-icons';
 
 import {updateProfile, updateStatus} from '../../../reducers/profile/thunks';
 import {
@@ -20,7 +23,6 @@ import LookingForAJob from './LookingForAJob/LookingForAJob';
 import EditInfoForm from './EditInfoForm/EditInfoForm';
 import {InfoCardProps} from './types';
 import {Profile} from '../../../models/types';
-import {FormSubmitHandler} from 'redux-form';
 
 const InfoCard: React.FC<InfoCardProps> = ({editable = false}) => {
   const fullName = useSelector(selectFullName);
@@ -50,7 +52,9 @@ const InfoCard: React.FC<InfoCardProps> = ({editable = false}) => {
   const updateStatusHandler = useCallback((status) => dispatch(updateStatus(status)), [dispatch]);
 
   const showEditButton = (): JSX.Element | '' => (
-    editable ? (<Button onClick={editHandler}>Edit</Button>) : ''
+    editable
+      ? (<Button onClick={editHandler}><FontAwesomeIcon icon={faEdit}/>&nbsp;Edit</Button>)
+      : ''
   );
 
   const showBody = (): JSX.Element => (
@@ -58,11 +62,14 @@ const InfoCard: React.FC<InfoCardProps> = ({editable = false}) => {
       ? (
         <Card.Body>
           <Card.Text as="div">
-            <h5>Contacts</h5>
+            <h5><FontAwesomeIcon icon={faAddressCard}/>&nbsp;Contacts</h5>
             <ContactList contacts={contacts} labels={contactLabels}/>
           </Card.Text>
           <LookingForAJob answer={lookingForAJob} description={lookingForAJobDescription}/>
-          <Card.Text as="div"><h5>About me</h5>{showAboutMe()}</Card.Text>
+          <Card.Text as="div">
+            <h5><FontAwesomeIcon icon={faUser}/>&nbsp;About me</h5>
+            {showAboutMe()}
+          </Card.Text>
           {showEditButton()}
         </Card.Body>
       )
