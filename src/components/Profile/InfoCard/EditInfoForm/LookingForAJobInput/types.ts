@@ -1,10 +1,9 @@
-import {InjectedFormProps, Validator} from 'redux-form';
+import {FieldValidator} from 'final-form';
 
 export type LookingForAJobInputProps = {
   checkboxName: string
   textareaName: string
   checked: boolean
-  change: InjectedFormProps['change']
-  validators?: Validator | Validator[]
+  validators?: FieldValidator<string> | FieldValidator<string>[]
   disabled?: boolean
 }

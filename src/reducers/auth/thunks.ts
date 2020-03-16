@@ -1,5 +1,3 @@
-import {stopSubmit} from 'redux-form';
-
 import {setCaptcha, setCurrentUser, setFetching, setUpdating} from './actionCreators';
 import {authAPI, securityAPI} from '../../api/api';
 import {CaptchaResultCode, ResultCode} from '../../utils/responseCodes';
@@ -53,10 +51,11 @@ export const login = ({
         await dispatch(getCaptcha());
       // eslint-disable-next-line no-fallthrough
       case ResultCode.ERROR:
-        dispatch(stopSubmit('login', parseMessages(messages)));
-        return;
+        throw parseMessages(messages);
     }
   } catch (error) {
+    if (error.submissionError) throw error;
+
     handleError(dispatch, error);
   } finally {
     dispatch(setUpdating(false));

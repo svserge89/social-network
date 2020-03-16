@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {reduxForm} from 'redux-form';
+import React from 'react';
+import {Form as FinalForm} from 'react-final-form';
 import {Form, Button, Alert, ButtonToolbar} from 'react-bootstrap';
 
 import EmailInput from './EmailInput/EmailInput';
@@ -8,56 +8,61 @@ import RememberMeCheckbox from './RememberMeCheckbox/RememberMeCheckbox';
 import CaptchaInput from './CapthaInput/CaptchaInput';
 import ButtonLoader from '../../common/ButtonLoader/ButtonLoader';
 import {required, isEmail, minLength, maxLength} from '../../../utils/validators';
-import {LoginFormOwnProps, LoginFormProps} from './types';
-import {LoginData} from '../../../models/types';
+import {LoginFormProps} from './types';
 
 const minLength6 = minLength(6);
 const maxLength50 = maxLength(50);
 
-const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, error, reset, updating, captcha}) => {
-  const [localError, setLocalError] = useState(error);
-
-  useEffect(() => {
-    if (error) setLocalError(error);
-  }, [error, setLocalError]);
-
-  const showAlert = (): JSX.Element | '' => (
-    localError ? (<Alert variant="danger">{localError}</Alert>) : ''
+const LoginForm: React.FC<LoginFormProps> = ({onSubmit, captcha}) => {
+  const showAlert = (error: string): JSX.Element | '' => (
+    error ? (<Alert variant="danger">{error}</Alert>) : ''
   );
 
-  const showCaptcha = (): JSX.Element | '' => (
+  const showCaptcha = (updating: boolean): JSX.Element | '' => (
     captcha
       ? (
-        <CaptchaInput name="captcha" url={captcha}
+        <CaptchaInput name="captcha"
+                      url={captcha}
                       validators={[required]}
                       disabled={updating}/>
       )
       : ''
   );
 
-  const showLogInButton = (): JSX.Element => (
-    updating ? (<ButtonLoader/>) : (<Button variant="success" type="submit">Log In</Button>)
+  const showLogInButton = (updating: boolean, disabled: boolean): JSX.Element => (
+    updating
+      ? (<ButtonLoader/>)
+      : (<Button variant="success" type="submit" disabled={disabled}>Log In</Button>)
   );
 
   return (
-    <Form onSubmit={handleSubmit}>
-      {showAlert()}
-      <EmailInput name="email"
-                  validators={[required, isEmail, maxLength50]}
-                  disabled={updating}/>
-      <PasswordInput name="password"
-                     validators={[required, minLength6, maxLength50]}
-                     disabled={updating}/>
-      <RememberMeCheckbox name="rememberMe" disabled={updating}/>
-      {showCaptcha()}
-      <ButtonToolbar className="justify-content-between">
-        {showLogInButton()}
-        <Button variant="warning" type="reset" onClick={reset} disabled={updating}>Clean</Button>
-      </ButtonToolbar>
-    </Form>
+    <FinalForm onSubmit={onSubmit}>
+      {
+        ({handleSubmit, pristine, form, submitError, submitting}) => (
+          <Form onSubmit={handleSubmit}>
+            {showAlert(submitError)}
+            <EmailInput name="email"
+                        validators={[required, isEmail, maxLength50]}
+                        disabled={submitting}/>
+            <PasswordInput name="password"
+                           validators={[required, minLength6, maxLength50]}
+                           disabled={submitting}/>
+            <RememberMeCheckbox name="rememberMe" disabled={submitting}/>
+            {showCaptcha(submitting)}
+            <ButtonToolbar className="justify-content-between">
+              {showLogInButton(submitting, pristine)}
+              <Button variant="warning"
+                      type="reset"
+                      onClick={form.reset}
+                      disabled={submitting || pristine}>
+                Clean
+              </Button>
+            </ButtonToolbar>
+          </Form>
+        )
+      }
+    </FinalForm>
   );
 };
 
-const formContainer = reduxForm<LoginData, LoginFormOwnProps>({form: 'login'});
-
-export default formContainer(LoginForm);
+export default LoginForm;

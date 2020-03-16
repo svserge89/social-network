@@ -1,9 +1,9 @@
-import {Validator} from 'redux-form';
+import {FieldValidator} from 'final-form';
 
 export type ContactInputProps = {
   label: string
   placeholder: string
   name: string
-  validators?: Validator | Validator[]
+  validators?: FieldValidator<string> | FieldValidator<string>[]
   disabled?: boolean
 }

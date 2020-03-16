@@ -1,10 +1,8 @@
-import {InjectedFormProps} from 'redux-form';
+import {FormProps} from 'react-final-form';
 
 import {LoginData} from '../../../models/types';
 
-export type LoginFormOwnProps = {
-  updating: boolean
+export type LoginFormProps = {
+  onSubmit: FormProps<LoginData>['onSubmit']
   captcha?: string | null
 }
-
-export type LoginFormProps = InjectedFormProps<LoginData, LoginFormOwnProps> & LoginFormOwnProps

@@ -1,16 +1,14 @@
 import React from 'react';
+import {Field} from 'react-final-form';
 import {Form} from 'react-bootstrap';
-import {Field} from 'redux-form';
 
 import {RememberMeCheckboxProps} from './types';
 
 const RememberMeCheckbox: React.FC<RememberMeCheckboxProps> = ({name, disabled}) => (
   <Form.Group>
-    <Field type="checkbox"
-           label="Remember me"
-           name={name}
-           component={Form.Check}
-           disabled={disabled}/>
+    <Field name={name} type="checkbox">
+      {() => (<Form.Check type="checkbox" label="Remember me" name={name} disabled={disabled}/>)}
+    </Field>
   </Form.Group>
 );
 

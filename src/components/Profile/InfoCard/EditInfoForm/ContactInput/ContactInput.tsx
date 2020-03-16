@@ -1,9 +1,10 @@
 import React from 'react';
+import {Field} from 'react-final-form';
 import {Form, Row, Col} from 'react-bootstrap';
-import {Field} from 'redux-form';
 
 import InputField from '../../../../common/InputField/InputField';
 import {ContactInputProps} from './types';
+import {compose} from '../../../../../utils/validators';
 
 const ContactInput: React.FC<ContactInputProps> = ({
                                                      label,
@@ -15,12 +16,18 @@ const ContactInput: React.FC<ContactInputProps> = ({
   <Form.Group as={Row} className="my-1">
     <Form.Label column={true} xs={4} md={4} lg={3} className="font-weight-bold">{label}</Form.Label>
     <Col>
-      <Field type="text"
-             placeholder={placeholder}
-             name={name}
-             component={InputField}
-             validate={validators}
-             disabled={disabled}/>
+      <Field name={name} validate={compose(validators)}>
+        {
+          ({input, meta}) => (
+            <InputField input={input}
+                        meta={meta}
+                        placeholder={placeholder}
+                        autoComplete="on"
+                        type="text"
+                        disabled={disabled}/>
+          )
+        }
+      </Field>
     </Col>
   </Form.Group>
 );

@@ -1,41 +1,44 @@
-import React, {useCallback} from 'react';
+import React from 'react';
+import {Field} from 'react-final-form';
 import {Form} from 'react-bootstrap';
-import {Field} from 'redux-form';
 
 import TextAreaField from '../../../../common/TextAreaField/TextAreaField';
 import {LookingForAJobInputProps} from './types';
+import {compose} from '../../../../../utils/validators';
 
 const LookingForAJobInput: React.FC<LookingForAJobInputProps> = ({
                                                                    checkboxName,
                                                                    textareaName,
                                                                    checked,
-                                                                   change,
                                                                    validators,
                                                                    disabled
                                                                  }) => {
-  const handleClick = useCallback(
-    () => change(checkboxName, !checked),
-    [change, checkboxName, checked]
-  );
-
   return (
     <>
       <Form.Group>
-        <Field type="checkbox"
-               label={<h5>Looking for a job</h5>}
-               name={checkboxName}
-               component={Form.Check}
-               defaultChecked={checked}
-               onClick={handleClick}
-               disabled={disabled}/>
+        <Field name={checkboxName} type="checkbox">
+          {
+            ({input}) => (
+              <Form.Check {...input}
+                          type="checkbox"
+                          label={<h5>Looking for a job</h5>}
+                          disabled={disabled}/>
+            )
+          }
+        </Field>
       </Form.Group>
       <Form.Group>
-        <Field type="textarea"
-               name={textareaName}
-               rows={3}
-               component={TextAreaField}
-               disabled={!checked || disabled}
-               validate={validators}/>
+        <Field name={textareaName} validate={compose(validators)}>
+          {
+            ({input, meta}) => (
+              <TextAreaField input={input}
+                             meta={meta}
+                             rows={3}
+                             type="textarea"
+                             disabled={!checked || disabled}/>
+            )
+          }
+        </Field>
       </Form.Group>
     </>
   );

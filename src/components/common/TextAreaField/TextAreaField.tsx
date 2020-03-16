@@ -5,9 +5,9 @@ import {TextAreaFieldProps} from './types';
 
 const TextAreaField: React.FC<TextAreaFieldProps> = ({
                                                        input,
-                                                       placeholder,
+                                                       placeholder = '',
                                                        type,
-                                                       meta: {touched, error},
+                                                       meta: {touched, error, submitError},
                                                        rows,
                                                        disabled = false
                                                      }) => (
@@ -17,9 +17,9 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
                   {...input}
                   type={type}
                   placeholder={placeholder}
-                  isInvalid={touched && error}
+                  isInvalid={touched && (error || submitError)}
                   disabled={disabled}/>
-    <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
+    <Form.Control.Feedback type="invalid">{error || submitError}</Form.Control.Feedback>
   </>
 );
 

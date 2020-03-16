@@ -1,23 +1,10 @@
-import {InjectedFormProps} from 'redux-form';
+import {FormProps} from 'react-final-form';
 
 import {Profile} from '../../../../models/types';
 
-export type EditInfoFormStateProps = {
-  lookingForAJobValue: boolean
-  initialValues: Profile
-}
-
-export type EditInfoFormDispatchProps = {}
-
-export type EditInfoFormOwnProps = {
+export type EditInfoFormProps = {
+  onSubmit: FormProps<Profile>['onSubmit']
   setEditMode: (value: boolean) => void
   contactLabels: Map<string, string>
   updating: boolean
 }
-
-export type EditInfoFormNonInjectedProps = EditInfoFormStateProps
-  & EditInfoFormDispatchProps
-  & EditInfoFormOwnProps
-
-export type EditInfoFormProps = InjectedFormProps<Profile, EditInfoFormNonInjectedProps>
-  & EditInfoFormNonInjectedProps

@@ -1,11 +1,11 @@
 import {FormControlProps} from 'react-bootstrap';
-import {WrappedFieldProps} from 'redux-form';
+import {FieldInputProps, FieldMetaState} from 'react-final-form';
 
-type TextAreaFieldOwnProps = {
+export type TextAreaFieldProps = {
+  input: FieldInputProps<string>
+  meta: FieldMetaState<string>
   rows: number
-  placeholder: string
+  placeholder?: string
   disabled?: FormControlProps['disabled']
   type: FormControlProps['type']
 }
-
-export type TextAreaFieldProps = TextAreaFieldOwnProps & WrappedFieldProps

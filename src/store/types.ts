@@ -1,5 +1,3 @@
-import {FormState} from 'redux-form';
-
 import {AuthState} from '../reducers/auth/types';
 import {InitState} from '../reducers/init/types';
 import {ProfileState} from '../reducers/profile/types';
@@ -12,5 +10,4 @@ export type RootState = {
   profile: ProfileState
   users: UsersState
   error: ErrorState
-  form: FormState
 }

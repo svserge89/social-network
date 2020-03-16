@@ -1,20 +1,25 @@
 import React from 'react';
+import {Field} from 'react-final-form';
 import {Form, Image} from 'react-bootstrap';
-import {Field} from 'redux-form';
 
 import InputField from '../../../common/InputField/InputField';
 import {CaptchaInputProps} from './types';
+import {compose} from '../../../../utils/validators';
 
 const CaptchaInput: React.FC<CaptchaInputProps> = ({name, url, validators, disabled = false}) => (
   <Form.Group>
     <Form.Label column={false}><Image src={url} thumbnail/></Form.Label>
-    <Field type="text"
-           placeholder="Input symbols from image"
-           name={name}
-           component={InputField}
-           validate={validators}
-           disabled={disabled}
-           autoComplete="off"/>
+    <Field name={name} validate={compose(validators)}>
+      {
+        ({input, meta}) => (
+          <InputField input={input}
+                      meta={meta}
+                      placeholder="Input symbols from image"
+                      autoComplete="off" type="text"
+                      disabled={disabled}/>
+        )
+      }
+    </Field>
   </Form.Group>
 );
 

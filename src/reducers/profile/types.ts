@@ -1,5 +1,4 @@
 import {ThunkAction} from 'redux-thunk';
-import {FormAction} from 'redux-form';
 
 import {Photos, Profile} from '../../models/types';
 import {RootState} from '../../store/types';
@@ -59,8 +58,7 @@ export type ProfileAction = SetProfileAction
 
 export type ProfileThunkAction = ThunkAction<void, RootState, unknown, ProfileAction>
 
-export type ProfileAsyncThunkAction =
-  ThunkAction<Promise<void>, RootState, unknown, ProfileAction | FormAction>
+export type ProfileAsyncThunkAction = ThunkAction<Promise<void>, RootState, unknown, ProfileAction>
 
 export type ProfileState = {
   profile: Profile

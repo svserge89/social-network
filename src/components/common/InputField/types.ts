@@ -1,11 +1,11 @@
 import {FormControlProps} from 'react-bootstrap';
-import {WrappedFieldProps} from 'redux-form';
+import {FieldInputProps, FieldMetaState} from 'react-final-form';
 
-type InputFieldOwnProps = {
+export type InputFieldProps = {
+  input: FieldInputProps<string>
+  meta: FieldMetaState<string>
   placeholder: string
   disabled?: FormControlProps['disabled']
   autoComplete: any
   type: FormControlProps['type']
 }
-
-export type InputFieldProps = WrappedFieldProps & InputFieldOwnProps

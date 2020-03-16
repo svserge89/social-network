@@ -9,7 +9,7 @@ const InputField: React.FC<InputFieldProps> = ({
                                                  disabled,
                                                  autoComplete,
                                                  type,
-                                                 meta: {touched, error}
+                                                 meta: {touched, error, submitError}
                                                }) => (
   <>
     <Form.Control
@@ -17,9 +17,9 @@ const InputField: React.FC<InputFieldProps> = ({
       type={type}
       disabled={disabled}
       placeholder={placeholder}
-      isInvalid={touched && error}
+      isInvalid={touched && (error || submitError)}
       autoComplete={autoComplete}/>
-    <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
+    <Form.Control.Feedback type="invalid">{error || submitError}</Form.Control.Feedback>
   </>
 );
 

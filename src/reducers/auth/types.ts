@@ -1,5 +1,4 @@
 import {ThunkAction} from 'redux-thunk';
-import {FormAction} from 'redux-form';
 
 import {RootState} from '../../store/types';
 
@@ -35,8 +34,7 @@ export type AuthAction = SetCurrentUserAction
   | SetFetchingAction
   | SetUpdatingAction
 
-export type AuthAsyncThunkAction =
-  ThunkAction<Promise<void>, RootState, unknown, AuthAction | FormAction>
+export type AuthAsyncThunkAction = ThunkAction<Promise<void>, RootState, unknown, AuthAction>
 
 export type AuthState = {
   userId: number | null

@@ -1,5 +1,3 @@
-import {stopSubmit} from 'redux-form';
-
 import {profileAPI} from '../../api/api';
 import {handleError, handleServerError} from '../../utils/errorHandler';
 import {ResultCode} from '../../utils/responseCodes';
@@ -37,14 +35,12 @@ export const updateProfile = (profile: Profile): ProfileAsyncThunkAction => asyn
   try {
     const {resultCode, messages} = await profileAPI.update(profile);
 
-    if (resultCode !== ResultCode.SUCCESS) {
-      dispatch(stopSubmit('profileInfo', parseMessages(messages)));
-
-      return;
-    }
+    if (resultCode !== ResultCode.SUCCESS) throw parseMessages(messages);
 
     await dispatch(getProfile(profile.userId));
   } catch (error) {
+    if (error.submissionError) throw error;
+
     handleError(dispatch, error);
   } finally {
     dispatch(setUpdating(false));

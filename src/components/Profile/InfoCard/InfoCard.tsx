@@ -1,7 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Card, Button} from 'react-bootstrap';
-import {FormSubmitHandler} from 'redux-form';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEdit, faAddressCard, faUser} from '@fortawesome/free-solid-svg-icons';
 
@@ -45,8 +44,12 @@ const InfoCard: React.FC<InfoCardProps> = ({editable = false}) => {
 
   const editHandler = useCallback(() => setEditMode(true), [setEditMode]);
 
-  const submitHandler = useCallback<FormSubmitHandler<Profile>>((profile: Profile) => {
-    dispatch(updateProfile(profile))
+  const submitHandler = useCallback(async (profile: Profile): Promise<any> => {
+    try {
+      await dispatch(updateProfile(profile));
+    } catch (error) {
+      return error;
+    }
   }, [dispatch]);
 
   const updateStatusHandler = useCallback((status) => dispatch(updateStatus(status)), [dispatch]);
