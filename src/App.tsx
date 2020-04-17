@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {Route, Switch, withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {Route, Switch} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {initialization} from './reducers/init/thunks';
 import {selectInitialized} from './selectors/init';
@@ -9,8 +9,6 @@ import {
   selectErrorDescription,
   selectIsError
 } from './selectors/error';
-import {RootState} from './store/types';
-import {AppDispatchProps, AppOwnProps, AppProps, AppStateProps} from './types';
 import {HOME, LOGIN, PROFILE, USERS} from './utils/routes';
 import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
@@ -25,16 +23,17 @@ import PageLoader from './components/common/PageLoader/PageLoader';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const App: React.FC<AppProps> = ({
-                                   initialized,
-                                   initialization,
-                                   isError,
-                                   errorCode,
-                                   errorDescription
-                                 }) => {
+const App: React.FC = () => {
+  const initialized = useSelector(selectInitialized);
+  const isError = useSelector(selectIsError);
+  const errorCode = useSelector(selectErrorCode);
+  const errorDescription = useSelector(selectErrorDescription);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    initialization();
-  }, [initialization]);
+    dispatch(initialization());
+  }, [dispatch]);
 
   if (!initialized && !isError) return (<PageLoader/>);
 
@@ -65,16 +64,4 @@ const App: React.FC<AppProps> = ({
   );
 };
 
-const mapStateToProps = (state: RootState): AppStateProps => ({
-  initialized: selectInitialized(state),
-  isError: selectIsError(state),
-  errorCode: selectErrorCode(state),
-  errorDescription: selectErrorDescription(state)
-});
-
-const stateContainer = connect<AppStateProps, AppDispatchProps, AppOwnProps, RootState>(
-  mapStateToProps,
-  {initialization}
-);
-
-export default withRouter(stateContainer(App));
+export default App;
