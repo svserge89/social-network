@@ -8,7 +8,7 @@ export const SET_INITIALIZED = PREFIX + 'SET-INITIALIZED';
 
 export type SetInitializedAction = {
   type: typeof SET_INITIALIZED
-  data: { initialized: boolean }
+  payload: { initialized: boolean }
 }
 
 export type InitAction = SetInitializedAction

@@ -1,6 +1,6 @@
 import {InitAction, InitState, SET_INITIALIZED} from './types';
 
-const changeInitialized = (state: InitState, {data: {initialized}}: InitAction): InitState => ({
+const changeInitialized = (state: InitState, {payload: {initialized}}: InitAction): InitState => ({
   ...state,
   initialized
 });

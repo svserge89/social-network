@@ -18,29 +18,32 @@ import {Photos, Profile} from '../../models/types';
 
 export const setProfile = (profile: Profile): SetProfileAction => ({
   type: SET_PROFILE,
-  data: {profile}
+  payload: {profile}
 });
 
-export const setStatus = (status: string): SetStatusAction => ({type: SET_STATUS, data: {status}});
+export const setStatus = (status: string): SetStatusAction => ({
+  type: SET_STATUS,
+  payload: {status}
+});
 
-export const setPhoto = (photos: Photos): SetPhotoAction => ({type: SET_PHOTO, data: {photos}});
+export const setPhoto = (photos: Photos): SetPhotoAction => ({type: SET_PHOTO, payload: {photos}});
 
 export const setFetching = (fetching: boolean): SetFetchingAction => ({
   type: SET_FETCHING,
-  data: {fetching}
+  payload: {fetching}
 });
 
 export const setFetchingStatus = (fetchingStatus: boolean): SetFetchingStatusAction => ({
   type: SET_FETCHING_STATUS,
-  data: {fetchingStatus}
+  payload: {fetchingStatus}
 });
 
 export const setFetchingPhoto = (fetchingPhoto: boolean): SetFetchingPhotoAction => ({
   type: SET_FETCHING_PHOTO,
-  data: {fetchingPhoto}
+  payload: {fetchingPhoto}
 });
 
 export const setUpdating = (updating: boolean): SetUpdatingAction => ({
   type: SET_UPDATING,
-  data: {updating}
+  payload: {updating}
 });

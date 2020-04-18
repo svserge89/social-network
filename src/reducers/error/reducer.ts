@@ -1,6 +1,9 @@
 import {ErrorAction, ErrorState, SET_ERROR} from './types';
 
-const changeData = (state: ErrorState, {data}: ErrorAction): ErrorState => ({...state, ...data});
+const changeData = (state: ErrorState, {payload}: ErrorAction): ErrorState => ({
+  ...state,
+  ...payload
+});
 
 const initialState: ErrorState = {code: 0, description: null};
 

@@ -14,16 +14,19 @@ import {
 } from './types';
 
 const changeFollowed = (state: UsersState,
-                        {data: {userId}}: SetFollowAction | SetUnfollowAction,
+                        {payload: {userId}}: SetFollowAction | SetUnfollowAction,
                         followed: boolean): UsersState => ({
   ...state,
   users: state.users.map(user => user.id !== userId ? user : {...user, followed})
 });
 
-const changeData = (state: UsersState, {data}: UsersAction): UsersState => ({...state, ...data});
+const changeData = (state: UsersState, {payload}: UsersAction): UsersState => ({
+  ...state,
+  ...payload
+});
 
 const changeFollowing = (state: UsersState,
-                         {data: {userId, status}}: SetFollowingAction): UsersState => ({
+                         {payload: {userId, status}}: SetFollowingAction): UsersState => ({
   ...state,
   following: (
     status ? [...state.following, userId] : state.following.filter(item => item !== userId)

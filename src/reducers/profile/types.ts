@@ -15,37 +15,37 @@ export const SET_UPDATING = PREFIX + 'SET-UPDATING';
 
 export type SetProfileAction = {
   type: typeof SET_PROFILE
-  data: { profile: Profile }
+  payload: { profile: Profile }
 }
 
 export type SetStatusAction = {
   type: typeof SET_STATUS
-  data: { status: string }
+  payload: { status: string }
 }
 
 export type SetPhotoAction = {
   type: typeof SET_PHOTO
-  data: { photos: Photos }
+  payload: { photos: Photos }
 }
 
 export type SetFetchingAction = {
   type: typeof SET_FETCHING
-  data: { fetching: boolean }
+  payload: { fetching: boolean }
 }
 
 export type SetFetchingStatusAction = {
   type: typeof SET_FETCHING_STATUS
-  data: { fetchingStatus: boolean }
+  payload: { fetchingStatus: boolean }
 }
 
 export type SetFetchingPhotoAction = {
   type: typeof SET_FETCHING_PHOTO
-  data: { fetchingPhoto: boolean }
+  payload: { fetchingPhoto: boolean }
 }
 
 export type SetUpdatingAction = {
   type: typeof SET_UPDATING
-  data: { updating: boolean }
+  payload: { updating: boolean }
 }
 
 export type ProfileAction = SetProfileAction

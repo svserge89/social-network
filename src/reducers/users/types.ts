@@ -15,37 +15,37 @@ export const UNFOLLOW = PREFIX + 'UNFOLLOW';
 
 export type SetFollowAction = {
   type: typeof FOLLOW
-  data: { userId: number }
+  payload: { userId: number }
 }
 
 export type SetUnfollowAction = {
   type: typeof UNFOLLOW
-  data: { userId: number }
+  payload: { userId: number }
 }
 
 export type SetUsersAction = {
   type: typeof SET_USERS
-  data: { users: User[], total: number }
+  payload: { users: User[], total: number }
 }
 
 export type SetPageAction = {
   type: typeof SET_PAGE
-  data: { page: number }
+  payload: { page: number }
 }
 
 export type SetSizeAction = {
   type: typeof SET_SIZE
-  data: { size: number, page: number }
+  payload: { size: number, page: number }
 }
 
 export type SetFetchingAction = {
   type: typeof SET_FETCHING
-  data: { fetching: boolean }
+  payload: { fetching: boolean }
 }
 
 export type SetFollowingAction = {
   type: typeof SET_FOLLOWING
-  data: { status: boolean, userId: number }
+  payload: { status: boolean, userId: number }
 }
 
 export type UsersAction = SetFollowAction

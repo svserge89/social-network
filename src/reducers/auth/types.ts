@@ -11,22 +11,22 @@ export const SET_UPDATING = PREFIX + 'SET-UPDATING';
 
 export type SetCurrentUserAction = {
   type: typeof SET_CURRENT_USER
-  data: { userId: number | null, email: string | null, login: string | null }
+  payload: { userId: number | null, email: string | null, login: string | null }
 }
 
 export type SetCaptchaAction = {
   type: typeof SET_CAPTCHA
-  data: { captcha: string | null }
+  payload: { captcha: string | null }
 }
 
 export type SetFetchingAction = {
   type: typeof SET_FETCHING
-  data: { fetching: boolean }
+  payload: { fetching: boolean }
 }
 
 export type SetUpdatingAction = {
   type: typeof SET_UPDATING
-  data: { updating: boolean }
+  payload: { updating: boolean }
 }
 
 export type AuthAction = SetCurrentUserAction

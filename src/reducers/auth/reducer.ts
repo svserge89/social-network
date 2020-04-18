@@ -7,7 +7,7 @@ import {
   SET_UPDATING
 } from './types';
 
-const changeData = (state: AuthState, {data}: AuthAction): AuthState => ({...state, ...data});
+const changeData = (state: AuthState, {payload}: AuthAction): AuthState => ({...state, ...payload});
 
 const initialState: AuthState = {
   userId: null,

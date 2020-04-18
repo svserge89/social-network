@@ -4,7 +4,7 @@ export const SET_ERROR = PREFIX + 'SET-ERROR';
 
 export type SetErrorAction = {
   type: typeof SET_ERROR
-  data: { code: number, description: string | null }
+  payload: { code: number, description: string | null }
 }
 
 export type ErrorAction = SetErrorAction
