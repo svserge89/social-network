@@ -1,29 +1,40 @@
-import React, {useCallback} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, {useCallback, useState} from 'react';
+import {useSelector} from 'react-redux';
 import {Card, InputGroup, FormControl, FormLabel} from 'react-bootstrap';
 import cn from 'classnames';
 
-import {updatePhoto} from '../../../reducers/profile/thunks';
 import {selectFetchingPhoto, selectLargePhoto} from '../../../selectors/profile';
 import ComponentLoader from '../../common/ComponentLoader/ComponentLoader';
+import CropImageModal from './CropImageModal/CropImageModal';
 import {AvatarCardProps} from './types';
 
 import style from './AvatarCard.module.css';
 import avatar from '../../../assets/images/avatar.png';
 
 const AvatarCard: React.FC<AvatarCardProps> = ({editable = false}) => {
+  const [fileUrl, setFileUrl] = useState<string>('');
+  const [showModal, setShowModal] = useState(false);
   const photo = useSelector(selectLargePhoto);
   const fetching = useSelector(selectFetchingPhoto);
-  const dispatch = useDispatch();
 
   const imageUrl = photo || avatar;
 
   const handleSelectImage = useCallback(
-    ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => (
-      files && files.length && dispatch(updatePhoto(files[0]))
-    ),
-    [dispatch]
-  );
+    ({target}: React.ChangeEvent<HTMLInputElement>) => {
+      if (target.files && target.files.length) {
+        const fileReader = new FileReader();
+
+        fileReader.onloadend = () => {
+          setFileUrl(fileReader.result as string);
+          setShowModal(true);
+          target.value = '';
+        };
+
+        fileReader.readAsDataURL(target.files[0]);
+      }
+    }, [setShowModal]);
+
+  const handleCloseModal = useCallback(() => setShowModal(false), [setShowModal]);
 
   const showImage = () => (
     fetching
@@ -49,11 +60,18 @@ const AvatarCard: React.FC<AvatarCardProps> = ({editable = false}) => {
     )
   );
 
+  const showCropImageModal = () => (
+    editable && (<CropImageModal show={showModal} imageUrl={fileUrl} handleClose={handleCloseModal}/>)
+  );
+
   return (
-    <Card className="mb-auto flex-shrink-0 flex-grow-0 bg-light p-1">
-      {showImage()}
-      {showButtonToolbar()}
-    </Card>
+    <>
+      {showCropImageModal()}
+      <Card className="mb-auto flex-shrink-0 flex-grow-0 bg-light p-1">
+        {showImage()}
+        {showButtonToolbar()}
+      </Card>
+    </>
   );
 };
 
