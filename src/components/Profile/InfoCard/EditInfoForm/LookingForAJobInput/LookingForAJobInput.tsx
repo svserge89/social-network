@@ -1,8 +1,10 @@
 import React from 'react';
 import {Field} from 'react-final-form';
 import {Form} from 'react-bootstrap';
+import {faSearch} from '@fortawesome/free-solid-svg-icons';
 
 import TextAreaField from '../../../../common/TextAreaField/TextAreaField';
+import ComponentWithIcon from '../../../../common/ComponentWithIcon/ComponentWithIcon';
 import {LookingForAJobInputProps} from './types';
 import {compose} from '../../../../../utils/validators';
 
@@ -13,6 +15,10 @@ const LookingForAJobInput: React.FC<LookingForAJobInputProps> = ({
                                                                    validators,
                                                                    disabled
                                                                  }) => {
+  const showLabel = (): JSX.Element => (
+    <h5><ComponentWithIcon icon={faSearch}>Looking for a job</ComponentWithIcon></h5>
+  );
+
   return (
     <>
       <Form.Group>
@@ -21,7 +27,7 @@ const LookingForAJobInput: React.FC<LookingForAJobInputProps> = ({
             ({input}) => (
               <Form.Check {...input}
                           type="checkbox"
-                          label={<h5>Looking for a job</h5>}
+                          label={showLabel()}
                           disabled={disabled}/>
             )
           }

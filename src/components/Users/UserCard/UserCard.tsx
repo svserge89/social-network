@@ -1,10 +1,12 @@
 import React, {useCallback} from 'react';
-import {Card, Image, Button} from 'react-bootstrap';
+import {Card, Image} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 import cn from 'classnames';
+import {faHeart, faHeartBroken} from '@fortawesome/free-solid-svg-icons';
 
 import {PROFILE} from '../../../utils/routes';
 import ButtonLoader from '../../common/ButtonLoader/ButtonLoader';
+import ButtonWithIcon from '../../common/ButtonWithIcon/ButtonWithIcon';
 import {UserCardProps} from './types';
 
 import smallAvatar from '../../../assets/images/small-avatar.png';
@@ -31,10 +33,10 @@ const UserCard: React.FC<UserCardProps> = ({
     if (following) return (<ButtonLoader/>);
 
     if (followed) {
-      return (<Button variant="danger" onClick={handleUnfollow}>Unfollow</Button>);
+      return (<ButtonWithIcon variant="danger" icon={faHeartBroken} onClick={handleUnfollow}>Unfollow</ButtonWithIcon>);
     }
 
-    return (<Button variant="success" onClick={handleFollow}>Follow</Button>);
+    return (<ButtonWithIcon variant="success" icon={faHeart} onClick={handleFollow}>Follow</ButtonWithIcon>);
   };
 
   const imageSrc = image ? image : smallAvatar;

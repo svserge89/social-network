@@ -1,9 +1,9 @@
 import React from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {ContactListProps} from './types';
 import resolveBrandIcon from '../../../../utils/resolveBrandIcon';
+import ComponentWithIcon from '../../../common/ComponentWithIcon/ComponentWithIcon';
 
 const ContactList: React.FC<ContactListProps> = ({contacts, labels}) => {
 
@@ -17,10 +17,11 @@ const ContactList: React.FC<ContactListProps> = ({contacts, labels}) => {
     link
       ? (
         <Row className="flex-nowrap" key={key}>
-          <Col xs={4} md={4} lg={3}><span className="font-weight-bold">
-            <FontAwesomeIcon icon={resolveBrandIcon(key)}/>
-            &nbsp;{label}:
-          </span></Col>
+          <Col xs={4} md={4} lg={3}>
+            <span className="font-weight-bold">
+              <ComponentWithIcon icon={resolveBrandIcon(key)}>{label}</ComponentWithIcon>:
+            </span>
+          </Col>
           <Col className="text-nowrap text-truncate" title={link}><a href={link}>{link}</a></Col>
         </Row>
       )

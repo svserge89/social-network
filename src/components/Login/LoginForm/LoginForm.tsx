@@ -1,12 +1,14 @@
 import React from 'react';
 import {Form as FinalForm} from 'react-final-form';
-import {Form, Button, Alert, ButtonToolbar} from 'react-bootstrap';
+import {Form, Alert, ButtonToolbar} from 'react-bootstrap';
+import {faSignInAlt, faUndo} from '@fortawesome/free-solid-svg-icons';
 
 import EmailInput from './EmailInput/EmailInput';
 import PasswordInput from './PasswordInput/PasswordInput';
 import RememberMeCheckbox from './RememberMeCheckbox/RememberMeCheckbox';
 import CaptchaInput from './CapthaInput/CaptchaInput';
 import ButtonLoader from '../../common/ButtonLoader/ButtonLoader';
+import ButtonWithIcon from '../../common/ButtonWithIcon/ButtonWithIcon';
 import {required, isEmail, minLength, maxLength} from '../../../utils/validators';
 import {LoginFormProps} from './types';
 
@@ -32,7 +34,7 @@ const LoginForm: React.FC<LoginFormProps> = ({onSubmit, captcha}) => {
   const showLogInButton = (updating: boolean, disabled: boolean): JSX.Element => (
     updating
       ? (<ButtonLoader/>)
-      : (<Button variant="success" type="submit" disabled={disabled}>Log In</Button>)
+      : (<ButtonWithIcon variant="success" icon={faSignInAlt} type="submit" disabled={disabled}>Log In</ButtonWithIcon>)
   );
 
   return (
@@ -51,12 +53,13 @@ const LoginForm: React.FC<LoginFormProps> = ({onSubmit, captcha}) => {
             {showCaptcha(submitting)}
             <ButtonToolbar className="justify-content-between">
               {showLogInButton(submitting, pristine)}
-              <Button variant="warning"
-                      type="reset"
-                      onClick={form.reset}
-                      disabled={submitting || pristine}>
+              <ButtonWithIcon variant="warning"
+                              icon={faUndo}
+                              type="reset"
+                              onClick={form.reset}
+                              disabled={submitting || pristine}>
                 Clean
-              </Button>
+              </ButtonWithIcon>
             </ButtonToolbar>
           </Form>
         )

@@ -1,15 +1,19 @@
 import React, {useCallback} from 'react';
 import {Form as FinalForm} from 'react-final-form';
 import {useSelector} from 'react-redux';
-import {Form, Card, Button, ButtonToolbar, ButtonGroup, Alert} from 'react-bootstrap';
+import {Form, Card, ButtonToolbar, ButtonGroup, Alert} from 'react-bootstrap';
+import {faAddressCard, faSave, faTimes, faUndo} from '@fortawesome/free-solid-svg-icons';
 
 import ContactInput from './ContactInput/ContactInput';
 import LookingForAJobInput from './LookingForAJobInput/LookingForAJobInput';
 import FullNameInput from './FullNameInput/FullNameInput';
 import AboutMeInput from './AboutMeInput/AboutMeInput';
 import ButtonLoader from '../../../common/ButtonLoader/ButtonLoader';
+import ButtonWithIcon from '../../../common/ButtonWithIcon/ButtonWithIcon';
+import ComponentWithIcon from '../../../common/ComponentWithIcon/ComponentWithIcon';
 import {selectProfile} from '../../../../selectors/profile';
 import {EditInfoFormProps} from './types';
+import resolveBrandIcon from '../../../../utils/resolveBrandIcon';
 
 const EditInfoForm: React.FC<EditInfoFormProps> = ({
                                                      onSubmit,
@@ -21,6 +25,7 @@ const EditInfoForm: React.FC<EditInfoFormProps> = ({
     [...contactLabels.entries()].map(([key, value]) => (
       <ContactInput key={key}
                     label={value}
+                    icon={resolveBrandIcon(key)}
                     placeholder={`Enter ${value} profile link`}
                     name={`contacts.${key}`}
                     disabled={updating}/>
@@ -34,7 +39,7 @@ const EditInfoForm: React.FC<EditInfoFormProps> = ({
   const showSaveButton = (updating: boolean, disabled: boolean): JSX.Element => (
     updating
       ? (<ButtonLoader/>)
-      : (<Button variant="success" type="submit" disabled={disabled}>Save</Button>)
+      : (<ButtonWithIcon variant="success" icon={faSave} type="submit" disabled={disabled}>Save</ButtonWithIcon>)
   );
 
   const handleCancel = useCallback(() => setEditMode(false), [setEditMode]);
@@ -42,14 +47,25 @@ const EditInfoForm: React.FC<EditInfoFormProps> = ({
   return (
     <FinalForm onSubmit={onSubmit} initialValues={profile}>
       {
-        ({handleSubmit, pristine, form, submitError, submitting, values}) => (
+        (
+          {
+            handleSubmit,
+            pristine,
+            form,
+            submitError,
+            submitting,
+            values
+          }
+        ) => (
           <Form onSubmit={handleSubmit}>
             {showAlert(submitError)}
             <Card.Text as="div">
               <FullNameInput name="fullName" disabled={submitting}/>
             </Card.Text>
             <Card.Text as="div">
-              <Form.Label column={false}><h5>Contacts</h5></Form.Label>
+              <Form.Label column={false}>
+                <h5><ComponentWithIcon icon={faAddressCard}>Contacts</ComponentWithIcon></h5>
+              </Form.Label>
               {showContactInputs(submitting)}
             </Card.Text>
             <Card.Text as="div" className="mt-3">
@@ -64,15 +80,16 @@ const EditInfoForm: React.FC<EditInfoFormProps> = ({
             <ButtonToolbar className="justify-content-between">
               {showSaveButton(submitting, pristine)}
               <ButtonGroup>
-                <Button variant="warning"
-                        type="reset"
-                        onClick={form.reset}
-                        disabled={pristine || submitting}>
+                <ButtonWithIcon variant="warning"
+                                type="reset"
+                                icon={faUndo}
+                                onClick={form.reset}
+                                disabled={pristine || submitting}>
                   Clean
-                </Button>
-                <Button variant="danger" onClick={handleCancel} disabled={submitting}>
+                </ButtonWithIcon>
+                <ButtonWithIcon variant="danger" icon={faTimes} onClick={handleCancel} disabled={submitting}>
                   Cancel
-                </Button>
+                </ButtonWithIcon>
               </ButtonGroup>
             </ButtonToolbar>
           </Form>
