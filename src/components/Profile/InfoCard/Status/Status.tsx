@@ -46,7 +46,7 @@ const Status: React.FC<StatusProps> = ({status, editable, setStatus, fetching}) 
   if (!status) {
     return (
       <Card.Subtitle onDoubleClick={editStatusHandler} className="text-secondary">
-        Status is not set.
+        Status is not set...
       </Card.Subtitle>
     );
   }

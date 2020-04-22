@@ -40,7 +40,7 @@ const InfoCard: React.FC<InfoCardProps> = ({editable = false}) => {
   const [editMode, setEditMode] = useState(false);
 
   const showAboutMe = (): JSX.Element => (
-    aboutMe ? (<pre>{aboutMe}</pre>) : (<p className="text-secondary">Empty.</p>)
+    aboutMe ? (<pre>{aboutMe}</pre>) : (<p className="text-secondary">Empty...</p>)
   );
 
   const editHandler = useCallback(() => setEditMode(true), [setEditMode]);

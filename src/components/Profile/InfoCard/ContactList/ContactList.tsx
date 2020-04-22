@@ -11,7 +11,7 @@ const ContactList: React.FC<ContactListProps> = ({contacts, labels}) => {
     .map(value => !!value)
     .reduce((prev, current) => prev || current, false);
 
-  if (emptyContacts) return (<p className="text-secondary">Empty.</p>);
+  if (emptyContacts) return (<p className="text-secondary">Empty...</p>);
 
   const showContact = (key: string, label: string, link?: string | null): JSX.Element | null => (
     link
