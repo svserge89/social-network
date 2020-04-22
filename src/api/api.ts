@@ -27,7 +27,7 @@ const PROFILE_STATUS = PROFILE + '/status';
 const PROFILE_PHOTO = PROFILE + '/photo';
 const CAPTCHA = '/security/get-captcha-url';
 
-const API_KEY = '12978896-c3c3-47c8-a5ce-4cdffd884edb';
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 const instance = axios.create({
   withCredentials: true,
