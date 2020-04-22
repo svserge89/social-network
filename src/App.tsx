@@ -21,8 +21,6 @@ import Footer from './components/Footer/Footer';
 import Error from './components/Error/Error';
 import PageLoader from './components/common/PageLoader/PageLoader';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 const App: React.FC = () => {
   const initialized = useSelector(selectInitialized);
   const isError = useSelector(selectIsError);
