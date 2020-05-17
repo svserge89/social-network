@@ -46,7 +46,7 @@ const UserCard: React.FC<UserCardProps> = ({
       <div className="d-flex">
         <LinkContainer to={`${PROFILE}/${userId}`} className="flex-shrink-0">
           <Card.Link>
-            <Image src={imageSrc} thumbnail className={cn(style.image, 'bg-light')}/>
+            <Image src={imageSrc} rounded={true} className={cn(style.image, 'bg-light')}/>
           </Card.Link>
         </LinkContainer>
         <Card.Body className="flex-shrink-2 text-nowrap text-truncate">
