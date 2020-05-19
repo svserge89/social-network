@@ -2,9 +2,7 @@ import {ThunkAction} from 'redux-thunk';
 
 import {RootState} from '../../store/types';
 
-const PREFIX = 'social-network/init/';
-
-export const SET_INITIALIZED = PREFIX + 'SET-INITIALIZED';
+export const SET_INITIALIZED = 'social-network/init/SET-INITIALIZED';
 
 export type SetInitializedAction = {
   type: typeof SET_INITIALIZED

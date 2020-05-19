@@ -51,7 +51,7 @@ const profileReducer = (state = initialState, action: ProfileAction): ProfileSta
     case SET_UPDATING:
       return changeData(state, action);
     case SET_PHOTO:
-      return changePhoto(state, action as SetPhotoAction);
+      return changePhoto(state, action);
     default:
       return state;
   }

@@ -1,6 +1,4 @@
-const PREFIX = 'social-network/error/';
-
-export const SET_ERROR = PREFIX + 'SET-ERROR';
+export const SET_ERROR = 'social-network/error/SET-ERROR';
 
 export type SetErrorAction = {
   type: typeof SET_ERROR

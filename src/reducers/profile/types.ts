@@ -3,15 +3,13 @@ import {ThunkAction} from 'redux-thunk';
 import {Photos, Profile} from '../../models/types';
 import {RootState} from '../../store/types';
 
-const PREFIX = 'social-network/profile/';
-
-export const SET_PROFILE = PREFIX + 'SET-PROFILE';
-export const SET_STATUS = PREFIX + 'SET-STATUS';
-export const SET_PHOTO = PREFIX + 'SET-PHOTO';
-export const SET_FETCHING = PREFIX + 'SET-FETCHING';
-export const SET_FETCHING_STATUS = PREFIX + 'SET-FETCHING-STATUS';
-export const SET_FETCHING_PHOTO = PREFIX + 'SET-FETCHING-PHOTO';
-export const SET_UPDATING = PREFIX + 'SET-UPDATING';
+export const SET_PROFILE = 'social-network/profile/SET-PROFILE';
+export const SET_STATUS = 'social-network/profile/SET-STATUS';
+export const SET_PHOTO = 'social-network/profile/SET-PHOTO';
+export const SET_FETCHING = 'social-network/profile/SET-FETCHING';
+export const SET_FETCHING_STATUS = 'social-network/profile/SET-FETCHING-STATUS';
+export const SET_FETCHING_PHOTO = 'social-network/profile/SET-FETCHING-PHOTO';
+export const SET_UPDATING = 'social-network/profile/SET-UPDATING';
 
 export type SetProfileAction = {
   type: typeof SET_PROFILE

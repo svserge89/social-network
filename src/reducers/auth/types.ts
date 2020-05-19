@@ -2,12 +2,10 @@ import {ThunkAction} from 'redux-thunk';
 
 import {RootState} from '../../store/types';
 
-const PREFIX = 'social-network/auth/';
-
-export const SET_CURRENT_USER = PREFIX + 'SET-CURRENT-USER';
-export const SET_CAPTCHA = PREFIX + 'SET-CAPTCHA';
-export const SET_FETCHING = PREFIX + 'SET-FETCHING';
-export const SET_UPDATING = PREFIX + 'SET-UPDATING';
+export const SET_CURRENT_USER = 'social-network/auth/SET-CURRENT-USER';
+export const SET_CAPTCHA = 'social-network/auth/SET-CAPTCHA';
+export const SET_FETCHING = 'social-network/auth/SET-FETCHING';
+export const SET_UPDATING = 'social-network/auth/SET-UPDATING';
 
 export type SetCurrentUserAction = {
   type: typeof SET_CURRENT_USER
