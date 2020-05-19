@@ -45,7 +45,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({editable = false}) => {
   const showButtonToolbar = (): JSX.Element | '' => (
     editable
       ? (
-        <Card.Body className="px-0 pb-0 pt-1">
+        <Card.Body className={cn(style.upload, 'px-0', 'pb-0', 'pt-1')}>
           <InputGroup>
             <FormControl className="custom-file-input"
                          type="file"
@@ -54,7 +54,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({editable = false}) => {
                          onChange={handleSelectImage}
                          disabled={fetching}/>
             <FormLabel column={false} className="custom-file-label" htmlFor="uploadImage">
-              Choose image
+              Choose image...
             </FormLabel>
           </InputGroup>
         </Card.Body>
