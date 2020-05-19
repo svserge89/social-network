@@ -3,19 +3,22 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Row, Col} from 'react-bootstrap';
 
 import {getUsers, cleanUsers, follow, unfollow} from '../../reducers/users/thunks';
-import {setPage, setSize} from '../../reducers/users/actionCreators';
+import {setFilter, setPage, setSize, setRelation} from '../../reducers/users/actionCreators';
 import {
   selectAvailable,
   selectFetching,
+  selectFilter,
   selectFollowing,
   selectPage,
   selectSize,
   selectTotal,
-  selectUsers
+  selectUsers,
+  selectRelation
 } from '../../selectors/users';
 import UserCard from './UserCard/UserCard';
 import PageNavToolbar from '../common/PageNavToolbar/PageNavToolbar';
 import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
+import FilterToolbar from './FilterToolbar/FilterToolbar';
 import {selectUserId} from '../../selectors/auth';
 
 const Users: React.FC = () => {
@@ -27,12 +30,14 @@ const Users: React.FC = () => {
   const fetching = useSelector(selectFetching);
   const following = useSelector(selectFollowing);
   const available = useSelector(selectAvailable);
+  const relation = useSelector(selectRelation);
+  const filter = useSelector(selectFilter);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUsers(page, size));
-  }, [dispatch, page, size]);
+    dispatch(getUsers(page, size, relation, filter));
+  }, [dispatch, page, size, relation, filter]);
 
   useEffect(() => () => {
     dispatch(cleanUsers());
@@ -50,6 +55,10 @@ const Users: React.FC = () => {
   const setPageHandler = useCallback((page) => dispatch(setPage(page)), [dispatch]);
 
   const setSizeHandler = useCallback((size) => dispatch(setSize(size)), [dispatch]);
+
+  const setRelationHandler = useCallback((relation) => dispatch(setRelation(relation)), [dispatch]);
+
+  const setFilterHandler = useCallback((filter) => dispatch(setFilter(filter)), [dispatch]);
 
   const showUserCards = (): JSX.Element | JSX.Element[] => {
     if (fetching || !users) return (
@@ -77,6 +86,15 @@ const Users: React.FC = () => {
 
   return (
     <>
+      <Row>
+        <Col className="col-12 p-0">
+          <FilterToolbar relation={relation}
+                         filter={filter}
+                         setFilter={setFilterHandler}
+                         setRelation={setRelationHandler}
+                         fetching={fetching}/>
+        </Col>
+      </Row>
       <Row>
         <Col className="col-12 p-0 mb-3">
           <PageNavToolbar total={total}
