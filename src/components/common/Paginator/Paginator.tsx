@@ -12,7 +12,7 @@ const Paginator: React.FC<PaginatorProps> = ({
                                                sideLength = 3,
                                                size = 'sm'
                                              }) => {
-  const pagesCount = Math.ceil(totalItems / pageSize);
+  const pagesCount = Math.ceil(totalItems / pageSize) || 1;
 
   const clickHandler = useCallback((page: number) => () => setPage(page), [setPage]);
 

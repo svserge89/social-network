@@ -7,26 +7,26 @@ import ButtonLoader from '../ButtonLoader/ButtonLoader';
 import {PageNavToolbarProps} from './types';
 
 const PageNavToolbar: React.FC<PageNavToolbarProps> = ({
-                          total,
-                          size,
-                          page,
-                          setPage,
-                          setSize,
-                          available,
-                          sideLength = 3,
-                          buttonSize = 'sm',
-                          fetching = false
-                        }) => {
+                                                         total,
+                                                         size,
+                                                         page,
+                                                         setPage,
+                                                         setSize,
+                                                         available,
+                                                         sideLength = 3,
+                                                         buttonSize = 'sm',
+                                                         fetching = false
+                                                       }) => {
   const showPaginator = () => (
-    total
-      ? (<Paginator totalItems={total}
+    !total && fetching
+      ? (<ButtonLoader size={buttonSize}/>)
+      : (<Paginator totalItems={total}
                     pageSize={size}
                     currentPage={page}
                     setPage={setPage}
                     sideLength={sideLength}
                     size={buttonSize}
                     disabled={fetching}/>)
-      : (<ButtonLoader size={buttonSize}/>)
   );
 
   return (
@@ -38,7 +38,7 @@ const PageNavToolbar: React.FC<PageNavToolbarProps> = ({
                         size={buttonSize}
                         disabled={fetching}/>
     </ButtonToolbar>
-  )
+  );
 };
 
 export default PageNavToolbar;
