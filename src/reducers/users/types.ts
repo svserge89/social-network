@@ -3,15 +3,21 @@ import {ThunkAction} from 'redux-thunk';
 import {User} from '../../models/types';
 import {RootState} from '../../store/types';
 
-const PREFIX = 'social-network/users/';
+export enum Relation {
+  ALL,
+  FRIENDS,
+  NOT_FRIENDS
+}
 
-export const SET_USERS = PREFIX + 'SET-USERS';
-export const SET_PAGE = PREFIX + 'SET-PAGE';
-export const SET_SIZE = PREFIX + 'SET-SIZE';
-export const SET_FETCHING = PREFIX + 'SET-FETCHING';
-export const SET_FOLLOWING = PREFIX + 'SET-FOLLOWING';
-export const FOLLOW = PREFIX + 'FOLLOW';
-export const UNFOLLOW = PREFIX + 'UNFOLLOW';
+export const SET_USERS = 'social-network/users/SET-USERS';
+export const SET_PAGE = 'social-network/users/SET-PAGE';
+export const SET_SIZE = 'social-network/users/SET-SIZE';
+export const SET_FETCHING = 'social-network/users/SET-FETCHING';
+export const SET_FOLLOWING = 'social-network/users/SET-FOLLOWING';
+export const SET_FILTER = 'social-network/users/SET-FILTER';
+export const SET_RELATION = 'social-network/users/SET-RELATION';
+export const FOLLOW = 'social-network/users/FOLLOW';
+export const UNFOLLOW = 'social-network/users/UNFOLLOW';
 
 export type SetFollowAction = {
   type: typeof FOLLOW
@@ -35,7 +41,7 @@ export type SetPageAction = {
 
 export type SetSizeAction = {
   type: typeof SET_SIZE
-  payload: { size: number, page: number }
+  payload: { size: number, page: 1 }
 }
 
 export type SetFetchingAction = {
@@ -48,6 +54,16 @@ export type SetFollowingAction = {
   payload: { status: boolean, userId: number }
 }
 
+export type SetRelationAction = {
+  type: typeof SET_RELATION
+  payload: { relation: Relation, page: 1 }
+}
+
+export type SetFilterAction = {
+  type: typeof SET_FILTER
+  payload: { filter: string, page: 1 }
+}
+
 export type UsersAction = SetFollowAction
   | SetUnfollowAction
   | SetUsersAction
@@ -55,6 +71,8 @@ export type UsersAction = SetFollowAction
   | SetSizeAction
   | SetFetchingAction
   | SetFollowingAction
+  | SetRelationAction
+  | SetFilterAction
 
 export type UsersThunkAction = ThunkAction<void, RootState, unknown, UsersAction>
 
@@ -68,4 +86,6 @@ export type UsersState = {
   fetching: boolean
   following: number[]
   available: number[]
+  relation: Relation
+  filter: string
 }

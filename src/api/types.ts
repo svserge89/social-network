@@ -5,6 +5,13 @@ export type ResponseData<T> = {
   data: T
 }
 
+export type UsersRequestParams = {
+  count: number
+  page: number
+  term?: string
+  friend?: boolean
+}
+
 type LoginResultCode = ResultCode | CaptchaResultCode
 
 type DefaultResponse<T> = {

@@ -12,9 +12,11 @@ import {
   UnFollowUserResponse,
   UpdatePhotoResponse,
   UpdateProfileResponse,
-  UpdateStatusResponse
+  UpdateStatusResponse,
+  UsersRequestParams
 } from './types';
 import {Profile} from '../models/types';
+import {Relation} from '../reducers/users/types';
 
 const BASE_URL = 'https://social-network.samuraijs.com/api/1.0';
 const AUTH = '/auth';
@@ -49,29 +51,34 @@ export const authAPI = {
 };
 
 export const usersAPI = {
-  get: (count: number, page: number) => instance.get<GetUsersResponse>(USERS, {
-    params: {
-      count,
-      page
+  get: (count: number, page: number, relation: Relation = Relation.ALL, filter: string = '') => {
+    const params: UsersRequestParams = {count, page};
+
+    switch (relation) {
+      case Relation.FRIENDS:
+        params.friend = true;
+        break;
+      case Relation.NOT_FRIENDS:
+        params.friend = false;
+        break;
     }
-  }).then(responseData),
 
-  follow: (userId: number) => instance.post<FollowUserResponse>(`${FOLLOW}/${userId}`)
-    .then(responseData),
+    if (filter) params.term = filter;
 
-  unFollow: (userId: number) => instance.delete<UnFollowUserResponse>(`${FOLLOW}/${userId}`)
-    .then(responseData)
+    return instance.get<GetUsersResponse>(USERS, {params}).then(responseData);
+  },
+
+  follow: (userId: number) => instance.post<FollowUserResponse>(`${FOLLOW}/${userId}`).then(responseData),
+
+  unFollow: (userId: number) => instance.delete<UnFollowUserResponse>(`${FOLLOW}/${userId}`).then(responseData)
 };
 
 export const profileAPI = {
-  get: (userId: number) => instance.get<GetProfileResponse>(`${PROFILE}/${userId}`)
-    .then(responseData),
+  get: (userId: number) => instance.get<GetProfileResponse>(`${PROFILE}/${userId}`).then(responseData),
 
-  update: (profile: Profile) => instance.put<UpdateProfileResponse>(PROFILE, profile)
-    .then(responseData),
+  update: (profile: Profile) => instance.put<UpdateProfileResponse>(PROFILE, profile).then(responseData),
 
-  getStatus: (userId: number) => instance.get<GetStatusResponse>(`${PROFILE_STATUS}/${userId}`)
-    .then(responseData),
+  getStatus: (userId: number) => instance.get<GetStatusResponse>(`${PROFILE_STATUS}/${userId}`).then(responseData),
 
   updateStatus: (status: string) => instance.put<UpdateStatusResponse>(PROFILE_STATUS, {status})
     .then(responseData),

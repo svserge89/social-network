@@ -2,18 +2,23 @@ import {User} from '../../models/types';
 import {
   FOLLOW,
   SET_FETCHING,
+  SET_FILTER,
   SET_FOLLOWING,
   SET_PAGE,
   SET_SIZE,
   SET_USERS,
+  SET_RELATION,
   SetFetchingAction,
+  SetFilterAction,
   SetFollowAction,
   SetFollowingAction,
   SetPageAction,
   SetSizeAction,
   SetUnfollowAction,
   SetUsersAction,
-  UNFOLLOW
+  SetRelationAction,
+  UNFOLLOW,
+  Relation
 } from './types';
 
 export const setFollow = (userId: number): SetFollowAction => ({type: FOLLOW, payload: {userId}});
@@ -43,4 +48,14 @@ export const setFetching = (fetching: boolean): SetFetchingAction => ({
 export const setFollowing = (status: boolean, userId: number): SetFollowingAction => ({
   type: SET_FOLLOWING,
   payload: {status, userId}
+});
+
+export const setRelation = (relation: Relation): SetRelationAction => ({
+  type: SET_RELATION,
+  payload: {relation, page: 1}
+});
+
+export const setFilter = (filter: string): SetFilterAction => ({
+  type: SET_FILTER,
+  payload: {filter, page: 1}
 });

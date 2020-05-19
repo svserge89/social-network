@@ -2,13 +2,16 @@ import {usersAPI} from '../../api/api';
 import {handleError, handleServerError} from '../../utils/errorHandler';
 import {ResultCode} from '../../utils/responseCodes';
 import {setFetching, setFollow, setFollowing, setUnfollow, setUsers} from './actionCreators';
-import {UsersAsyncThunkAction, UsersThunkAction} from './types';
+import {UsersAsyncThunkAction, UsersThunkAction, Relation} from './types';
 
-export const getUsers = (page: number, size: number): UsersAsyncThunkAction => async (dispatch) => {
+export const getUsers = (page: number,
+                         size: number,
+                         relation?: Relation,
+                         filter?: string): UsersAsyncThunkAction => async (dispatch) => {
   dispatch(setFetching(true));
 
   try {
-    const {items, totalCount, error} = await usersAPI.get(size, page);
+    const {items, totalCount, error} = await usersAPI.get(size, page, relation, filter);
 
     if (error) handleServerError(dispatch, [error]);
     else dispatch(setUsers(items, totalCount));
