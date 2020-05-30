@@ -7,9 +7,7 @@ export const selectProfile = ({profile}: RootState): Profile => profile.profile;
 
 export const selectStatus = ({profile}: RootState): string => profile.status || '';
 
-export const selectContactLabels = ({profile}: RootState): Map<string, string> => (
-  profile.contactLabels
-);
+export const selectContactLabels = ({profile}: RootState): Map<string, string> => profile.contactLabels;
 
 export const selectFetching = ({profile}: RootState): boolean => profile.fetching;
 

@@ -12,7 +12,7 @@ export const handleError = (dispatch: Dispatch<ErrorAction>, {response}: AxiosEr
 };
 
 export const handleServerError = (dispatch: Dispatch<ErrorAction>, messages: string[]) => {
-  const message = (messages && messages.length) ? messages.join('; ') : 'Unknown Error';
+  const message = messages?.length ? messages.join('; ') : 'Unknown Error';
 
   dispatch(setError(ERROR_CODE, message));
 };

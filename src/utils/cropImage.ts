@@ -17,9 +17,7 @@ const getCroppedImg = async (imageSrc: string, pixelCrop: Area, rotation = 0) =>
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 
-  if (!ctx) {
-    throw new Error('Can\'t create 2D canvas context');
-  }
+  if (!ctx) throw new Error('Can\'t create 2D canvas context');
 
   const maxSize = Math.max(image.width, image.height);
   const safeArea = 2 * ((maxSize / 2) * Math.sqrt(2));
@@ -50,11 +48,8 @@ const getCroppedImg = async (imageSrc: string, pixelCrop: Area, rotation = 0) =>
 
   return new Promise<File>((resolve, reject) => {
     canvas.toBlob(blob => {
-      if (blob) {
-        resolve(new File([blob], 'image.jpg'));
-      } else {
-        reject(new Error('Can\'t convert canvas to blob'));
-      }
+      if (blob) resolve(new File([blob], 'image.jpg'));
+      else reject(new Error('Can\'t convert canvas to blob'));
     });
   });
 };

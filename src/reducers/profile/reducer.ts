@@ -12,10 +12,7 @@ import {
 } from './types';
 import emptyProfile from './emptyProfile';
 
-const changeData = (state: ProfileState, {payload}: ProfileAction): ProfileState => ({
-  ...state,
-  ...payload
-});
+const changeData = (state: ProfileState, {payload}: ProfileAction): ProfileState => ({...state, ...payload});
 
 const changePhoto = (state: ProfileState, {payload: {photos}}: SetPhotoAction): ProfileState => ({
   ...state,

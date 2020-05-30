@@ -28,8 +28,7 @@ const changeData = (state: UsersState, {payload}: UsersAction): UsersState => ({
   ...payload
 });
 
-const changeFollowing = (state: UsersState,
-                         {payload: {userId, status}}: SetFollowingAction): UsersState => ({
+const changeFollowing = (state: UsersState, {payload: {userId, status}}: SetFollowingAction): UsersState => ({
   ...state,
   following: (
     status ? [...state.following, userId] : state.following.filter(item => item !== userId)
@@ -51,9 +50,9 @@ const initialState: UsersState = {
 const usersReducer = (state = initialState, action: UsersAction) => {
   switch (action.type) {
     case FOLLOW:
-      return changeFollowed(state, action as SetFollowAction, true);
+      return changeFollowed(state, action, true);
     case UNFOLLOW:
-      return changeFollowed(state, action as SetUnfollowAction, false);
+      return changeFollowed(state, action, false);
     case SET_USERS:
     case SET_PAGE:
     case SET_SIZE:

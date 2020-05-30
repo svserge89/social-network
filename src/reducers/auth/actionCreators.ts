@@ -21,12 +21,6 @@ export const setCaptcha = (captcha: string | null = null): SetCaptchaAction => (
   payload: {captcha}
 });
 
-export const setFetching = (fetching: boolean): SetFetchingAction => ({
-  type: SET_FETCHING,
-  payload: {fetching}
-});
+export const setFetching = (fetching: boolean): SetFetchingAction => ({type: SET_FETCHING, payload: {fetching}});
 
-export const setUpdating = (updating: boolean): SetUpdatingAction => ({
-  type: SET_UPDATING,
-  payload: {updating}
-});
+export const setUpdating = (updating: boolean): SetUpdatingAction => ({type: SET_UPDATING, payload: {updating}});

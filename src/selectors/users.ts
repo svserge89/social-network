@@ -18,6 +18,4 @@ export const selectRelation = ({users}: RootState): Relation => users.relation;
 
 export const selectFilter = ({users}: RootState): string => users.filter;
 
-export const selectAvailable = ({users}: RootState): string[] => (
-  users.available.map(value => '' + value)
-);
+export const selectAvailable = ({users}: RootState): string[] => (users.available.map(value => '' + value));

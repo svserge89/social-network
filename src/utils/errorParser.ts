@@ -6,9 +6,7 @@ const MESSAGE = 1;
 const FIELD = 2;
 const SUB_FIELD = 4;
 
-const toLowerCase = (word: string): string => word.replace(
-  FIRST_LETTER, ch => ch.toLowerCase()
-);
+const toLowerCase = (word: string): string => word.replace(FIRST_LETTER, ch => ch.toLowerCase());
 
 const submissionError = {submissionError: true};
 
