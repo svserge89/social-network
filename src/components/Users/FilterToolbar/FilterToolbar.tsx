@@ -10,12 +10,19 @@ const FilterToolbar: React.FC<FilterToolbarProps> = ({
                                                        relation,
                                                        setFilter,
                                                        setRelation,
+                                                       filterOnly = false,
                                                        fetching = false
-                                                     }) => (
-  <ButtonToolbar className="px-0 mt-3">
-    <Filter filter={filter} setFilter={setFilter} fetching={fetching}/>
-    <RelationSelector relation={relation} setRelation={setRelation} fetching={fetching}/>
-  </ButtonToolbar>
-);
+                                                     }) => {
+  const showRelation = (): JSX.Element | '' => (
+    !filterOnly ? (<RelationSelector relation={relation} setRelation={setRelation} fetching={fetching}/>) : ''
+  );
+
+  return (
+    <ButtonToolbar className="px-0 mt-3">
+      <Filter filter={filter} setFilter={setFilter} fetching={fetching}/>
+      {showRelation()}
+    </ButtonToolbar>
+  );
+};
 
 export default FilterToolbar;

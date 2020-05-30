@@ -15,11 +15,11 @@ import {
   selectUsers,
   selectRelation
 } from '../../selectors/users';
+import {selectAuthenticated, selectUserId} from '../../selectors/auth';
 import UserCard from './UserCard/UserCard';
 import PageNavToolbar from '../common/PageNavToolbar/PageNavToolbar';
 import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
 import FilterToolbar from './FilterToolbar/FilterToolbar';
-import {selectUserId} from '../../selectors/auth';
 
 const Users: React.FC = () => {
   const currentUserId = useSelector(selectUserId);
@@ -32,6 +32,7 @@ const Users: React.FC = () => {
   const available = useSelector(selectAvailable);
   const relation = useSelector(selectRelation);
   const filter = useSelector(selectFilter);
+  const authenticated = useSelector(selectAuthenticated);
 
   const dispatch = useDispatch();
 
@@ -92,6 +93,7 @@ const Users: React.FC = () => {
                          filter={filter}
                          setFilter={setFilterHandler}
                          setRelation={setRelationHandler}
+                         filterOnly={!authenticated}
                          fetching={fetching}/>
         </Col>
       </Row>

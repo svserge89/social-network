@@ -17,7 +17,7 @@ const RelationSelector: React.FC<RelationSelectorProps> = ({
   );
 
   return (
-    <InputGroup>
+    <InputGroup className="ml-3">
       <InputGroup.Prepend>
         <InputGroup.Text><FontAwesomeIcon icon={faUserFriends}/></InputGroup.Text>
       </InputGroup.Prepend>

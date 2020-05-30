@@ -28,7 +28,7 @@ const Filter: React.FC<FilterProps> = ({filter, setFilter, fetching = false}) =>
   const isFilterAvailable = !!value && value !== filter;
 
   return (
-    <InputGroup className="flex-fill mr-3">
+    <InputGroup className="flex-fill">
       <InputGroup.Prepend>
         <ButtonWithIcon variant="outline-secondary"
                         onClick={filterHandler}

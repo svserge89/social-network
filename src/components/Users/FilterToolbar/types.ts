@@ -5,5 +5,6 @@ export type FilterToolbarProps = {
   filter: string
   setRelation: (relation: Relation) => void
   setFilter: (filter: string) => void
+  filterOnly?: boolean
   fetching?: boolean
 }
