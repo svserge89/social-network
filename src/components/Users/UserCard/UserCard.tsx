@@ -2,11 +2,9 @@ import React, {useCallback} from 'react';
 import {Card, Image} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 import cn from 'classnames';
-import {faHeart, faHeartBroken} from '@fortawesome/free-solid-svg-icons';
 
 import {PROFILE} from '../../../utils/routes';
-import ButtonLoader from '../../common/ButtonLoader/ButtonLoader';
-import ButtonWithIcon from '../../common/ButtonWithIcon/ButtonWithIcon';
+import FollowButton from '../../common/FollowButton/FollowButton';
 import {UserCardProps} from './types';
 
 import smallAvatar from '../../../assets/images/small-avatar.png';
@@ -27,17 +25,9 @@ const UserCard: React.FC<UserCardProps> = ({
 
   const handleUnfollow = useCallback(() => unfollow(userId), [unfollow, userId]);
 
-  const showButton = (): JSX.Element | '' => {
-    if (!currentUserId || currentUserId === userId) return '';
-
-    if (following) return (<ButtonLoader/>);
-
-    if (followed) {
-      return (<ButtonWithIcon variant="danger" icon={faHeartBroken} onClick={handleUnfollow}>Unfollow</ButtonWithIcon>);
-    }
-
-    return (<ButtonWithIcon variant="success" icon={faHeart} onClick={handleFollow}>Follow</ButtonWithIcon>);
-  };
+  const showButton = (): JSX.Element | '' => (currentUserId && currentUserId !== userId)
+    ? (<FollowButton followed={followed} follow={handleFollow} unfollow={handleUnfollow} following={following}/>)
+    : '';
 
   const imageSrc = image ? image : smallAvatar;
 
