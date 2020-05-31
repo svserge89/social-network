@@ -17,6 +17,10 @@ export const selectFetchingPhoto = ({profile}: RootState): boolean => profile.fe
 
 export const selectUpdating = ({profile}: RootState): boolean => profile.updating;
 
+export const selectFollowed = ({profile}: RootState): boolean | null => profile.followed;
+
+export const selectFollowing = ({profile}: RootState): boolean => profile.following;
+
 export const selectUserId: Selector<RootState, number> = createSelector(
   [selectProfile], ({userId}) => userId
 );

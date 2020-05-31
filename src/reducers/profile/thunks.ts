@@ -1,4 +1,4 @@
-import {profileAPI} from '../../api/api';
+import {followAPI, profileAPI} from '../../api/api';
 import {handleError, handleServerError} from '../../utils/errorHandler';
 import {ResultCode} from '../../utils/responseCodes';
 import {parseMessages} from '../../utils/errorParser';
@@ -6,6 +6,8 @@ import {
   setFetching,
   setFetchingPhoto,
   setFetchingStatus,
+  setFollowed,
+  setFollowing,
   setPhoto,
   setProfile,
   setStatus,
@@ -14,6 +16,7 @@ import {
 import {Profile} from '../../models/types';
 import emptyProfile from './emptyProfile';
 import {ProfileAsyncThunkAction, ProfileThunkAction} from './types';
+import {selectUserId} from '../../selectors/profile';
 
 export const getProfile = (userId: number): ProfileAsyncThunkAction => async (dispatch) => {
   dispatch(setFetching(true));
@@ -88,5 +91,49 @@ export const updatePhoto = (image: File): ProfileAsyncThunkAction => async (disp
     handleError(dispatch, error);
   } finally {
     dispatch(setFetchingPhoto(false));
+  }
+};
+
+export const getFollowed = (): ProfileAsyncThunkAction => async (dispatch, getState) => {
+  dispatch(setFollowing(true));
+
+  try {
+    const followed = await followAPI.get(selectUserId(getState()));
+
+    dispatch(setFollowed(followed));
+  } catch (error) {
+    handleError(dispatch, error);
+  } finally {
+    dispatch(setFollowing(false));
+  }
+};
+
+export const follow = (): ProfileAsyncThunkAction => async (dispatch, getState) => {
+  dispatch(setFollowing(true));
+
+  try {
+    const {resultCode, messages} = await followAPI.follow(selectUserId(getState()));
+
+    if (resultCode !== ResultCode.SUCCESS) handleServerError(dispatch, messages);
+    else dispatch(setFollowed(true));
+  } catch (error) {
+    handleError(dispatch, error);
+  } finally {
+    dispatch(setFollowing(false));
+  }
+};
+
+export const unfollow = (): ProfileAsyncThunkAction => async (dispatch, getState) => {
+  dispatch(setFollowing(true));
+
+  try {
+    const {resultCode, messages} = await followAPI.unFollow(selectUserId(getState()));
+
+    if (resultCode !== ResultCode.SUCCESS) handleServerError(dispatch, messages);
+    else dispatch(setFollowed(false));
+  } catch (error) {
+    handleError(dispatch, error);
+  } finally {
+    dispatch(setFollowing(false));
   }
 };

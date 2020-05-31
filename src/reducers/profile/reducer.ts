@@ -4,6 +4,8 @@ import {
   SET_FETCHING,
   SET_FETCHING_PHOTO,
   SET_FETCHING_STATUS,
+  SET_FOLLOWED,
+  SET_FOLLOWING,
   SET_PHOTO,
   SET_PROFILE,
   SET_STATUS,
@@ -35,7 +37,9 @@ const initialState: ProfileState = {
   fetchingStatus: false,
   fetchingPhoto: false,
   updating: false,
-  status: null
+  status: null,
+  followed: null,
+  following: false
 };
 
 const profileReducer = (state = initialState, action: ProfileAction): ProfileState => {
@@ -46,6 +50,8 @@ const profileReducer = (state = initialState, action: ProfileAction): ProfileSta
     case SET_FETCHING_STATUS:
     case SET_FETCHING_PHOTO:
     case SET_UPDATING:
+    case SET_FOLLOWED:
+    case SET_FOLLOWING:
       return changeData(state, action);
     case SET_PHOTO:
       return changePhoto(state, action);

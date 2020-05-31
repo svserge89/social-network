@@ -1,4 +1,4 @@
-import {usersAPI} from '../../api/api';
+import {followAPI, usersAPI} from '../../api/api';
 import {handleError, handleServerError} from '../../utils/errorHandler';
 import {ResultCode} from '../../utils/responseCodes';
 import {setFetching, setFollow, setFollowing, setUnfollow, setUsers} from './actionCreators';
@@ -28,7 +28,7 @@ export const follow = (userId: number): UsersAsyncThunkAction => async (dispatch
   dispatch(setFollowing(true, userId));
 
   try {
-    const {resultCode, messages} = await usersAPI.follow(userId);
+    const {resultCode, messages} = await followAPI.follow(userId);
 
     if (resultCode !== ResultCode.SUCCESS) handleServerError(dispatch, messages);
     else dispatch(setFollow(userId));
@@ -43,7 +43,7 @@ export const unfollow = (userId: number): UsersAsyncThunkAction => async (dispat
   dispatch(setFollowing(true, userId));
 
   try {
-    const {resultCode, messages} = await usersAPI.unFollow(userId);
+    const {resultCode, messages} = await followAPI.unFollow(userId);
 
     if (resultCode !== ResultCode.SUCCESS) handleServerError(dispatch, messages);
     else dispatch(setUnfollow(userId));

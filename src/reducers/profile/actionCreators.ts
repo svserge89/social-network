@@ -2,6 +2,8 @@ import {
   SET_FETCHING,
   SET_FETCHING_PHOTO,
   SET_FETCHING_STATUS,
+  SET_FOLLOWED,
+  SET_FOLLOWING,
   SET_PHOTO,
   SET_PROFILE,
   SET_STATUS,
@@ -9,6 +11,8 @@ import {
   SetFetchingAction,
   SetFetchingPhotoAction,
   SetFetchingStatusAction,
+  SetFollowedAction,
+  SetFollowingAction,
   SetPhotoAction,
   SetProfileAction,
   SetStatusAction,
@@ -35,3 +39,7 @@ export const setFetchingPhoto = (fetchingPhoto: boolean): SetFetchingPhotoAction
 });
 
 export const setUpdating = (updating: boolean): SetUpdatingAction => ({type: SET_UPDATING, payload: {updating}});
+
+export const setFollowed = (followed: boolean): SetFollowedAction => ({type: SET_FOLLOWED, payload: {followed}});
+
+export const setFollowing = (following: boolean): SetFollowingAction => ({type: SET_FOLLOWING, payload: {following}});

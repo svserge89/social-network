@@ -45,9 +45,11 @@ export type GetUsersResponse = {
   error: string | null
 }
 
-export type FollowUserResponse = DefaultResponseWithEmptyData
+export type GetFollowedResponse = boolean
 
-export type UnFollowUserResponse = DefaultResponseWithEmptyData
+export type FollowResponse = DefaultResponseWithEmptyData
+
+export type UnFollowResponse = DefaultResponseWithEmptyData
 
 export type GetProfileResponse = Profile
 

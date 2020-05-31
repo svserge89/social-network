@@ -10,6 +10,8 @@ export const SET_FETCHING = 'social-network/profile/SET-FETCHING';
 export const SET_FETCHING_STATUS = 'social-network/profile/SET-FETCHING-STATUS';
 export const SET_FETCHING_PHOTO = 'social-network/profile/SET-FETCHING-PHOTO';
 export const SET_UPDATING = 'social-network/profile/SET-UPDATING';
+export const SET_FOLLOWED = 'social-network/profile/SET-FOLLOWED';
+export const SET_FOLLOWING = 'social-network/profile/SET-FOLLOWING';
 
 export type SetProfileAction = {
   type: typeof SET_PROFILE
@@ -46,6 +48,16 @@ export type SetUpdatingAction = {
   payload: { updating: boolean }
 }
 
+export type SetFollowedAction = {
+  type: typeof SET_FOLLOWED
+  payload: { followed: boolean }
+}
+
+export type SetFollowingAction = {
+  type: typeof SET_FOLLOWING
+  payload: { following: boolean }
+}
+
 export type ProfileAction = SetProfileAction
   | SetStatusAction
   | SetPhotoAction
@@ -53,6 +65,8 @@ export type ProfileAction = SetProfileAction
   | SetFetchingStatusAction
   | SetFetchingPhotoAction
   | SetUpdatingAction
+  | SetFollowedAction
+  | SetFollowingAction
 
 export type ProfileThunkAction = ThunkAction<void, RootState, unknown, ProfileAction>
 
@@ -66,4 +80,6 @@ export type ProfileState = {
   fetchingPhoto: boolean
   updating: boolean
   status: string | null
+  followed: boolean | null
+  following: boolean
 }

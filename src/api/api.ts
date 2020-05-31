@@ -1,15 +1,15 @@
 import axios from 'axios';
 
 import {
-  FollowUserResponse,
-  GetCurrentUserResponse,
+  FollowResponse,
+  GetCurrentUserResponse, GetFollowedResponse,
   GetProfileResponse,
   GetStatusResponse,
   GetUsersResponse,
   LoginResponse,
   LogoutResponse,
   ResponseData,
-  UnFollowUserResponse,
+  UnFollowResponse,
   UpdatePhotoResponse,
   UpdateProfileResponse,
   UpdateStatusResponse,
@@ -66,11 +66,15 @@ export const usersAPI = {
     if (filter) params.term = filter;
 
     return instance.get<GetUsersResponse>(USERS, {params}).then(responseData);
-  },
+  }
+};
 
-  follow: (userId: number) => instance.post<FollowUserResponse>(`${FOLLOW}/${userId}`).then(responseData),
+export const followAPI = {
+  get: (userId: number) => instance.get<GetFollowedResponse>(`${FOLLOW}/${userId}`).then(responseData),
 
-  unFollow: (userId: number) => instance.delete<UnFollowUserResponse>(`${FOLLOW}/${userId}`).then(responseData)
+  follow: (userId: number) => instance.post<FollowResponse>(`${FOLLOW}/${userId}`).then(responseData),
+
+  unFollow: (userId: number) => instance.delete<UnFollowResponse>(`${FOLLOW}/${userId}`).then(responseData)
 };
 
 export const profileAPI = {
