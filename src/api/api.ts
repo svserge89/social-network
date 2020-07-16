@@ -2,7 +2,8 @@ import axios from 'axios';
 
 import {
   FollowResponse,
-  GetCurrentUserResponse, GetFollowedResponse,
+  GetCurrentUserResponse,
+  GetFollowedResponse,
   GetProfileResponse,
   GetStatusResponse,
   GetUsersResponse,
@@ -18,7 +19,7 @@ import {
 import {Profile} from '../models/types';
 import {Relation} from '../reducers/users/types';
 
-const BASE_URL = 'https://social-network.samuraijs.com/api/1.0';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const AUTH = '/auth';
 const AUTH_ME = AUTH + '/me';
 const AUTH_LOGIN = AUTH + '/login';
