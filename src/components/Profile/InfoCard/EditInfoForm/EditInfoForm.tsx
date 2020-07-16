@@ -83,7 +83,7 @@ const EditInfoForm: React.FC<EditInfoFormProps> = ({
                 <ButtonWithIcon variant="warning"
                                 type="reset"
                                 icon={faUndo}
-                                onClick={form.reset}
+                                onClick={() => form.reset()}
                                 disabled={pristine || submitting}>
                   Clean
                 </ButtonWithIcon>

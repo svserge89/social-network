@@ -56,7 +56,7 @@ const LoginForm: React.FC<LoginFormProps> = ({onSubmit, captcha}) => {
               <ButtonWithIcon variant="warning"
                               icon={faUndo}
                               type="reset"
-                              onClick={form.reset}
+                              onClick={() => form.reset()}
                               disabled={submitting || pristine}>
                 Clean
               </ButtonWithIcon>
