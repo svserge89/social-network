@@ -1,4 +1,5 @@
-import {followAPI, usersAPI} from '../../api/api';
+import usersAPI from '../../api/users';
+import followAPI from '../../api/follow';
 import {handleError, handleServerError} from '../../utils/errorHandler';
 import {ResultCode} from '../../utils/responseCodes';
 import {setFetching, setFollow, setFollowing, setUnfollow, setUsers} from './actionCreators';

@@ -1,4 +1,5 @@
-import {followAPI, profileAPI} from '../../api/api';
+import profileAPI from '../../api/profile';
+import followAPI from '../../api/follow';
 import {handleError, handleServerError} from '../../utils/errorHandler';
 import {ResultCode} from '../../utils/responseCodes';
 import {parseMessages} from '../../utils/errorParser';

@@ -1,5 +1,6 @@
 import {setCaptcha, setCurrentUser, setFetching, setUpdating} from './actionCreators';
-import {authAPI, securityAPI} from '../../api/api';
+import authAPI from '../../api/auth';
+import securityAPI from '../../api/security';
 import {CaptchaResultCode, ResultCode} from '../../utils/responseCodes';
 import {handleError, handleServerError} from '../../utils/errorHandler';
 import {LoginData} from '../../models/types';
