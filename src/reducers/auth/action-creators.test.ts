@@ -1,42 +1,27 @@
-import {
-  SET_CAPTCHA,
-  SET_CURRENT_USER,
-  SET_FETCHING,
-  SET_UPDATING,
-  SetCaptchaAction,
-  SetCurrentUserAction,
-  SetFetchingAction,
-  SetUpdatingAction
-} from './types';
+import {AuthAction, SET_CAPTCHA, SET_CURRENT_USER, SET_FETCHING, SET_UPDATING} from './types';
 import {setCaptcha, setCurrentUser, setFetching, setUpdating} from './action-creators';
 
-it('should create an action to set current user', () => {
-  const expected: SetCurrentUserAction = {
-    type: SET_CURRENT_USER,
-    payload: {email: 'test@email.com', login: 'test', userId: 42}
-  };
+describe('auth action creators', () => {
+  it('should create an action to set current user', () => {
+    expect(setCurrentUser(42, 'test@email.com', 'test'))
+      .toEqual<AuthAction>({
+        type: SET_CURRENT_USER,
+        payload: {email: 'test@email.com', login: 'test', userId: 42}
+      });
+  });
 
-  expect(setCurrentUser(42, 'test@email.com', 'test')).toEqual(expected);
-});
+  it('should create an action to set captcha', () => {
+    expect(setCaptcha('some_url'))
+      .toEqual<AuthAction>({type: SET_CAPTCHA, payload: {captcha: 'some_url'}});
+  });
 
-it('should create an action to set captcha', () => {
-  const expected: SetCaptchaAction = {type: SET_CAPTCHA, payload: {captcha: 'some_url'}};
+  it('should create an action to set fetching', () => {
+    expect(setFetching(true)).toEqual<AuthAction>({type: SET_FETCHING, payload: {fetching: true}});
+    expect(setFetching(false)).toEqual<AuthAction>({type: SET_FETCHING, payload: {fetching: false}});
+  });
 
-  expect(setCaptcha('some_url')).toEqual(expected);
-});
-
-it('should create an action to set fetching', () => {
-  const expectedTrue: SetFetchingAction = {type: SET_FETCHING, payload: {fetching: true}};
-  const expectedFalse: SetFetchingAction = {type: SET_FETCHING, payload: {fetching: false}};
-
-  expect(setFetching(true)).toEqual(expectedTrue);
-  expect(setFetching(false)).toEqual(expectedFalse);
-});
-
-it('should create an action to set updating', () => {
-  const expectedTrue: SetUpdatingAction = {type: SET_UPDATING, payload: {updating: true}};
-  const expectedFalse: SetUpdatingAction = {type: SET_UPDATING, payload: {updating: false}};
-
-  expect(setUpdating(true)).toEqual(expectedTrue);
-  expect(setUpdating(false)).toEqual(expectedFalse);
+  it('should create an action to set updating', () => {
+    expect(setUpdating(true)).toEqual<AuthAction>({type: SET_UPDATING, payload: {updating: true}});
+    expect(setUpdating(false)).toEqual<AuthAction>({type: SET_UPDATING, payload: {updating: false}});
+  });
 });

@@ -1,8 +1,9 @@
-import {SET_ERROR, SetErrorAction} from './types';
+import {ErrorAction, SET_ERROR} from './types';
 import {setError} from './action-creators';
 
-it('should create an action to set error', () => {
-  const expected: SetErrorAction = {type: SET_ERROR, payload: {code: 401, description: 'test message'}};
-
-  expect(setError(401, 'test message')).toEqual(expected);
+describe('error action creators', () => {
+  it('should create an action to set error', () => {
+    expect(setError(401, 'test message'))
+      .toEqual<ErrorAction>({type: SET_ERROR, payload: {code: 401, description: 'test message'}});
+  });
 });
