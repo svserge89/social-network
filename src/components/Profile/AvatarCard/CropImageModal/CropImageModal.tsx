@@ -7,7 +7,7 @@ import {faFileUpload, faTimes} from '@fortawesome/free-solid-svg-icons';
 
 import {CropImageModalProps} from './types';
 import Slider from '../../../common/Slider/Slider';
-import getCroppedImg from '../../../../utils/cropImage';
+import getCroppedImg from '../../../../utils/crop-image';
 import {updatePhoto} from '../../../../reducers/profile/thunks';
 import ButtonWithIcon from '../../../common/ButtonWithIcon/ButtonWithIcon';
 

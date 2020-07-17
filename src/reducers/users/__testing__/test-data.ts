@@ -1,7 +1,7 @@
 import {User} from '../../../models/types';
 import {Relation, UsersState} from '../types';
 
-export const MOCK_USERS: User[] = [
+export const TEST_USERS: User[] = [
   {
     id: 1,
     name: 'test user 1',
@@ -25,7 +25,7 @@ export const MOCK_USERS: User[] = [
   }
 ];
 
-export const MOCK_INITIAL_STATE: UsersState = {
+export const TEST_INITIAL_STATE: UsersState = {
   users: [],
   size: 5,
   total: 0,

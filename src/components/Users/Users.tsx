@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Row, Col} from 'react-bootstrap';
 
 import {getUsers, cleanUsers, follow, unfollow} from '../../reducers/users/thunks';
-import {setFilter, setPage, setSize, setRelation} from '../../reducers/users/actionCreators';
+import {setFilter, setPage, setSize, setRelation} from '../../reducers/users/action-creators';
 import {
   selectAvailable,
   selectFetching,

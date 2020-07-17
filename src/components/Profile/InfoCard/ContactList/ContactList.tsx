@@ -2,7 +2,7 @@ import React from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 
 import {ContactListProps} from './types';
-import resolveBrandIcon from '../../../../utils/resolveBrandIcon';
+import resolveBrandIcon from '../../../../utils/resolve-brand-icon';
 import ComponentWithIcon from '../../../common/ComponentWithIcon/ComponentWithIcon';
 
 const ContactList: React.FC<ContactListProps> = ({contacts, labels}) => {

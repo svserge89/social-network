@@ -13,7 +13,7 @@ import ButtonWithIcon from '../../../common/ButtonWithIcon/ButtonWithIcon';
 import ComponentWithIcon from '../../../common/ComponentWithIcon/ComponentWithIcon';
 import {selectProfile} from '../../../../selectors/profile';
 import {EditInfoFormProps} from './types';
-import resolveBrandIcon from '../../../../utils/resolveBrandIcon';
+import resolveBrandIcon from '../../../../utils/resolve-brand-icon';
 
 const EditInfoForm: React.FC<EditInfoFormProps> = ({
                                                      onSubmit,

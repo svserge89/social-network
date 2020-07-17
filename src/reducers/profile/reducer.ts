@@ -12,7 +12,7 @@ import {
   SET_UPDATING,
   SetPhotoAction
 } from './types';
-import emptyProfile from './emptyProfile';
+import emptyProfile from './empty-profile';
 
 const changeData = (state: ProfileState, {payload}: ProfileAction): ProfileState => ({...state, ...payload});
 

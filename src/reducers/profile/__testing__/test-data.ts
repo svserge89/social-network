@@ -1,10 +1,10 @@
 import {Photos, Profile} from '../../../models/types';
 import {ProfileState} from '../types';
-import emptyProfile from '../emptyProfile';
+import emptyProfile from '../empty-profile';
 
-export const MOCK_PHOTOS: Photos = {small: 'small/photo/url', large: 'large/photo/url'};
+export const TEST_PHOTOS: Photos = {small: 'small/photo/url', large: 'large/photo/url'};
 
-export const MOCK_PROFILE: Profile = {
+export const TEST_PROFILE: Profile = {
   userId: 42,
   fullName: 'test user',
   aboutMe: 'some info about test user',
@@ -20,10 +20,10 @@ export const MOCK_PROFILE: Profile = {
     youtube: 'youtube.com',
     website: 'website.com'
   },
-  photos: MOCK_PHOTOS
+  photos: TEST_PHOTOS
 };
 
-export const MOCK_INITIAL_STATE: ProfileState = {
+export const TEST_INITIAL_STATE: ProfileState = {
   profile: {...emptyProfile},
   contactLabels: new Map([
     ['github', 'GitHub'],

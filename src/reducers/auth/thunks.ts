@@ -1,12 +1,12 @@
-import {setCaptcha, setCurrentUser, setFetching, setUpdating} from './actionCreators';
+import {setCaptcha, setCurrentUser, setFetching, setUpdating} from './action-creators';
 import authAPI from '../../api/auth';
 import securityAPI from '../../api/security';
-import {CaptchaResultCode, ResultCode} from '../../utils/responseCodes';
-import {handleError, handleServerError} from '../../utils/errorHandler';
+import {CaptchaResultCode, ResultCode} from '../../utils/response-codes';
+import {handleError, handleServerError} from '../../utils/error-handler';
 import {LoginData} from '../../models/types';
-import {parseMessages} from '../../utils/errorParser';
+import {parseMessages} from '../../utils/error-parser';
 import {AuthAsyncThunkAction} from './types';
-import {setRelation} from '../users/actionCreators';
+import {setRelation} from '../users/action-creators';
 import {Relation} from '../users/types';
 import {selectRelation} from '../../selectors/users';
 

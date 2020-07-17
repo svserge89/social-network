@@ -28,11 +28,11 @@ import {
   setProfile,
   setStatus,
   setUpdating
-} from './actionCreators';
-import {MOCK_PHOTOS, MOCK_PROFILE} from './__mocks__/mock-data';
+} from './action-creators';
+import {TEST_PHOTOS, TEST_PROFILE} from './__testing__/test-data';
 
 it('should create an action to set profile', () => {
-  const profile = {...MOCK_PROFILE};
+  const profile = {...TEST_PROFILE};
   const expected: SetProfileAction = {type: SET_PROFILE, payload: {profile}};
 
   expect(setProfile(profile)).toEqual(expected);
@@ -45,7 +45,7 @@ it('should create an action to set status', () => {
 });
 
 it('should create an action to set photo', () => {
-  const photos = {...MOCK_PHOTOS};
+  const photos = {...TEST_PHOTOS};
   const expected: SetPhotoAction = {type: SET_PHOTO, payload: {photos}};
 
   expect(setPhoto(photos)).toEqual(expected);

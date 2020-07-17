@@ -29,8 +29,8 @@ import {
   setSize,
   setUnfollow,
   setUsers
-} from './actionCreators';
-import {MOCK_USERS} from './__mocks__/mock-data';
+} from './action-creators';
+import {TEST_USERS} from './__testing__/test-data';
 
 it('should create an action to set follow user', () => {
   const expected: SetFollowAction = {type: FOLLOW, payload: {userId: 42}};
@@ -45,7 +45,7 @@ it('should create an action to set unfollow user', () => {
 });
 
 it('should create an action to set users', () => {
-  const users = [...MOCK_USERS];
+  const users = [...TEST_USERS];
   const expected: SetUsersAction = {type: SET_USERS, payload: {users, total: 42}};
 
   expect(setUsers(users, 42)).toEqual(expected);

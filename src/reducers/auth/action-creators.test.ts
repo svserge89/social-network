@@ -8,7 +8,7 @@ import {
   SetFetchingAction,
   SetUpdatingAction
 } from './types';
-import {setCaptcha, setCurrentUser, setFetching, setUpdating} from './actionCreators';
+import {setCaptcha, setCurrentUser, setFetching, setUpdating} from './action-creators';
 
 it('should create an action to set current user', () => {
   const expected: SetCurrentUserAction = {

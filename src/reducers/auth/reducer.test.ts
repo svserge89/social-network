@@ -1,12 +1,12 @@
 import {AuthAction, AuthState, SET_CAPTCHA, SET_CURRENT_USER, SET_FETCHING, SET_UPDATING} from './types';
 import authReducer from './reducer';
-import {MOCK_INITIAL_STATE} from './__mocks__/mock-data';
+import {TEST_INITIAL_STATE} from './__testing__/test-data';
 
 describe('auth reducer', () => {
   let initialState: AuthState;
 
   beforeEach(() => {
-    initialState = {...MOCK_INITIAL_STATE};
+    initialState = {...TEST_INITIAL_STATE};
   });
 
   it('should return the initial state', () => {

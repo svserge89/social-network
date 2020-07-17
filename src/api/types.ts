@@ -1,5 +1,5 @@
 import {Photos, Profile, User} from '../models/types';
-import {CaptchaResultCode, ResultCode} from '../utils/responseCodes';
+import {CaptchaResultCode, ResultCode} from '../utils/response-codes';
 
 export type ResponseData<T> = {
   data: T

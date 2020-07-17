@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux';
 import {AxiosError} from 'axios';
 
-import {setError} from '../reducers/error/actionCreators';
+import {setError} from '../reducers/error/action-creators';
 import {ErrorAction} from '../reducers/error/types';
 
 const ERROR_CODE = 400;

@@ -1,6 +1,6 @@
 import {AuthState} from '../types';
 
-export const MOCK_INITIAL_STATE: AuthState = {
+export const TEST_INITIAL_STATE: AuthState = {
   userId: null,
   email: null,
   login: null,

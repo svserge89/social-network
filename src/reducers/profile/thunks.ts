@@ -1,8 +1,8 @@
 import profileAPI from '../../api/profile';
 import followAPI from '../../api/follow';
-import {handleError, handleServerError} from '../../utils/errorHandler';
-import {ResultCode} from '../../utils/responseCodes';
-import {parseMessages} from '../../utils/errorParser';
+import {handleError, handleServerError} from '../../utils/error-handler';
+import {ResultCode} from '../../utils/response-codes';
+import {parseMessages} from '../../utils/error-parser';
 import {
   setFetching,
   setFetchingPhoto,
@@ -13,9 +13,9 @@ import {
   setProfile,
   setStatus,
   setUpdating
-} from './actionCreators';
+} from './action-creators';
 import {Profile} from '../../models/types';
-import emptyProfile from './emptyProfile';
+import emptyProfile from './empty-profile';
 import {ProfileAsyncThunkAction, ProfileThunkAction} from './types';
 import {selectUserId} from '../../selectors/profile';
 

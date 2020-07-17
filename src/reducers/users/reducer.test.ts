@@ -13,13 +13,13 @@ import {
   UsersState
 } from './types';
 import usersReducer from './reducer';
-import {MOCK_INITIAL_STATE, MOCK_USERS} from './__mocks__/mock-data';
+import {TEST_INITIAL_STATE, TEST_USERS} from './__testing__/test-data';
 
 describe('users reducer', () => {
   let initialState: UsersState;
 
   beforeEach(() => {
-    initialState = {...MOCK_INITIAL_STATE};
+    initialState = {...TEST_INITIAL_STATE};
   });
 
   it('should return the initial state', () => {
@@ -28,8 +28,8 @@ describe('users reducer', () => {
   });
 
   it('should handle FOLLOW', () => {
-    const users = [...MOCK_USERS];
-    const expectedUsers = MOCK_USERS.map(user => user.id === 2 ? {...user, followed: true} : user);
+    const users = [...TEST_USERS];
+    const expectedUsers = TEST_USERS.map(user => user.id === 2 ? {...user, followed: true} : user);
 
     testReducer(
       {...initialState, users: expectedUsers},
@@ -39,8 +39,8 @@ describe('users reducer', () => {
   });
 
   it('should handle UNFOLLOW', () => {
-    const users = MOCK_USERS.map(user => user.id === 2 ? {...user, followed: true} : user);
-    const expectedUsers = [...MOCK_USERS];
+    const users = TEST_USERS.map(user => user.id === 2 ? {...user, followed: true} : user);
+    const expectedUsers = [...TEST_USERS];
 
     testReducer(
       {...initialState, users: expectedUsers},
@@ -50,7 +50,7 @@ describe('users reducer', () => {
   });
 
   it('should handle SET_USERS', () => {
-    const users = [...MOCK_USERS];
+    const users = [...TEST_USERS];
 
     testReducer(
       {...initialState, users, total: 42},

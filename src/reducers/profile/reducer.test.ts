@@ -11,15 +11,15 @@ import {
   SET_STATUS,
   SET_UPDATING
 } from './types';
-import emptyProfile from './emptyProfile';
+import emptyProfile from './empty-profile';
 import profileReducer from './reducer';
-import {MOCK_INITIAL_STATE, MOCK_PHOTOS, MOCK_PROFILE} from './__mocks__/mock-data';
+import {TEST_INITIAL_STATE, TEST_PHOTOS, TEST_PROFILE} from './__testing__/test-data';
 
 describe('profile reducer', () => {
   let initialState: ProfileState;
 
   beforeEach(() => {
-    initialState = {...MOCK_INITIAL_STATE};
+    initialState = {...TEST_INITIAL_STATE};
   });
 
   it('should return the initial state', () => {
@@ -28,7 +28,7 @@ describe('profile reducer', () => {
   });
 
   it('should handle SET_PROFILE', () => {
-    const profile = {...MOCK_PROFILE};
+    const profile = {...TEST_PROFILE};
 
     testReducer({...initialState, profile}, {type: SET_PROFILE, payload: {profile}}, initialState);
     testReducer(
@@ -125,7 +125,7 @@ describe('profile reducer', () => {
   });
 
   it('should handle SET_PHOTO', () => {
-    const photos = {...MOCK_PHOTOS};
+    const photos = {...TEST_PHOTOS};
 
     testReducer(
       {...initialState, profile: {...initialState.profile, photos}},
