@@ -1,4 +1,3 @@
-import {Photos, Profile} from '../../models/types';
 import {
   SET_FETCHING,
   SET_FETCHING_PHOTO,
@@ -30,26 +29,10 @@ import {
   setStatus,
   setUpdating
 } from './actionCreators';
+import {MOCK_PHOTOS, MOCK_PROFILE} from './__mocks__/mock-data';
 
 it('should create an action to set profile', () => {
-  const profile: Profile = {
-    userId: 42,
-    fullName: 'test user',
-    aboutMe: 'some info about test user',
-    lookingForAJob: true,
-    lookingForAJobDescription: 'some looking for a job description',
-    contacts: {
-      facebook: 'facebook.com',
-      github: 'github.com',
-      instagram: 'instagram.com',
-      twitter: 'twitter.com',
-      mainLink: 'main.link.com',
-      vk: 'vk.com',
-      youtube: 'youtube.com',
-      website: 'website.com'
-    },
-    photos: {large: 'large/photo/url', small: 'small/photo/url'}
-  };
+  const profile = {...MOCK_PROFILE};
   const expected: SetProfileAction = {type: SET_PROFILE, payload: {profile}};
 
   expect(setProfile(profile)).toEqual(expected);
@@ -62,7 +45,7 @@ it('should create an action to set status', () => {
 });
 
 it('should create an action to set photo', () => {
-  const photos: Photos = {small: 'small/photo/url', large: 'large/photo/url'};
+  const photos = {...MOCK_PHOTOS};
   const expected: SetPhotoAction = {type: SET_PHOTO, payload: {photos}};
 
   expect(setPhoto(photos)).toEqual(expected);
