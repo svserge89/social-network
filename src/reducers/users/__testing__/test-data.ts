@@ -1,5 +1,5 @@
 import {User} from '../../../models/types';
-import {Relation, UsersState} from '../types';
+import {Relation, SET_RELATION, UsersAction, UsersState} from '../types';
 
 export const TEST_USERS: User[] = [
   {
@@ -35,4 +35,9 @@ export const TEST_INITIAL_STATE: UsersState = {
   available: [5, 10, 25, 50],
   relation: Relation.ALL,
   filter: ''
+};
+
+export const TEST_SET_RELATION_ALL_ACTION: UsersAction = {
+  type: SET_RELATION,
+  payload: {relation: Relation.ALL, page: 1}
 };

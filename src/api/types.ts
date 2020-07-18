@@ -24,15 +24,19 @@ type DefaultResponseWithEmptyData = DefaultResponse<ResultCode> & {
 }
 
 export type GetCurrentUserResponse = DefaultResponse<ResultCode> & {
-  data: {
+  data?: {
     id: number
     email: string
     login: string
   }
 }
 
+export type GetCaptchaResponse = {
+  url: string
+}
+
 export type LoginResponse = DefaultResponse<LoginResultCode> & {
-  data: {
+  data?: {
     userId: number
   }
 }

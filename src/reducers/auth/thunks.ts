@@ -14,10 +14,10 @@ export const getCurrentUser = (): AuthAsyncThunkAction => async (dispatch) => {
   dispatch(setFetching(true));
 
   try {
-    const {resultCode, data: {id, email, login}} = await authAPI.getCurrentUser();
+    const {resultCode, messages, data} = await authAPI.getCurrentUser();
 
-    if (resultCode !== ResultCode.SUCCESS) return;
-    else dispatch(setCurrentUser(id, email, login));
+    if (resultCode !== ResultCode.SUCCESS) handleServerError(dispatch, messages);
+    else dispatch(setCurrentUser(data!.id, data!.email, data!.login));
   } catch (error) {
     handleError(dispatch, error);
   } finally {
@@ -25,7 +25,7 @@ export const getCurrentUser = (): AuthAsyncThunkAction => async (dispatch) => {
   }
 };
 
-const getCaptcha = (): AuthAsyncThunkAction => async (dispatch) => {
+export const getCaptcha = (): AuthAsyncThunkAction => async (dispatch) => {
   try {
     const {url} = await securityAPI.getCaptcha();
 
