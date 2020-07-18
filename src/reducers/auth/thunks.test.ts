@@ -9,13 +9,16 @@ import {AuthAction} from './types';
 import {ErrorAction} from '../error/types';
 import {UsersAction} from '../users/types';
 import {
+  TEST_CAPTCHA,
   TEST_CAPTCHA_REQUIRED_LOGIN_RESPONSE,
+  TEST_EMAIL,
   TEST_ERROR_GET_CURRENT_USER_RESPONSE,
   TEST_ERROR_LOGIN_RESPONSE,
   TEST_ERROR_LOGOUT_RESPONSE,
   TEST_ERROR_RESPONSE,
   TEST_FORM_ERROR_EXCEPTION,
   TEST_LOGIN_PARAM,
+  TEST_PASSWORD,
   TEST_ROOT_STATE,
   TEST_ROOT_STATE_WITH_RELATION_FRIENDS,
   TEST_SET_CAPTCHA_ACTION,
@@ -173,12 +176,7 @@ describe('auth thunk actions', () => {
       await store.dispatch(login(TEST_LOGIN_PARAM));
 
       expect(spyLogin).toBeCalledTimes(1);
-      expect(spyLogin).toBeCalledWith(
-        TEST_LOGIN_PARAM.email,
-        TEST_LOGIN_PARAM.password,
-        TEST_LOGIN_PARAM.rememberMe,
-        TEST_LOGIN_PARAM.captcha
-      );
+      expect(spyLogin).toBeCalledWith(TEST_EMAIL, TEST_PASSWORD, TEST_LOGIN_PARAM.rememberMe, TEST_CAPTCHA);
       expect(spyGetCurrentUser).not.toBeCalled();
       expect(spyGetCaptcha).not.toBeCalled();
       expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([

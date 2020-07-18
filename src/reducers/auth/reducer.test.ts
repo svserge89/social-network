@@ -1,6 +1,19 @@
-import {AuthAction, AuthState, SET_CAPTCHA, SET_CURRENT_USER, SET_FETCHING, SET_UPDATING} from './types';
+import {AuthAction, AuthState} from './types';
 import authReducer from './reducer';
-import {TEST_INITIAL_STATE} from './__testing__/test-data';
+import {
+  TEST_CAPTCHA_URL,
+  TEST_EMAIL,
+  TEST_INITIAL_STATE,
+  TEST_LOGIN,
+  TEST_SET_CAPTCHA_ACTION,
+  TEST_SET_CURRENT_USER_ACTION,
+  TEST_SET_CURRENT_USER_EMPTY_ACTION,
+  TEST_SET_FETCHING_FALSE_ACTION,
+  TEST_SET_FETCHING_TRUE_ACTION,
+  TEST_SET_UPDATING_FALSE_ACTION,
+  TEST_SET_UPDATING_TRUE_ACTION,
+  TEST_USER_ID
+} from './__testing__/test-data';
 
 describe('auth reducer', () => {
   let initialState: AuthState;
@@ -15,48 +28,36 @@ describe('auth reducer', () => {
   });
 
   it('should handle SET_FETCHING', () => {
-    testReducer(
-      {...initialState, fetching: true},
-      {type: SET_FETCHING, payload: {fetching: true}},
-      initialState
-    );
+    testReducer({...initialState, fetching: true}, TEST_SET_FETCHING_TRUE_ACTION, initialState);
     testReducer(
       {...initialState, fetching: false},
-      {type: SET_FETCHING, payload: {fetching: false}},
+      TEST_SET_FETCHING_FALSE_ACTION,
       {...initialState, fetching: true}
     );
   });
 
   it('should handle SET_CURRENT_USER', () => {
     testReducer(
-      {...initialState, userId: 42, email: 'test@email.com', login: 'test user'},
-      {type: SET_CURRENT_USER, payload: {userId: 42, email: 'test@email.com', login: 'test user'}},
+      {...initialState, userId: TEST_USER_ID, email: TEST_EMAIL, login: TEST_LOGIN},
+      TEST_SET_CURRENT_USER_ACTION,
       initialState
     );
     testReducer(
       {...initialState},
-      {type: SET_CURRENT_USER, payload: {userId: null, email: null, login: null}},
-      {...initialState, userId: 42, email: 'test@email.com', login: 'test user'}
+      TEST_SET_CURRENT_USER_EMPTY_ACTION,
+      {...initialState, userId: TEST_USER_ID, email: TEST_EMAIL, login: TEST_LOGIN}
     );
   });
 
   it('should handle SET_CAPTCHA', () => {
-    testReducer(
-      {...initialState, captcha: 'captcha/url'},
-      {type: SET_CAPTCHA, payload: {captcha: 'captcha/url'}},
-      initialState
-    );
+    testReducer({...initialState, captcha: TEST_CAPTCHA_URL}, TEST_SET_CAPTCHA_ACTION, initialState);
   });
 
   it('should handle SET_UPDATING', () => {
-    testReducer(
-      {...initialState, updating: true},
-      {type: SET_UPDATING, payload: {updating: true}},
-      initialState
-    );
+    testReducer({...initialState, updating: true}, TEST_SET_UPDATING_TRUE_ACTION, initialState);
     testReducer(
       {...initialState, updating: false},
-      {type: SET_UPDATING, payload: {updating: false}},
+      TEST_SET_UPDATING_FALSE_ACTION,
       {...initialState, updating: true}
     );
   });
