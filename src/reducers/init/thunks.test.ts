@@ -14,7 +14,7 @@ import {
   TEST_SET_FETCHING_TRUE_ACTION,
   TEST_SUCCESS_GET_CURRENT_USER_RESPONSE
 } from '../auth/__testing__/test-data';
-import {TEST_ROOT_STATE, TEST_SET_INITIALIZED_ACTION} from './__testing__/test-data';
+import {TEST_ROOT_STATE, TEST_SET_INITIALIZED_TRUE_ACTION} from './__testing__/test-data';
 import {TEST_SET_ERROR_ACTION} from '../error/__testing__/test-data';
 import {DispatchExts} from './__testing__/types';
 
@@ -40,7 +40,7 @@ describe('init thunk actions', () => {
         TEST_SET_FETCHING_TRUE_ACTION,
         TEST_SET_CURRENT_USER_ACTION,
         TEST_SET_FETCHING_FALSE_ACTION,
-        TEST_SET_INITIALIZED_ACTION
+        TEST_SET_INITIALIZED_TRUE_ACTION
       ]);
     });
 
@@ -53,7 +53,7 @@ describe('init thunk actions', () => {
         TEST_SET_FETCHING_TRUE_ACTION,
         TEST_SET_ERROR_ACTION,
         TEST_SET_FETCHING_FALSE_ACTION,
-        TEST_SET_INITIALIZED_ACTION
+        TEST_SET_INITIALIZED_TRUE_ACTION
       ]);
     });
   });

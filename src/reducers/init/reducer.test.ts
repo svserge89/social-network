@@ -1,11 +1,16 @@
-import {InitAction, InitState, SET_INITIALIZED} from './types';
+import {InitAction, InitState} from './types';
 import initReducer from './reducer';
+import {
+  TEST_INITIAL_STATE,
+  TEST_SET_INITIALIZED_FALSE_ACTION,
+  TEST_SET_INITIALIZED_TRUE_ACTION
+} from './__testing__/test-data';
 
 describe('init reducer', () => {
   let initialState: InitState;
 
   beforeEach(() => {
-    initialState = {initialized: false};
+    initialState = {...TEST_INITIAL_STATE};
   });
 
   it('should return the initial state', () => {
@@ -14,14 +19,10 @@ describe('init reducer', () => {
   });
 
   it('should handle SET_INITIALIZED', () => {
-    testReducer(
-      {...initialState, initialized: true},
-      {type: SET_INITIALIZED, payload: {initialized: true}},
-      initialState
-    );
+    testReducer({...initialState, initialized: true}, TEST_SET_INITIALIZED_TRUE_ACTION, initialState);
     testReducer(
       {...initialState, initialized: false},
-      {type: SET_INITIALIZED, payload: {initialized: false}},
+      TEST_SET_INITIALIZED_FALSE_ACTION,
       {...initialState, initialized: true}
     );
   });
