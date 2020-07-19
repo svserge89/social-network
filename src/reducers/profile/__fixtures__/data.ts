@@ -2,9 +2,9 @@ import {Photos, Profile} from '../../../models/types';
 import {ProfileState} from '../types';
 import emptyProfile from '../empty-profile';
 
-export const TEST_PHOTOS: Photos = {small: 'small/photo/url', large: 'large/photo/url'};
+export const PHOTOS: Photos = {small: 'small/photo/url', large: 'large/photo/url'};
 
-export const TEST_PROFILE: Profile = {
+export const PROFILE: Profile = {
   userId: 42,
   fullName: 'test user',
   aboutMe: 'some info about test user',
@@ -20,10 +20,10 @@ export const TEST_PROFILE: Profile = {
     youtube: 'youtube.com',
     website: 'website.com'
   },
-  photos: TEST_PHOTOS
+  photos: PHOTOS
 };
 
-export const TEST_INITIAL_STATE: ProfileState = {
+export const INITIAL_STATE: ProfileState = {
   profile: {...emptyProfile},
   contactLabels: new Map([
     ['github', 'GitHub'],

@@ -9,7 +9,7 @@ import {
   SET_PROFILE,
   SET_STATUS,
   SET_UPDATING,
-} from './types';
+} from '../types';
 import {
   setFetching,
   setFetchingPhoto,
@@ -20,12 +20,12 @@ import {
   setProfile,
   setStatus,
   setUpdating
-} from './action-creators';
-import {TEST_PHOTOS, TEST_PROFILE} from './__testing__/test-data';
+} from '../action-creators';
+import {PHOTOS, PROFILE} from '../__fixtures__/data';
 
 describe('profile action creators', () => {
   it('should create an action to set profile', () => {
-    const profile = {...TEST_PROFILE};
+    const profile = {...PROFILE};
 
     expect(setProfile(profile)).toEqual<ProfileAction>({type: SET_PROFILE, payload: {profile}});
   });
@@ -36,7 +36,7 @@ describe('profile action creators', () => {
   });
 
   it('should create an action to set photo', () => {
-    const photos = {...TEST_PHOTOS};
+    const photos = {...PHOTOS};
 
     expect(setPhoto(photos)).toEqual<ProfileAction>({type: SET_PHOTO, payload: {photos}});
   });

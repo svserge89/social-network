@@ -10,7 +10,7 @@ import {
   SET_USERS,
   UNFOLLOW,
   UsersAction
-} from './types';
+} from '../types';
 import {
   setFetching,
   setFilter,
@@ -21,8 +21,8 @@ import {
   setSize,
   setUnfollow,
   setUsers
-} from './action-creators';
-import {TEST_USERS} from './__testing__/test-data';
+} from '../action-creators';
+import {TEST_USERS} from '../__fixtures__/data';
 
 describe('users action creators', () => {
   it('should create an action to set follow user', () => {

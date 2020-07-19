@@ -37,7 +37,7 @@ export const TEST_INITIAL_STATE: UsersState = {
   filter: ''
 };
 
-export const TEST_SET_RELATION_ALL_ACTION: UsersAction = {
+export const SET_RELATION_ALL_ACTION: UsersAction = {
   type: SET_RELATION,
   payload: {relation: Relation.ALL, page: 1}
 };

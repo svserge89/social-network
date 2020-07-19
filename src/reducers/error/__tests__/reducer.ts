@@ -1,12 +1,12 @@
-import {ErrorAction, ErrorState} from './types';
-import errorReducer from './reducer';
-import {TEST_ERROR_CODE, TEST_ERROR_MESSAGE, TEST_INITIAL_STATE, TEST_SET_ERROR_ACTION} from './__testing__/test-data';
+import {ErrorAction, ErrorState} from '../types';
+import errorReducer from '../reducer';
+import {ERROR_CODE, ERROR_MESSAGE, INITIAL_STATE, SET_ERROR_ACTION} from '../__fixtures__/data';
 
 describe('error reducer', () => {
   let initialState: ErrorState;
 
   beforeEach(() => {
-    initialState = {...TEST_INITIAL_STATE};
+    initialState = {...INITIAL_STATE};
   });
 
   it('should return the initial state', () => {
@@ -16,8 +16,8 @@ describe('error reducer', () => {
 
   it('should handle SET_ERROR', () => {
     testReducer(
-      {...initialState, code: TEST_ERROR_CODE, description: TEST_ERROR_MESSAGE},
-      TEST_SET_ERROR_ACTION,
+      {...initialState, code: ERROR_CODE, description: ERROR_MESSAGE},
+      SET_ERROR_ACTION,
       initialState
     );
   });

@@ -11,9 +11,9 @@ import {
   UNFOLLOW,
   UsersAction,
   UsersState
-} from './types';
-import usersReducer from './reducer';
-import {TEST_INITIAL_STATE, TEST_USERS} from './__testing__/test-data';
+} from '../types';
+import usersReducer from '../reducer';
+import {TEST_INITIAL_STATE, TEST_USERS} from '../__fixtures__/data';
 
 describe('users reducer', () => {
   let initialState: UsersState;

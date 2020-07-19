@@ -10,16 +10,16 @@ import {
   SET_PROFILE,
   SET_STATUS,
   SET_UPDATING
-} from './types';
-import emptyProfile from './empty-profile';
-import profileReducer from './reducer';
-import {TEST_INITIAL_STATE, TEST_PHOTOS, TEST_PROFILE} from './__testing__/test-data';
+} from '../types';
+import emptyProfile from '../empty-profile';
+import profileReducer from '../reducer';
+import {INITIAL_STATE, PHOTOS, PROFILE} from '../__fixtures__/data';
 
 describe('profile reducer', () => {
   let initialState: ProfileState;
 
   beforeEach(() => {
-    initialState = {...TEST_INITIAL_STATE};
+    initialState = {...INITIAL_STATE};
   });
 
   it('should return the initial state', () => {
@@ -28,7 +28,7 @@ describe('profile reducer', () => {
   });
 
   it('should handle SET_PROFILE', () => {
-    const profile = {...TEST_PROFILE};
+    const profile = {...PROFILE};
 
     testReducer({...initialState, profile}, {type: SET_PROFILE, payload: {profile}}, initialState);
     testReducer(
@@ -125,7 +125,7 @@ describe('profile reducer', () => {
   });
 
   it('should handle SET_PHOTO', () => {
-    const photos = {...TEST_PHOTOS};
+    const photos = {...PHOTOS};
 
     testReducer(
       {...initialState, profile: {...initialState.profile, photos}},
