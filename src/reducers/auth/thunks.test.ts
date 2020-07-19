@@ -34,7 +34,7 @@ import {
   TEST_SUCCESS_LOGIN_RESPONSE,
   TEST_SUCCESS_LOGOUT_RESPONSE
 } from './__testing__/test-data';
-import {TEST_SET_ERROR_ACTION, TEST_SET_SERVER_ERROR_ACTION} from '../error/__testing__/test-data';
+import {TEST_SET_ERROR_ACTION, TEST_SET_ERROR_STATUS_ACTION} from '../error/__testing__/test-data';
 import {TEST_SET_RELATION_ALL_ACTION} from '../users/__testing__/test-data';
 import {DispatchExts} from './__testing__/types';
 
@@ -82,7 +82,7 @@ describe('auth thunk actions', () => {
       expect(spyGetCurrentUser).toBeCalledTimes(1);
       expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([
         TEST_SET_FETCHING_TRUE_ACTION,
-        TEST_SET_SERVER_ERROR_ACTION,
+        TEST_SET_ERROR_STATUS_ACTION,
         TEST_SET_FETCHING_FALSE_ACTION
       ]);
     });
@@ -224,7 +224,7 @@ describe('auth thunk actions', () => {
       expect(spyLogout).toBeCalledTimes(1);
       expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([
         TEST_SET_UPDATING_TRUE_ACTION,
-        TEST_SET_SERVER_ERROR_ACTION,
+        TEST_SET_ERROR_STATUS_ACTION,
         TEST_SET_UPDATING_FALSE_ACTION
       ]);
     });

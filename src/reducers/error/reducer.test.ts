@@ -1,11 +1,12 @@
-import {ErrorAction, ErrorState, SET_ERROR} from './types';
+import {ErrorAction, ErrorState} from './types';
 import errorReducer from './reducer';
+import {TEST_ERROR_CODE, TEST_ERROR_MESSAGE, TEST_INITIAL_STATE, TEST_SET_ERROR_ACTION} from './__testing__/test-data';
 
 describe('error reducer', () => {
   let initialState: ErrorState;
 
   beforeEach(() => {
-    initialState = {code: 0, description: null};
+    initialState = {...TEST_INITIAL_STATE};
   });
 
   it('should return the initial state', () => {
@@ -15,8 +16,8 @@ describe('error reducer', () => {
 
   it('should handle SET_ERROR', () => {
     testReducer(
-      {...initialState, code: 401, description: 'test message'},
-      {type: SET_ERROR, payload: {code: 401, description: 'test message'}},
+      {...initialState, code: TEST_ERROR_CODE, description: TEST_ERROR_MESSAGE},
+      TEST_SET_ERROR_ACTION,
       initialState
     );
   });
