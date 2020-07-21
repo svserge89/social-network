@@ -102,21 +102,21 @@ describe('profile thunk actions', () => {
 
     it('should dispatch actions when success response', async () => {
       spyUpdate.mockResolvedValue(SUCCESS_UPDATE_PROFILE_RESPONSE);
-      await testUpdateProfile(SET_PROFILE_ACTION);
+      await testUpdateProfile([SET_PROFILE_ACTION]);
     });
 
     it('should dispatch actions and throw exception when error result code', async () => {
       spyUpdate.mockResolvedValue(ERROR_UPDATE_PROFILE_RESPONSE);
-      await testUpdateProfile(undefined, true);
+      await testUpdateProfile([], true);
     });
 
     it('should dispatch actions when error response', async () => {
       spyUpdate.mockRejectedValue(ERROR_RESPONSE);
-      await testUpdateProfile(SET_ERROR_ACTION);
+      await testUpdateProfile([SET_ERROR_ACTION]);
     });
 
-    async function testUpdateProfile(expectedAction?: ProfileAction | ErrorAction, expectError: boolean = false)
-      : Promise<void> {
+    async function testUpdateProfile(expectedActions: (ProfileAction | ErrorAction)[],
+                                     expectError: boolean = false): Promise<void> {
       let thrownError;
 
       try {
@@ -126,16 +126,16 @@ describe('profile thunk actions', () => {
         else throw error;
       }
 
-      const expectedActions: (ProfileAction | ErrorAction)[] = !!expectedAction
-        ? [SET_UPDATING_TRUE_ACTION, expectedAction, SET_UPDATING_FALSE_ACTION]
-        : [SET_UPDATING_TRUE_ACTION, SET_UPDATING_FALSE_ACTION];
-
       expect(spyUpdate).toBeCalledTimes(1);
       expect(spyUpdate).toBeCalledWith(PROFILE);
 
       if (expectError) expect(thrownError).toEqual(FORM_ERROR_EXCEPTION);
 
-      expect(store.getActions()).toEqual(expectedActions);
+      expect(store.getActions()).toEqual<(ProfileAction | ErrorAction)[]>([
+        SET_UPDATING_TRUE_ACTION,
+        ...expectedActions,
+        SET_UPDATING_FALSE_ACTION
+      ]);
     }
   });
 
