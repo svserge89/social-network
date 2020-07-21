@@ -56,57 +56,48 @@ describe('auth thunk actions', () => {
   describe('getCurrentUser thunk', () => {
     it('should dispatch actions when success response', async () => {
       spyGetCurrentUser.mockResolvedValue(SUCCESS_GET_CURRENT_USER_RESPONSE);
-      await store.dispatch(getCurrentUser());
-
-      expect(spyGetCurrentUser).toBeCalledTimes(1);
-      expect(store.getActions()).toEqual<AuthAction[]>([
-        SET_FETCHING_TRUE_ACTION,
-        SET_CURRENT_USER_ACTION,
-        SET_FETCHING_FALSE_ACTION
-      ]);
+      await testGetCurrentUser(SET_CURRENT_USER_ACTION);
     });
 
     it('should dispatch actions when success response', async () => {
       spyGetCurrentUser.mockRejectedValue(ERROR_RESPONSE);
-      await store.dispatch(getCurrentUser());
-
-      expect(spyGetCurrentUser).toBeCalledTimes(1);
-      expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([
-        SET_FETCHING_TRUE_ACTION,
-        SET_ERROR_ACTION,
-        SET_FETCHING_FALSE_ACTION
-      ]);
+      await testGetCurrentUser(SET_ERROR_ACTION);
     });
 
     it('should dispatch actions when error result code', async () => {
       spyGetCurrentUser.mockResolvedValue(ERROR_GET_CURRENT_USER_RESPONSE);
+      await testGetCurrentUser(SET_ERROR_STATUS_ACTION);
+    });
+
+    async function testGetCurrentUser(expectedAction: AuthAction | ErrorAction): Promise<void> {
       await store.dispatch(getCurrentUser());
 
       expect(spyGetCurrentUser).toBeCalledTimes(1);
       expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([
         SET_FETCHING_TRUE_ACTION,
-        SET_ERROR_STATUS_ACTION,
+        expectedAction,
         SET_FETCHING_FALSE_ACTION
       ]);
-    });
+    }
   });
 
   describe('getCaptcha thunk', () => {
     it('should dispatch action when success response', async () => {
       spyGetCaptcha.mockResolvedValue(SUCCESS_GET_CAPTCHA_RESPONSE);
-      await store.dispatch(getCaptcha());
-
-      expect(spyGetCaptcha).toBeCalledTimes(1);
-      expect(store.getActions()).toEqual<AuthAction[]>([SET_CAPTCHA_ACTION]);
+      await testGetCaptcha(SET_CAPTCHA_ACTION);
     });
 
     it('should dispatch action when error response', async () => {
       spyGetCaptcha.mockRejectedValue(ERROR_RESPONSE);
+      await testGetCaptcha(SET_ERROR_ACTION);
+    });
+
+    async function testGetCaptcha(expectedAction: AuthAction | ErrorAction): Promise<void> {
       await store.dispatch(getCaptcha());
 
       expect(spyGetCaptcha).toBeCalledTimes(1);
-      expect(store.getActions()).toEqual<ErrorAction[]>([SET_ERROR_ACTION]);
-    });
+      expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([expectedAction]);
+    }
   });
 
   describe('login thunk', () => {
@@ -115,76 +106,64 @@ describe('auth thunk actions', () => {
     it('should dispatch actions when success response', async () => {
       spyLogin.mockResolvedValue(SUCCESS_LOGIN_RESPONSE);
       spyGetCurrentUser.mockResolvedValue(SUCCESS_GET_CURRENT_USER_RESPONSE);
-      await store.dispatch(login(LOGIN_PARAM));
-
-      expect(spyLogin).toBeCalledTimes(1);
-      expect(spyGetCurrentUser).toBeCalledTimes(1);
-      expect(spyGetCaptcha).not.toBeCalled();
-      expect(store.getActions()).toEqual<AuthAction[]>([
-        SET_UPDATING_TRUE_ACTION,
+      await testLogin([
         SET_FETCHING_TRUE_ACTION,
         SET_CURRENT_USER_ACTION,
         SET_FETCHING_FALSE_ACTION,
-        SET_CAPTCHA_EMPTY_ACTION,
-        SET_UPDATING_FALSE_ACTION
+        SET_CAPTCHA_EMPTY_ACTION
       ]);
+
+      expect(spyGetCurrentUser).toBeCalledTimes(1);
+      expect(spyGetCaptcha).not.toBeCalled();
     });
 
     it('should dispatch actions and throw error when captcha required', async () => {
       spyLogin.mockResolvedValue(CAPTCHA_REQUIRED_LOGIN_RESPONSE);
       spyGetCaptcha.mockResolvedValue(SUCCESS_GET_CAPTCHA_RESPONSE);
+      await testLogin([SET_CAPTCHA_ACTION], true);
 
-      let thrownError;
-
-      try {
-        await store.dispatch(login(LOGIN_PARAM));
-      } catch (error) {
-        thrownError = error;
-      }
-
-      expect(spyLogin).toBeCalledTimes(1);
       expect(spyGetCurrentUser).not.toBeCalled();
       expect(spyGetCaptcha).toBeCalledTimes(1);
-      expect(thrownError).toEqual(FORM_ERROR_EXCEPTION);
-      expect(store.getActions()).toEqual<AuthAction[]>([
-        SET_UPDATING_TRUE_ACTION,
-        SET_CAPTCHA_ACTION,
-        SET_UPDATING_FALSE_ACTION
-      ]);
     });
 
     it('should dispatch actions and throw error when error result code', async () => {
       spyLogin.mockResolvedValue(ERROR_LOGIN_RESPONSE);
+      await testLogin([], true);
 
+      expect(spyGetCurrentUser).not.toBeCalled();
+      expect(spyGetCaptcha).not.toBeCalled();
+    });
+
+    it('should dispatch actions when error response', async () => {
+      spyLogin.mockRejectedValue(ERROR_RESPONSE);
+      await testLogin([SET_ERROR_ACTION]);
+
+      expect(spyGetCurrentUser).not.toBeCalled();
+      expect(spyGetCaptcha).not.toBeCalled();
+    });
+
+    async function testLogin(expectedActions: (AuthAction | ErrorAction)[],
+                             expectError: boolean = false): Promise<void> {
       let thrownError;
 
       try {
         await store.dispatch(login(LOGIN_PARAM));
       } catch (error) {
-        thrownError = error;
+        if (expectError) thrownError = error;
+        else throw error;
       }
 
       expect(spyLogin).toBeCalledTimes(1);
-      expect(spyGetCurrentUser).not.toBeCalled();
-      expect(spyGetCaptcha).not.toBeCalled();
-      expect(thrownError).toEqual(FORM_ERROR_EXCEPTION);
-      expect(store.getActions()).toEqual<AuthAction[]>([SET_UPDATING_TRUE_ACTION, SET_UPDATING_FALSE_ACTION]);
-    });
-
-    it('should dispatch actions when error response', async () => {
-      spyLogin.mockRejectedValue(ERROR_RESPONSE);
-      await store.dispatch(login(LOGIN_PARAM));
-
-      expect(spyLogin).toBeCalledTimes(1);
       expect(spyLogin).toBeCalledWith(EMAIL, PASSWORD, LOGIN_PARAM.rememberMe, CAPTCHA);
-      expect(spyGetCurrentUser).not.toBeCalled();
-      expect(spyGetCaptcha).not.toBeCalled();
+
+      if (expectError) expect(thrownError).toEqual(FORM_ERROR_EXCEPTION);
+
       expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([
         SET_UPDATING_TRUE_ACTION,
-        SET_ERROR_ACTION,
+        ...expectedActions,
         SET_UPDATING_FALSE_ACTION
       ]);
-    });
+    }
   });
 
   describe('logout thunk', () => {
@@ -192,53 +171,36 @@ describe('auth thunk actions', () => {
 
     it('should dispatch actions when success response', async () => {
       spyLogout.mockResolvedValue(SUCCESS_LOGOUT_RESPONSE);
-      await store.dispatch(logout());
-
-      expect(spyLogout).toBeCalledTimes(1);
-      expect(store.getActions()).toEqual<AuthAction[]>([
-        SET_UPDATING_TRUE_ACTION,
-        SET_CURRENT_USER_EMPTY_ACTION,
-        SET_UPDATING_FALSE_ACTION
-      ]);
+      await testLogout([SET_CURRENT_USER_EMPTY_ACTION]);
     });
 
     it('should dispatch actions when success response and relation not set to all', async () => {
       const store = mockStore(ROOT_STATE_WITH_RELATION_FRIENDS);
 
       spyLogout.mockResolvedValue(SUCCESS_LOGOUT_RESPONSE);
-      await store.dispatch(logout());
-
-      expect(spyLogout).toBeCalledTimes(1);
-      expect(store.getActions()).toEqual<(AuthAction | UsersAction)[]>([
-        SET_UPDATING_TRUE_ACTION,
-        SET_CURRENT_USER_EMPTY_ACTION,
-        SET_RELATION_ALL_ACTION,
-        SET_UPDATING_FALSE_ACTION
-      ]);
+      await testLogout([SET_CURRENT_USER_EMPTY_ACTION, SET_RELATION_ALL_ACTION], store);
     });
 
     it('should dispatch actions when error result code', async () => {
       spyLogout.mockResolvedValue(ERROR_LOGOUT_RESPONSE);
-      await store.dispatch(logout());
-
-      expect(spyLogout).toBeCalledTimes(1);
-      expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([
-        SET_UPDATING_TRUE_ACTION,
-        SET_ERROR_STATUS_ACTION,
-        SET_UPDATING_FALSE_ACTION
-      ]);
+      await testLogout([SET_ERROR_STATUS_ACTION]);
     });
 
     it('should dispatch actions when error response', async () => {
       spyLogout.mockRejectedValue(ERROR_RESPONSE);
-      await store.dispatch(logout());
+      await testLogout([SET_ERROR_ACTION]);
+    });
+
+    async function testLogout(expectedActions: (AuthAction | UsersAction | ErrorAction)[],
+                              localStore: ReturnType<typeof mockStore> = store): Promise<void> {
+      await localStore.dispatch(logout());
 
       expect(spyLogout).toBeCalledTimes(1);
-      expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([
+      expect(localStore.getActions()).toEqual<(AuthAction | UsersAction | ErrorAction)[]>([
         SET_UPDATING_TRUE_ACTION,
-        SET_ERROR_ACTION,
+        ...expectedActions,
         SET_UPDATING_FALSE_ACTION
       ]);
-    });
+    }
   });
 });
