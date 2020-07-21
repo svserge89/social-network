@@ -48,6 +48,7 @@ const InfoCard: React.FC<InfoCardProps> = ({editable = false}) => {
   const submitHandler = useCallback(async (profile: Profile): Promise<any> => {
     try {
       await dispatch(updateProfile(profile));
+      setEditMode(false);
     } catch (error) {
       return error;
     }
