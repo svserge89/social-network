@@ -8,14 +8,13 @@ import {InitAction} from '../types';
 import {AuthAction} from '../../auth/types';
 import {ErrorAction} from '../../error/types';
 import {
-  ERROR_RESPONSE,
   SET_CURRENT_USER_ACTION,
   SET_FETCHING_FALSE_ACTION,
   SET_FETCHING_TRUE_ACTION,
   SUCCESS_GET_CURRENT_USER_RESPONSE
 } from '../../auth/__fixtures__/data';
 import {ROOT_STATE, SET_INITIALIZED_TRUE_ACTION} from '../__fixtures__/data';
-import {SET_ERROR_ACTION} from '../../error/__fixtures__/data';
+import {ERROR_RESPONSE, SET_ERROR_ACTION} from '../../error/__fixtures__/data';
 import {DispatchExts} from '../__fixtures__/types';
 
 const mockStore = configureMockStore<Partial<RootState>, DispatchExts>([thunk]);

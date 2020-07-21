@@ -41,7 +41,7 @@ export const updateProfile = (profile: Profile): ProfileAsyncThunkAction => asyn
 
     if (resultCode !== ResultCode.SUCCESS) throw parseMessages(messages);
 
-    await dispatch(getProfile(profile.userId));
+    await dispatch(setProfile(profile));
   } catch (error) {
     if (error.submissionError) throw error;
 
@@ -56,12 +56,16 @@ export const cleanProfile = (): ProfileThunkAction => (dispatch) => (
 );
 
 export const getStatus = (userId: number): ProfileAsyncThunkAction => async (dispatch) => {
+  dispatch(setFetchingStatus(true));
+
   try {
     const status = await profileAPI.getStatus(userId);
 
     dispatch(setStatus(status));
   } catch (error) {
     handleError(dispatch, error);
+  } finally {
+    dispatch(setFetchingStatus(false));
   }
 };
 
@@ -84,10 +88,10 @@ export const updatePhoto = (image: File): ProfileAsyncThunkAction => async (disp
   dispatch(setFetchingPhoto(true));
 
   try {
-    const {resultCode, data: {photos}, messages} = await profileAPI.updatePhoto(image);
+    const {resultCode, data, messages} = await profileAPI.updatePhoto(image);
 
     if (resultCode !== ResultCode.SUCCESS) handleServerError(dispatch, messages);
-    else dispatch(setPhoto(photos));
+    else dispatch(setPhoto(data!.photos));
   } catch (error) {
     handleError(dispatch, error);
   } finally {

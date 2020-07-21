@@ -1,11 +1,8 @@
-import {FORM_ERROR} from 'final-form';
-
 import {AuthAction, AuthState, SET_CAPTCHA, SET_CURRENT_USER, SET_FETCHING, SET_UPDATING} from '../types';
 import {Relation, UsersState} from '../../users/types';
 import {RootState} from '../../../store/types';
 import {CaptchaResultCode, ResultCode} from '../../../utils/response-codes';
 import {GetCaptchaResponse, GetCurrentUserResponse, LoginResponse, LogoutResponse} from '../../../api/types';
-import {AxiosError} from 'axios';
 import {LoginData} from '../../../models/types';
 import {ERROR_MESSAGE} from '../../error/__fixtures__/data';
 
@@ -32,8 +29,6 @@ export const EMAIL = 'test@email.com';
 export const CAPTCHA = 'test_captcha';
 export const CAPTCHA_URL = 'test/captcha/url';
 export const PASSWORD = 'test_password';
-
-export const ERROR_RESPONSE = {response: {status: 500, data: {message: ERROR_MESSAGE}}} as AxiosError;
 
 export const SUCCESS_GET_CURRENT_USER_RESPONSE: GetCurrentUserResponse = {
   data: {id: USER_ID, email: EMAIL, login: LOGIN},
@@ -85,5 +80,3 @@ export const LOGIN_PARAM: LoginData = {
   rememberMe: true,
   captcha: CAPTCHA
 };
-
-export const FORM_ERROR_EXCEPTION = {[FORM_ERROR]: ERROR_MESSAGE, submissionError: true};

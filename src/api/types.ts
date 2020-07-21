@@ -20,7 +20,7 @@ type DefaultResponse<T> = {
 }
 
 type DefaultResponseWithEmptyData = DefaultResponse<ResultCode> & {
-  data: {}
+  data?: {}
 }
 
 export type GetCurrentUserResponse = DefaultResponse<ResultCode> & {
@@ -64,7 +64,7 @@ export type GetStatusResponse = string
 export type UpdateStatusResponse = DefaultResponseWithEmptyData
 
 export type UpdatePhotoResponse = DefaultResponse<ResultCode> & {
-  data: {
+  data?: {
     photos: Photos
   }
 }

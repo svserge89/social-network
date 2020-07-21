@@ -15,8 +15,6 @@ import {
   ERROR_GET_CURRENT_USER_RESPONSE,
   ERROR_LOGIN_RESPONSE,
   ERROR_LOGOUT_RESPONSE,
-  ERROR_RESPONSE,
-  FORM_ERROR_EXCEPTION,
   LOGIN_PARAM,
   PASSWORD,
   ROOT_STATE,
@@ -34,7 +32,12 @@ import {
   SUCCESS_LOGIN_RESPONSE,
   SUCCESS_LOGOUT_RESPONSE
 } from '../__fixtures__/data';
-import {SET_ERROR_ACTION, SET_ERROR_STATUS_ACTION} from '../../error/__fixtures__/data';
+import {
+  ERROR_RESPONSE,
+  FORM_ERROR_EXCEPTION,
+  SET_ERROR_ACTION,
+  SET_ERROR_STATUS_ACTION
+} from '../../error/__fixtures__/data';
 import {SET_RELATION_ALL_ACTION} from '../../users/__fixtures__/data';
 import {DispatchExts} from '../__fixtures__/types';
 

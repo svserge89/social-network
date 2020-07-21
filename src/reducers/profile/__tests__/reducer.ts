@@ -1,19 +1,31 @@
 import {
   ProfileAction,
-  ProfileState,
-  SET_FETCHING,
-  SET_FETCHING_PHOTO,
-  SET_FETCHING_STATUS,
-  SET_FOLLOWED,
-  SET_FOLLOWING,
-  SET_PHOTO,
-  SET_PROFILE,
-  SET_STATUS,
-  SET_UPDATING
+  ProfileState
 } from '../types';
 import emptyProfile from '../empty-profile';
 import profileReducer from '../reducer';
-import {INITIAL_STATE, PHOTOS, PROFILE} from '../__fixtures__/data';
+import {
+  INITIAL_STATE,
+  PHOTOS,
+  PROFILE,
+  SET_FETCHING_FALSE_ACTION,
+  SET_FETCHING_PHOTO_FALSE_ACTION,
+  SET_FETCHING_PHOTO_TRUE_ACTION,
+  SET_FETCHING_STATUS_FALSE_ACTION,
+  SET_FETCHING_STATUS_TRUE_ACTION,
+  SET_FETCHING_TRUE_ACTION,
+  SET_FOLLOWED_FALSE_ACTION,
+  SET_FOLLOWED_TRUE_ACTION,
+  SET_FOLLOWING_FALSE_ACTION,
+  SET_FOLLOWING_TRUE_ACTION,
+  SET_PHOTO_ACTION,
+  SET_PROFILE_ACTION,
+  SET_PROFILE_EMPTY_ACTION,
+  SET_STATUS_ACTION,
+  SET_UPDATING_FALSE_ACTION,
+  SET_UPDATING_TRUE_ACTION,
+  STATUS
+} from '../__fixtures__/data';
 
 describe('profile reducer', () => {
   let initialState: ProfileState;
@@ -30,96 +42,68 @@ describe('profile reducer', () => {
   it('should handle SET_PROFILE', () => {
     const profile = {...PROFILE};
 
-    testReducer({...initialState, profile}, {type: SET_PROFILE, payload: {profile}}, initialState);
+    testReducer({...initialState, profile}, SET_PROFILE_ACTION, initialState);
     testReducer(
       {...initialState, profile: emptyProfile},
-      {type: SET_PROFILE, payload: {profile: emptyProfile}},
+      SET_PROFILE_EMPTY_ACTION,
       {...initialState, profile}
     );
   });
 
   it('should handle SET_STATUS', () => {
-    testReducer(
-      {...initialState, status: 'test status'},
-      {type: SET_STATUS, payload: {status: 'test status'}},
-      initialState
-    );
+    testReducer({...initialState, status: STATUS}, SET_STATUS_ACTION, initialState);
   });
 
   it('should handle SET_FETCHING', () => {
-    testReducer(
-      {...initialState, fetching: true},
-      {type: SET_FETCHING, payload: {fetching: true}},
-      initialState
-    );
+    testReducer({...initialState, fetching: true}, SET_FETCHING_TRUE_ACTION, initialState);
     testReducer(
       {...initialState, fetching: false},
-      {type: SET_FETCHING, payload: {fetching: false}},
+      SET_FETCHING_FALSE_ACTION,
       {...initialState, fetching: true}
     );
   });
 
   it('should handle SET_FETCHING_STATUS', () => {
-    testReducer(
-      {...initialState, fetchingStatus: true},
-      {type: SET_FETCHING_STATUS, payload: {fetchingStatus: true}},
-      initialState
-    );
+    testReducer({...initialState, fetchingStatus: true}, SET_FETCHING_STATUS_TRUE_ACTION, initialState);
     testReducer(
       {...initialState, fetchingStatus: false},
-      {type: SET_FETCHING_STATUS, payload: {fetchingStatus: false}},
+      SET_FETCHING_STATUS_FALSE_ACTION,
       {...initialState, fetchingStatus: true}
     );
   });
 
   it('should handle SET_FETCHING_PHOTO', () => {
-    testReducer(
-      {...initialState, fetchingPhoto: true},
-      {type: SET_FETCHING_PHOTO, payload: {fetchingPhoto: true}},
-      initialState
-    );
+    testReducer({...initialState, fetchingPhoto: true}, SET_FETCHING_PHOTO_TRUE_ACTION, initialState);
     testReducer(
       {...initialState, fetchingPhoto: false},
-      {type: SET_FETCHING_PHOTO, payload: {fetchingPhoto: false}},
+      SET_FETCHING_PHOTO_FALSE_ACTION,
       {...initialState, fetchingPhoto: true}
     );
   });
 
   it('should handle SET_UPDATING', () => {
-    testReducer(
-      {...initialState, updating: true},
-      {type: SET_UPDATING, payload: {updating: true}},
-      initialState
-    );
+    testReducer({...initialState, updating: true}, SET_UPDATING_TRUE_ACTION, initialState);
     testReducer(
       {...initialState, updating: false},
-      {type: SET_UPDATING, payload: {updating: false}},
+      SET_UPDATING_FALSE_ACTION,
       {...initialState, updating: true}
     );
   });
 
   it('should handle SET_FOLLOWED', () => {
-    testReducer(
-      {...initialState, followed: true},
-      {type: SET_FOLLOWED, payload: {followed: true}},
-      initialState
-    );
+    testReducer({...initialState, followed: true}, SET_FOLLOWED_TRUE_ACTION, initialState);
     testReducer(
       {...initialState, followed: false},
-      {type: SET_FOLLOWED, payload: {followed: false}},
+      SET_FOLLOWED_FALSE_ACTION,
       {...initialState, followed: true}
     );
   });
 
   it('should handle SET_FOLLOWING', () => {
-    testReducer(
-      {...initialState, following: true},
-      {type: SET_FOLLOWING, payload: {following: true}},
-      initialState
-    );
+    testReducer({...initialState, following: true}, SET_FOLLOWING_TRUE_ACTION, initialState);
     testReducer(
       {...initialState, following: false},
-      {type: SET_FOLLOWING, payload: {following: false}},
+      SET_FOLLOWING_FALSE_ACTION,
       {...initialState, following: true}
     );
   });
@@ -127,11 +111,7 @@ describe('profile reducer', () => {
   it('should handle SET_PHOTO', () => {
     const photos = {...PHOTOS};
 
-    testReducer(
-      {...initialState, profile: {...initialState.profile, photos}},
-      {type: SET_PHOTO, payload: {photos}},
-      initialState
-    );
+    testReducer({...initialState, profile: {...initialState.profile, photos}}, SET_PHOTO_ACTION, initialState);
   });
 });
 
