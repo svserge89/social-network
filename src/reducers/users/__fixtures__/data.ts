@@ -1,4 +1,7 @@
 import {User} from '../../../models/types';
+import {ResultCode} from '../../../utils/response-codes';
+import {RootState} from '../../../store/types';
+import {FollowResponse, GetUsersResponse, UnFollowResponse} from '../../../api/types';
 import {
   FOLLOW,
   Relation,
@@ -13,6 +16,7 @@ import {
   UsersAction,
   UsersState
 } from '../types';
+import {ERROR_MESSAGE} from '../../error/__fixtures__/data';
 
 export const USER_ID = 42;
 export const USERS: User[] = [
@@ -68,10 +72,20 @@ export const STATE_WITH_FILTER: UsersState = {...INITIAL_STATE, filter: FILTER, 
 export const STATE_WITH_FOLLOWING: UsersState = {...INITIAL_STATE, following: [...FOLLOWING]};
 export const STATE_WITH_FOLLOWING_USER_ID: UsersState = {...INITIAL_STATE, following: [...FOLLOWING_WITH_USER_ID]};
 
+export const ROOT_STATE: Partial<RootState> = {users: {...INITIAL_STATE}};
+
+export const SUCCESS_GET_USERS_RESPONSE: GetUsersResponse = {items: USERS, totalCount: TOTAL};
+export const ERROR_GET_USERS_RESPONSE: GetUsersResponse = {error: ERROR_MESSAGE};
+export const SUCCESS_FOLLOW_RESPONSE: FollowResponse = {resultCode: ResultCode.SUCCESS, messages: []};
+export const ERROR_FOLLOW_RESPONSE: FollowResponse = {resultCode: ResultCode.ERROR, messages: [ERROR_MESSAGE]};
+export const SUCCESS_UNFOLLOW_RESPONSE: UnFollowResponse = SUCCESS_FOLLOW_RESPONSE;
+export const ERROR_UNFOLLOW_RESPONSE: UnFollowResponse = ERROR_FOLLOW_RESPONSE;
+
 export const EMPTY_ACTION = {} as UsersAction;
 export const SET_FOLLOW_ACTION: UsersAction = {type: FOLLOW, payload: {userId: USER_ID}};
 export const SET_UNFOLLOW_ACTION: UsersAction = {type: UNFOLLOW, payload: {userId: USER_ID}};
 export const SET_USERS_ACTION: UsersAction = {type: SET_USERS, payload: {users: USERS, total: TOTAL}};
+export const SET_USERS_EMPTY_ACTION: UsersAction = {type: SET_USERS, payload: {users: [], total: 0}};
 export const SET_RELATION_ALL_ACTION: UsersAction = {type: SET_RELATION, payload: {relation: Relation.ALL, page: 1}};
 export const SET_RELATION_FRIENDS_ACTION: UsersAction = {
   type: SET_RELATION,

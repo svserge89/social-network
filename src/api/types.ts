@@ -44,9 +44,9 @@ export type LoginResponse = DefaultResponse<LoginResultCode> & {
 export type LogoutResponse = DefaultResponseWithEmptyData
 
 export type GetUsersResponse = {
-  items: User[]
-  totalCount: number
-  error: string | null
+  items?: User[]
+  totalCount?: number
+  error?: string | null
 }
 
 export type GetFollowedResponse = boolean

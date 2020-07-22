@@ -15,7 +15,7 @@ export const getUsers = (page: number,
     const {items, totalCount, error} = await usersAPI.get(size, page, relation, filter);
 
     if (error) handleServerError(dispatch, [error]);
-    else dispatch(setUsers(items, totalCount));
+    else dispatch(setUsers(items!, totalCount!));
   } catch (error) {
     handleError(dispatch, error);
   } finally {
