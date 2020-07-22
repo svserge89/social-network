@@ -38,7 +38,7 @@ const initialState: ProfileState = {
   fetchingPhoto: false,
   updating: false,
   status: null,
-  followed: null,
+  followed: false,
   following: false
 };
 

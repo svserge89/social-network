@@ -64,12 +64,24 @@ export const INITIAL_STATE: ProfileState = {
   fetchingPhoto: false,
   updating: false,
   status: null,
-  followed: null,
+  followed: false,
   following: false
 };
-export const ROOT_STATE: Partial<RootState> = {
-  profile: {...INITIAL_STATE}
+export const STATE_WITH_PROFILE: ProfileState = {...INITIAL_STATE, profile: {...PROFILE}};
+export const STATE_WITH_EMPTY_PROFILE: ProfileState = {...INITIAL_STATE, profile: {...emptyProfile}};
+export const STATE_WITH_STATUS: ProfileState = {...INITIAL_STATE, status: STATUS};
+export const STATE_WITH_FETCHING_TRUE: ProfileState = {...INITIAL_STATE, fetching: true};
+export const STATE_WITH_FETCHING_STATUS_TRUE: ProfileState = {...INITIAL_STATE, fetchingStatus: true};
+export const STATE_WITH_FETCHING_PHOTO_TRUE: ProfileState = {...INITIAL_STATE, fetchingPhoto: true};
+export const STATE_WITH_UPDATING_TRUE: ProfileState = {...INITIAL_STATE, updating: true};
+export const STATE_WITH_FOLLOWED_TRUE: ProfileState = {...INITIAL_STATE, followed: true};
+export const STATE_WITH_FOLLOWING_TRUE: ProfileState = {...INITIAL_STATE, following: true};
+export const STATE_WITH_PROFILE_PHOTOS: ProfileState = {
+  ...INITIAL_STATE,
+  profile: {...INITIAL_STATE.profile, photos: {...PHOTOS}}
 };
+
+export const ROOT_STATE: Partial<RootState> = {profile: {...INITIAL_STATE}};
 export const ROOT_STATE_WITH_PROFILE: Partial<RootState> = {profile: {...INITIAL_STATE, profile: {...PROFILE}}};
 
 export const SUCCESS_UPDATE_PROFILE_RESPONSE: UpdateProfileResponse = {
@@ -97,6 +109,7 @@ export const ERROR_FOLLOW_RESPONSE: FollowResponse = ERROR_UPDATE_PROFILE_RESPON
 export const SUCCESS_UNFOLLOW_RESPONSE: UnFollowResponse = SUCCESS_UPDATE_PROFILE_RESPONSE;
 export const ERROR_UNFOLLOW_RESPONSE: UnFollowResponse = ERROR_UPDATE_PROFILE_RESPONSE;
 
+export const EMPTY_ACTION = {} as ProfileAction;
 export const SET_PROFILE_ACTION: ProfileAction = {type: SET_PROFILE, payload: {profile: {...PROFILE}}};
 export const SET_PROFILE_EMPTY_ACTION: ProfileAction = {type: SET_PROFILE, payload: {profile: emptyProfile}};
 export const SET_STATUS_ACTION: ProfileAction = {type: SET_STATUS, payload: {status: STATUS}};

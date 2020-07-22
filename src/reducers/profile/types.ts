@@ -80,6 +80,6 @@ export type ProfileState = {
   fetchingPhoto: boolean
   updating: boolean
   status: string | null
-  followed: boolean | null
+  followed: boolean
   following: boolean
 }

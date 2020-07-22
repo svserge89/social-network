@@ -1,13 +1,8 @@
-import {
-  ProfileAction,
-  ProfileState
-} from '../types';
-import emptyProfile from '../empty-profile';
+import {ProfileAction, ProfileState} from '../types';
 import profileReducer from '../reducer';
 import {
+  EMPTY_ACTION,
   INITIAL_STATE,
-  PHOTOS,
-  PROFILE,
   SET_FETCHING_FALSE_ACTION,
   SET_FETCHING_PHOTO_FALSE_ACTION,
   SET_FETCHING_PHOTO_TRUE_ACTION,
@@ -24,94 +19,67 @@ import {
   SET_STATUS_ACTION,
   SET_UPDATING_FALSE_ACTION,
   SET_UPDATING_TRUE_ACTION,
-  STATUS
+  STATE_WITH_EMPTY_PROFILE,
+  STATE_WITH_FETCHING_PHOTO_TRUE,
+  STATE_WITH_FETCHING_STATUS_TRUE,
+  STATE_WITH_FETCHING_TRUE,
+  STATE_WITH_FOLLOWED_TRUE,
+  STATE_WITH_FOLLOWING_TRUE,
+  STATE_WITH_PROFILE,
+  STATE_WITH_PROFILE_PHOTOS,
+  STATE_WITH_STATUS,
+  STATE_WITH_UPDATING_TRUE
 } from '../__fixtures__/data';
 
 describe('profile reducer', () => {
-  let initialState: ProfileState;
-
-  beforeEach(() => {
-    initialState = {...INITIAL_STATE};
-  });
-
   it('should return the initial state', () => {
-    expect(profileReducer(undefined, {} as ProfileAction)).toEqual(initialState);
-    expect(profileReducer(initialState, {} as ProfileAction)).toBe(initialState);
+    const initialState = {...INITIAL_STATE};
+    
+    expect(profileReducer(undefined, EMPTY_ACTION)).toEqual(INITIAL_STATE);
+    expect(profileReducer(initialState, EMPTY_ACTION)).toBe(initialState);
   });
 
   it('should handle SET_PROFILE', () => {
-    const profile = {...PROFILE};
-
-    testReducer({...initialState, profile}, SET_PROFILE_ACTION, initialState);
-    testReducer(
-      {...initialState, profile: emptyProfile},
-      SET_PROFILE_EMPTY_ACTION,
-      {...initialState, profile}
-    );
+    testReducer(STATE_WITH_PROFILE, SET_PROFILE_ACTION, {...INITIAL_STATE});
+    testReducer(STATE_WITH_EMPTY_PROFILE, SET_PROFILE_EMPTY_ACTION, {...STATE_WITH_PROFILE});
   });
 
   it('should handle SET_STATUS', () => {
-    testReducer({...initialState, status: STATUS}, SET_STATUS_ACTION, initialState);
+    testReducer(STATE_WITH_STATUS, SET_STATUS_ACTION, {...INITIAL_STATE});
   });
 
   it('should handle SET_FETCHING', () => {
-    testReducer({...initialState, fetching: true}, SET_FETCHING_TRUE_ACTION, initialState);
-    testReducer(
-      {...initialState, fetching: false},
-      SET_FETCHING_FALSE_ACTION,
-      {...initialState, fetching: true}
-    );
+    testReducer(STATE_WITH_FETCHING_TRUE, SET_FETCHING_TRUE_ACTION, {...INITIAL_STATE});
+    testReducer(INITIAL_STATE, SET_FETCHING_FALSE_ACTION, {...STATE_WITH_FETCHING_TRUE});
   });
 
   it('should handle SET_FETCHING_STATUS', () => {
-    testReducer({...initialState, fetchingStatus: true}, SET_FETCHING_STATUS_TRUE_ACTION, initialState);
-    testReducer(
-      {...initialState, fetchingStatus: false},
-      SET_FETCHING_STATUS_FALSE_ACTION,
-      {...initialState, fetchingStatus: true}
-    );
+    testReducer(STATE_WITH_FETCHING_STATUS_TRUE, SET_FETCHING_STATUS_TRUE_ACTION, {...INITIAL_STATE});
+    testReducer(INITIAL_STATE, SET_FETCHING_STATUS_FALSE_ACTION, {...STATE_WITH_FETCHING_STATUS_TRUE});
   });
 
   it('should handle SET_FETCHING_PHOTO', () => {
-    testReducer({...initialState, fetchingPhoto: true}, SET_FETCHING_PHOTO_TRUE_ACTION, initialState);
-    testReducer(
-      {...initialState, fetchingPhoto: false},
-      SET_FETCHING_PHOTO_FALSE_ACTION,
-      {...initialState, fetchingPhoto: true}
-    );
+    testReducer(STATE_WITH_FETCHING_PHOTO_TRUE, SET_FETCHING_PHOTO_TRUE_ACTION, {...INITIAL_STATE});
+    testReducer(INITIAL_STATE, SET_FETCHING_PHOTO_FALSE_ACTION, {...STATE_WITH_FETCHING_PHOTO_TRUE});
   });
 
   it('should handle SET_UPDATING', () => {
-    testReducer({...initialState, updating: true}, SET_UPDATING_TRUE_ACTION, initialState);
-    testReducer(
-      {...initialState, updating: false},
-      SET_UPDATING_FALSE_ACTION,
-      {...initialState, updating: true}
-    );
+    testReducer(STATE_WITH_UPDATING_TRUE, SET_UPDATING_TRUE_ACTION, {...INITIAL_STATE});
+    testReducer(INITIAL_STATE, SET_UPDATING_FALSE_ACTION, {...STATE_WITH_UPDATING_TRUE});
   });
 
   it('should handle SET_FOLLOWED', () => {
-    testReducer({...initialState, followed: true}, SET_FOLLOWED_TRUE_ACTION, initialState);
-    testReducer(
-      {...initialState, followed: false},
-      SET_FOLLOWED_FALSE_ACTION,
-      {...initialState, followed: true}
-    );
+    testReducer(STATE_WITH_FOLLOWED_TRUE, SET_FOLLOWED_TRUE_ACTION, {...INITIAL_STATE});
+    testReducer(INITIAL_STATE, SET_FOLLOWED_FALSE_ACTION, {...STATE_WITH_FOLLOWED_TRUE});
   });
 
   it('should handle SET_FOLLOWING', () => {
-    testReducer({...initialState, following: true}, SET_FOLLOWING_TRUE_ACTION, initialState);
-    testReducer(
-      {...initialState, following: false},
-      SET_FOLLOWING_FALSE_ACTION,
-      {...initialState, following: true}
-    );
+    testReducer(STATE_WITH_FOLLOWING_TRUE, SET_FOLLOWING_TRUE_ACTION, {...INITIAL_STATE});
+    testReducer(INITIAL_STATE, SET_FOLLOWING_FALSE_ACTION, {...STATE_WITH_FOLLOWING_TRUE});
   });
 
   it('should handle SET_PHOTO', () => {
-    const photos = {...PHOTOS};
-
-    testReducer({...initialState, profile: {...initialState.profile, photos}}, SET_PHOTO_ACTION, initialState);
+    testReducer(STATE_WITH_PROFILE_PHOTOS, SET_PHOTO_ACTION, {...INITIAL_STATE});
   });
 });
 
