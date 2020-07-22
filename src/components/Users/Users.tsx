@@ -62,9 +62,9 @@ const Users: React.FC = () => {
   const setFilterHandler = useCallback((filter) => dispatch(setFilter(filter)), [dispatch]);
 
   const showUserCards = (): JSX.Element | JSX.Element[] => {
-    if (fetching || !users) return (
-      <Row><Col className="col-12 p-0"><ComponentLoader/></Col></Row>
-    );
+    if (fetching || !users) return (<ComponentLoader/>);
+
+    if (!users.length) return (<h4 className="d-flex justify-content-center text-secondary">Not found...</h4>);
 
     return (
       users.map(({id, name, status, photos: {small}, followed}) => (
