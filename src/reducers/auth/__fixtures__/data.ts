@@ -6,6 +6,13 @@ import {GetCaptchaResponse, GetCurrentUserResponse, LoginResponse, LogoutRespons
 import {LoginData} from '../../../models/types';
 import {ERROR_MESSAGE} from '../../error/__fixtures__/data';
 
+export const USER_ID = 42;
+export const LOGIN = 'test_login';
+export const EMAIL = 'test@email.com';
+export const CAPTCHA = 'test_captcha';
+export const CAPTCHA_URL = 'test/captcha/url';
+export const PASSWORD = 'test_password';
+
 export const INITIAL_STATE: AuthState = {
   userId: null,
   email: null,
@@ -14,6 +21,11 @@ export const INITIAL_STATE: AuthState = {
   updating: false,
   captcha: null
 };
+export const STATE_WITH_FETCHING_TRUE: AuthState = {...INITIAL_STATE, fetching: true};
+export const STATE_WITH_CURRENT_USER: AuthState = {...INITIAL_STATE, userId: USER_ID, email: EMAIL, login: LOGIN};
+export const STATE_WITH_CAPTCHA: AuthState = {...INITIAL_STATE, captcha: CAPTCHA_URL};
+export const STATE_WITH_UPDATING_TRUE: AuthState = {...INITIAL_STATE, updating: true};
+
 export const ROOT_STATE: Partial<RootState> = {
   auth: {...INITIAL_STATE},
   users: {relation: Relation.ALL} as UsersState
@@ -22,13 +34,6 @@ export const ROOT_STATE_WITH_RELATION_FRIENDS: Partial<RootState> = {
   ...ROOT_STATE,
   users: {...ROOT_STATE.users, relation: Relation.FRIENDS} as UsersState
 };
-
-export const USER_ID = 42;
-export const LOGIN = 'test_login';
-export const EMAIL = 'test@email.com';
-export const CAPTCHA = 'test_captcha';
-export const CAPTCHA_URL = 'test/captcha/url';
-export const PASSWORD = 'test_password';
 
 export const SUCCESS_GET_CURRENT_USER_RESPONSE: GetCurrentUserResponse = {
   data: {id: USER_ID, email: EMAIL, login: LOGIN},
@@ -59,6 +64,7 @@ export const ERROR_LOGOUT_RESPONSE: LogoutResponse = {
   messages: [ERROR_MESSAGE]
 };
 
+export const EMPTY_ACTION = {} as AuthAction;
 export const SET_FETCHING_TRUE_ACTION: AuthAction = {type: SET_FETCHING, payload: {fetching: true}};
 export const SET_FETCHING_FALSE_ACTION: AuthAction = {type: SET_FETCHING, payload: {fetching: false}};
 export const SET_UPDATING_TRUE_ACTION: AuthAction = {type: SET_UPDATING, payload: {updating: true}};

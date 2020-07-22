@@ -1,10 +1,8 @@
 import {AuthAction, AuthState} from '../types';
 import authReducer from '../reducer';
 import {
-  CAPTCHA_URL,
-  EMAIL,
+  EMPTY_ACTION,
   INITIAL_STATE,
-  LOGIN,
   SET_CAPTCHA_ACTION,
   SET_CURRENT_USER_ACTION,
   SET_CURRENT_USER_EMPTY_ACTION,
@@ -12,54 +10,37 @@ import {
   SET_FETCHING_TRUE_ACTION,
   SET_UPDATING_FALSE_ACTION,
   SET_UPDATING_TRUE_ACTION,
-  USER_ID
+  STATE_WITH_CAPTCHA,
+  STATE_WITH_CURRENT_USER,
+  STATE_WITH_FETCHING_TRUE,
+  STATE_WITH_UPDATING_TRUE
 } from '../__fixtures__/data';
 
 describe('auth reducer', () => {
-  let initialState: AuthState;
-
-  beforeEach(() => {
-    initialState = {...INITIAL_STATE};
-  });
-
   it('should return the initial state', () => {
-    expect(authReducer(undefined, {} as AuthAction)).toEqual(initialState);
-    expect(authReducer(initialState, {} as AuthAction)).toBe(initialState);
+    const initialState = {...INITIAL_STATE};
+
+    expect(authReducer(undefined, EMPTY_ACTION)).toEqual(INITIAL_STATE);
+    expect(authReducer(initialState, EMPTY_ACTION)).toBe(initialState);
   });
 
   it('should handle SET_FETCHING', () => {
-    testReducer({...initialState, fetching: true}, SET_FETCHING_TRUE_ACTION, initialState);
-    testReducer(
-      {...initialState, fetching: false},
-      SET_FETCHING_FALSE_ACTION,
-      {...initialState, fetching: true}
-    );
+    testReducer(STATE_WITH_FETCHING_TRUE, SET_FETCHING_TRUE_ACTION, {...INITIAL_STATE});
+    testReducer(INITIAL_STATE, SET_FETCHING_FALSE_ACTION, {...STATE_WITH_FETCHING_TRUE});
   });
 
   it('should handle SET_CURRENT_USER', () => {
-    testReducer(
-      {...initialState, userId: USER_ID, email: EMAIL, login: LOGIN},
-      SET_CURRENT_USER_ACTION,
-      initialState
-    );
-    testReducer(
-      {...initialState},
-      SET_CURRENT_USER_EMPTY_ACTION,
-      {...initialState, userId: USER_ID, email: EMAIL, login: LOGIN}
-    );
+    testReducer(STATE_WITH_CURRENT_USER, SET_CURRENT_USER_ACTION, {...INITIAL_STATE});
+    testReducer(INITIAL_STATE, SET_CURRENT_USER_EMPTY_ACTION, {...STATE_WITH_CURRENT_USER});
   });
 
   it('should handle SET_CAPTCHA', () => {
-    testReducer({...initialState, captcha: CAPTCHA_URL}, SET_CAPTCHA_ACTION, initialState);
+    testReducer(STATE_WITH_CAPTCHA, SET_CAPTCHA_ACTION, {...INITIAL_STATE});
   });
 
   it('should handle SET_UPDATING', () => {
-    testReducer({...initialState, updating: true}, SET_UPDATING_TRUE_ACTION, initialState);
-    testReducer(
-      {...initialState, updating: false},
-      SET_UPDATING_FALSE_ACTION,
-      {...initialState, updating: true}
-    );
+    testReducer(STATE_WITH_UPDATING_TRUE, SET_UPDATING_TRUE_ACTION, {...INITIAL_STATE});
+    testReducer(INITIAL_STATE, SET_UPDATING_FALSE_ACTION, {...STATE_WITH_UPDATING_TRUE});
   });
 });
 
