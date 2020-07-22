@@ -1,30 +1,24 @@
 import {InitAction, InitState} from '../types';
 import initReducer from '../reducer';
 import {
+  EMPTY_ACTION,
   INITIAL_STATE,
   SET_INITIALIZED_FALSE_ACTION,
-  SET_INITIALIZED_TRUE_ACTION
+  SET_INITIALIZED_TRUE_ACTION,
+  STATE_WITH_INITIALIZED_TRUE
 } from '../__fixtures__/data';
 
 describe('init reducer', () => {
-  let initialState: InitState;
-
-  beforeEach(() => {
-    initialState = {...INITIAL_STATE};
-  });
-
   it('should return the initial state', () => {
-    expect(initReducer(undefined, {} as InitAction)).toEqual(initialState);
+    const initialState = {...INITIAL_STATE};
+
+    expect(initReducer(undefined, EMPTY_ACTION)).toEqual(INITIAL_STATE);
     expect(initReducer(initialState, {} as InitAction)).toBe(initialState);
   });
 
   it('should handle SET_INITIALIZED', () => {
-    testReducer({...initialState, initialized: true}, SET_INITIALIZED_TRUE_ACTION, initialState);
-    testReducer(
-      {...initialState, initialized: false},
-      SET_INITIALIZED_FALSE_ACTION,
-      {...initialState, initialized: true}
-    );
+    testReducer(STATE_WITH_INITIALIZED_TRUE, SET_INITIALIZED_TRUE_ACTION, {...INITIAL_STATE});
+    testReducer(INITIAL_STATE, SET_INITIALIZED_FALSE_ACTION, {...STATE_WITH_INITIALIZED_TRUE});
   });
 });
 
