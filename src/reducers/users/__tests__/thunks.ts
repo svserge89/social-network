@@ -27,9 +27,13 @@ import {
   SUCCESS_FOLLOW_RESPONSE,
   SUCCESS_GET_USERS_RESPONSE,
   SUCCESS_UNFOLLOW_RESPONSE,
-  USER_ID
+  USER_ID,
 } from '../__fixtures__/data';
-import {ERROR_RESPONSE, SET_ERROR_ACTION, SET_ERROR_STATUS_ACTION} from '../../error/__fixtures__/data';
+import {
+  ERROR_RESPONSE,
+  SET_ERROR_ACTION,
+  SET_ERROR_STATUS_ACTION,
+} from '../../error/__fixtures__/data';
 
 const mockStore = configureMockStore<Partial<RootState>, DispatchExts>([thunk]);
 
@@ -59,7 +63,9 @@ describe('users thunk actions', () => {
       await testGetUsers(SET_ERROR_ACTION);
     });
 
-    async function testGetUsers(expectedAction: UsersAction | ErrorAction): Promise<void> {
+    async function testGetUsers(
+      expectedAction: UsersAction | ErrorAction
+    ): Promise<void> {
       await store.dispatch(getUsers(PAGE, SIZE, Relation.ALL, FILTER));
 
       expect(spyGet).toBeCalledTimes(1);
@@ -67,7 +73,7 @@ describe('users thunk actions', () => {
       expect(store.getActions()).toEqual<(UsersAction | ErrorAction)[]>([
         SET_FETCHING_TRUE_ACTION,
         expectedAction,
-        SET_FETCHING_FALSE_ACTION
+        SET_FETCHING_FALSE_ACTION,
       ]);
     }
   });
@@ -76,7 +82,9 @@ describe('users thunk actions', () => {
     it('should dispatch action', () => {
       store.dispatch(cleanUsers());
 
-      expect(store.getActions()).toEqual<UsersAction[]>([SET_USERS_EMPTY_ACTION]);
+      expect(store.getActions()).toEqual<UsersAction[]>([
+        SET_USERS_EMPTY_ACTION,
+      ]);
     });
   });
 
@@ -98,7 +106,9 @@ describe('users thunk actions', () => {
       await testFollow(SET_ERROR_ACTION);
     });
 
-    async function testFollow(expectedAction: UsersAction | ErrorAction): Promise<void> {
+    async function testFollow(
+      expectedAction: UsersAction | ErrorAction
+    ): Promise<void> {
       await store.dispatch(follow(USER_ID));
 
       expect(spyFollow).toBeCalledTimes(1);
@@ -106,7 +116,7 @@ describe('users thunk actions', () => {
       expect(store.getActions()).toEqual<(UsersAction | ErrorAction)[]>([
         SET_FOLLOWING_TRUE_ACTION,
         expectedAction,
-        SET_FOLLOWING_FALSE_ACTION
+        SET_FOLLOWING_FALSE_ACTION,
       ]);
     }
   });
@@ -129,7 +139,9 @@ describe('users thunk actions', () => {
       await testUnfollow(SET_ERROR_ACTION);
     });
 
-    async function testUnfollow(expectedAction: UsersAction | ErrorAction): Promise<void> {
+    async function testUnfollow(
+      expectedAction: UsersAction | ErrorAction
+    ): Promise<void> {
       await store.dispatch(unfollow(USER_ID));
 
       expect(spyUnFollow).toBeCalledTimes(1);
@@ -137,7 +149,7 @@ describe('users thunk actions', () => {
       expect(store.getActions()).toEqual<(UsersAction | ErrorAction)[]>([
         SET_FOLLOWING_TRUE_ACTION,
         expectedAction,
-        SET_FOLLOWING_FALSE_ACTION
+        SET_FOLLOWING_FALSE_ACTION,
       ]);
     }
   });

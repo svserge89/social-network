@@ -2,8 +2,18 @@ import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Row, Col} from 'react-bootstrap';
 
-import {getUsers, cleanUsers, follow, unfollow} from '../../reducers/users/thunks';
-import {setFilter, setPage, setSize, setRelation} from '../../reducers/users/action-creators';
+import {
+  getUsers,
+  cleanUsers,
+  follow,
+  unfollow,
+} from '../../reducers/users/thunks';
+import {
+  setFilter,
+  setPage,
+  setSize,
+  setRelation,
+} from '../../reducers/users/action-creators';
 import {
   selectAvailable,
   selectFetching,
@@ -13,7 +23,7 @@ import {
   selectSize,
   selectTotal,
   selectUsers,
-  selectRelation
+  selectRelation,
 } from '../../selectors/users';
 import {selectAuthenticated, selectUserId} from '../../selectors/auth';
 import UserCard from './UserCard/UserCard';
@@ -40,72 +50,101 @@ const Users: React.FC = () => {
     dispatch(getUsers(page, size, relation, filter));
   }, [dispatch, page, size, relation, filter]);
 
-  useEffect(() => () => {
-    dispatch(cleanUsers());
-  }, [dispatch]);
+  useEffect(
+    () => () => {
+      dispatch(cleanUsers());
+    },
+    [dispatch]
+  );
 
   const isFollowing = useCallback(
     (userId: number): boolean => following.includes(userId),
     [following]
   );
 
-  const followHandler = useCallback((userId) => dispatch(follow(userId)), [dispatch]);
+  const followHandler = useCallback((userId) => dispatch(follow(userId)), [
+    dispatch,
+  ]);
 
-  const unfollowHandler = useCallback((userId) => dispatch(unfollow(userId)), [dispatch]);
+  const unfollowHandler = useCallback((userId) => dispatch(unfollow(userId)), [
+    dispatch,
+  ]);
 
-  const setPageHandler = useCallback((page) => dispatch(setPage(page)), [dispatch]);
+  const setPageHandler = useCallback((page) => dispatch(setPage(page)), [
+    dispatch,
+  ]);
 
-  const setSizeHandler = useCallback((size) => dispatch(setSize(size)), [dispatch]);
+  const setSizeHandler = useCallback((size) => dispatch(setSize(size)), [
+    dispatch,
+  ]);
 
-  const setRelationHandler = useCallback((relation) => dispatch(setRelation(relation)), [dispatch]);
+  const setRelationHandler = useCallback(
+    (relation) => dispatch(setRelation(relation)),
+    [dispatch]
+  );
 
-  const setFilterHandler = useCallback((filter) => dispatch(setFilter(filter)), [dispatch]);
+  const setFilterHandler = useCallback(
+    (filter) => dispatch(setFilter(filter)),
+    [dispatch]
+  );
 
   const showUserCards = (): JSX.Element | JSX.Element[] => {
-    if (fetching || !users) return (<ComponentLoader/>);
+    if (fetching || !users) {
+      return <ComponentLoader />;
+    }
 
-    if (!users.length) return (<h4 className="d-flex justify-content-center text-secondary">Not found...</h4>);
+    if (!users.length) {
+      return (
+        <h4 className="d-flex justify-content-center text-secondary">
+          Not found...
+        </h4>
+      );
+    }
 
-    return (
-      users.map(({id, name, status, photos: {small}, followed}) => (
-        <Row key={id} className="mb-1">
-          <Col className="col-12 p-0">
-            <UserCard userId={id}
-                      name={name}
-                      status={status || ''}
-                      image={small}
-                      followed={followed}
-                      following={isFollowing(id)}
-                      currentUserId={currentUserId}
-                      follow={followHandler}
-                      unfollow={unfollowHandler}/>
-          </Col>
-        </Row>
-      ))
-    );
+    return users.map(({id, name, status, photos: {small}, followed}) => (
+      <Row key={id} className="mb-1">
+        <Col className="col-12 p-0">
+          <UserCard
+            userId={id}
+            name={name}
+            status={status || ''}
+            image={small}
+            followed={followed}
+            following={isFollowing(id)}
+            currentUserId={currentUserId}
+            follow={followHandler}
+            unfollow={unfollowHandler}
+          />
+        </Col>
+      </Row>
+    ));
   };
 
   return (
     <>
       <Row>
         <Col className="col-12 p-0">
-          <FilterToolbar relation={relation}
-                         filter={filter}
-                         setFilter={setFilterHandler}
-                         setRelation={setRelationHandler}
-                         filterOnly={!authenticated}
-                         fetching={fetching}/>
+          <FilterToolbar
+            relation={relation}
+            filter={filter}
+            setFilter={setFilterHandler}
+            setRelation={setRelationHandler}
+            filterOnly={!authenticated}
+            fetching={fetching}
+          />
         </Col>
       </Row>
       <Row>
         <Col className="col-12 p-0 mb-3">
-          <PageNavToolbar total={total}
-                          size={size}
-                          page={page}
-                          setPage={setPageHandler}
-                          setSize={setSizeHandler}
-                          available={available}
-                          fetching={fetching}/>
+          <PageNavToolbar
+            total={total}
+            size={size}
+            page={page}
+            setPage={setPageHandler}
+            setSize={setSizeHandler}
+            available={available}
+            fetching={fetching}
+          />
         </Col>
       </Row>
       {showUserCards()}

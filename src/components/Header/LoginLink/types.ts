@@ -1,4 +1,4 @@
 export type LoginLinkProps = {
-  path: string
-  disabled?: boolean
-}
+  path: string;
+  disabled?: boolean;
+};

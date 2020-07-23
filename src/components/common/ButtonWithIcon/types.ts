@@ -4,5 +4,5 @@ import {FontAwesomeIconProps} from '@fortawesome/react-fontawesome';
 
 export type ButtonWithIconProps = ButtonProps & {
   icon: FontAwesomeIconProps['icon'];
-  onClick?: HTMLProps<HTMLButtonElement>['onClick']
-}
+  onClick?: HTMLProps<HTMLButtonElement>['onClick'];
+};

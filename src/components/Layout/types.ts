@@ -1,3 +1,3 @@
 export type LayoutProps = {
-  className: string | null
-}
+  className: string | null;
+};

@@ -14,10 +14,10 @@ import ButtonWithIcon from '../../../common/ButtonWithIcon/ButtonWithIcon';
 import style from './CropImageModal.module.css';
 
 const CropImageModal: React.FC<CropImageModalProps> = ({
-                                                         show,
-                                                         imageUrl,
-                                                         handleClose,
-                                                       }) => {
+  show,
+  imageUrl,
+  handleClose,
+}) => {
   const [crop, setCrop] = useState({x: 0, y: 0});
   const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(1);
@@ -25,9 +25,12 @@ const CropImageModal: React.FC<CropImageModalProps> = ({
 
   const dispatch = useDispatch();
 
-  const handleCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-    setCroppedAreaPixels(croppedAreaPixels);
-  }, [setCroppedAreaPixels]);
+  const handleCropComplete = useCallback(
+    (croppedArea, croppedAreaPixels) => {
+      setCroppedAreaPixels(croppedAreaPixels);
+    },
+    [setCroppedAreaPixels]
+  );
 
   const handleZoom = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => setZoom(+event.target.value),
@@ -54,31 +57,41 @@ const CropImageModal: React.FC<CropImageModalProps> = ({
       </Modal.Header>
       <Modal.Body>
         <div className={style.container}>
-          <Cropper image={imageUrl}
-                   crop={crop}
-                   rotation={rotation}
-                   zoom={zoom}
-                   aspect={1}
-                   onCropChange={setCrop}
-                   onRotationChange={setRotation}
-                   onCropComplete={handleCropComplete}
-                   onZoomChange={setZoom}/>
+          <Cropper
+            image={imageUrl}
+            crop={crop}
+            rotation={rotation}
+            zoom={zoom}
+            aspect={1}
+            onCropChange={setCrop}
+            onRotationChange={setRotation}
+            onCropComplete={handleCropComplete}
+            onZoomChange={setZoom}
+          />
         </div>
       </Modal.Body>
       <Modal.Footer className="justify-content-between">
-        <Slider label="Zoom"
-                min={1}
-                max={3}
-                step={.1}
-                value={zoom}
-                handleChange={handleZoom}/>
-        <Slider label="Rotate"
-                min={0}
-                max={360}
-                step={1}
-                value={rotation}
-                handleChange={handleRotation}/>
-        <ButtonWithIcon variant="success" onClick={handleUpload} icon={faFileUpload}>
+        <Slider
+          label="Zoom"
+          min={1}
+          max={3}
+          step={0.1}
+          value={zoom}
+          handleChange={handleZoom}
+        />
+        <Slider
+          label="Rotate"
+          min={0}
+          max={360}
+          step={1}
+          value={rotation}
+          handleChange={handleRotation}
+        />
+        <ButtonWithIcon
+          variant="success"
+          onClick={handleUpload}
+          icon={faFileUpload}
+        >
           Upload image
         </ButtonWithIcon>
         <ButtonWithIcon variant="danger" onClick={handleClose} icon={faTimes}>

@@ -30,13 +30,13 @@ import {
   SUCCESS_GET_CAPTCHA_RESPONSE,
   SUCCESS_GET_CURRENT_USER_RESPONSE,
   SUCCESS_LOGIN_RESPONSE,
-  SUCCESS_LOGOUT_RESPONSE
+  SUCCESS_LOGOUT_RESPONSE,
 } from '../__fixtures__/data';
 import {
   ERROR_RESPONSE,
   FORM_ERROR_EXCEPTION,
   SET_ERROR_ACTION,
-  SET_ERROR_STATUS_ACTION
+  SET_ERROR_STATUS_ACTION,
 } from '../../error/__fixtures__/data';
 import {SET_RELATION_ALL_ACTION} from '../../users/__fixtures__/data';
 import {DispatchExts} from '../__fixtures__/types';
@@ -69,14 +69,16 @@ describe('auth thunk actions', () => {
       await testGetCurrentUser(SET_ERROR_STATUS_ACTION);
     });
 
-    async function testGetCurrentUser(expectedAction: AuthAction | ErrorAction): Promise<void> {
+    async function testGetCurrentUser(
+      expectedAction: AuthAction | ErrorAction
+    ): Promise<void> {
       await store.dispatch(getCurrentUser());
 
       expect(spyGetCurrentUser).toBeCalledTimes(1);
       expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([
         SET_FETCHING_TRUE_ACTION,
         expectedAction,
-        SET_FETCHING_FALSE_ACTION
+        SET_FETCHING_FALSE_ACTION,
       ]);
     }
   });
@@ -92,11 +94,15 @@ describe('auth thunk actions', () => {
       await testGetCaptcha(SET_ERROR_ACTION);
     });
 
-    async function testGetCaptcha(expectedAction: AuthAction | ErrorAction): Promise<void> {
+    async function testGetCaptcha(
+      expectedAction: AuthAction | ErrorAction
+    ): Promise<void> {
       await store.dispatch(getCaptcha());
 
       expect(spyGetCaptcha).toBeCalledTimes(1);
-      expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([expectedAction]);
+      expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([
+        expectedAction,
+      ]);
     }
   });
 
@@ -110,7 +116,7 @@ describe('auth thunk actions', () => {
         SET_FETCHING_TRUE_ACTION,
         SET_CURRENT_USER_ACTION,
         SET_FETCHING_FALSE_ACTION,
-        SET_CAPTCHA_EMPTY_ACTION
+        SET_CAPTCHA_EMPTY_ACTION,
       ]);
 
       expect(spyGetCurrentUser).toBeCalledTimes(1);
@@ -142,26 +148,38 @@ describe('auth thunk actions', () => {
       expect(spyGetCaptcha).not.toBeCalled();
     });
 
-    async function testLogin(expectedActions: (AuthAction | ErrorAction)[],
-                             expectError: boolean = false): Promise<void> {
+    async function testLogin(
+      expectedActions: (AuthAction | ErrorAction)[],
+      expectError: boolean = false
+    ): Promise<void> {
       let thrownError;
 
       try {
         await store.dispatch(login(LOGIN_PARAM));
       } catch (error) {
-        if (expectError) thrownError = error;
-        else throw error;
+        if (expectError) {
+          thrownError = error;
+        } else {
+          throw error;
+        }
       }
 
       expect(spyLogin).toBeCalledTimes(1);
-      expect(spyLogin).toBeCalledWith(EMAIL, PASSWORD, LOGIN_PARAM.rememberMe, CAPTCHA);
+      expect(spyLogin).toBeCalledWith(
+        EMAIL,
+        PASSWORD,
+        LOGIN_PARAM.rememberMe,
+        CAPTCHA
+      );
 
-      if (expectError) expect(thrownError).toEqual(FORM_ERROR_EXCEPTION);
+      if (expectError) {
+        expect(thrownError).toEqual(FORM_ERROR_EXCEPTION);
+      }
 
       expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([
         SET_UPDATING_TRUE_ACTION,
         ...expectedActions,
-        SET_UPDATING_FALSE_ACTION
+        SET_UPDATING_FALSE_ACTION,
       ]);
     }
   });
@@ -178,7 +196,10 @@ describe('auth thunk actions', () => {
       const store = mockStore(ROOT_STATE_WITH_RELATION_FRIENDS);
 
       spyLogout.mockResolvedValue(SUCCESS_LOGOUT_RESPONSE);
-      await testLogout([SET_CURRENT_USER_EMPTY_ACTION, SET_RELATION_ALL_ACTION], store);
+      await testLogout(
+        [SET_CURRENT_USER_EMPTY_ACTION, SET_RELATION_ALL_ACTION],
+        store
+      );
     });
 
     it('should dispatch actions when error result code', async () => {
@@ -191,15 +212,19 @@ describe('auth thunk actions', () => {
       await testLogout([SET_ERROR_ACTION]);
     });
 
-    async function testLogout(expectedActions: (AuthAction | UsersAction | ErrorAction)[],
-                              localStore: ReturnType<typeof mockStore> = store): Promise<void> {
+    async function testLogout(
+      expectedActions: (AuthAction | UsersAction | ErrorAction)[],
+      localStore: ReturnType<typeof mockStore> = store
+    ): Promise<void> {
       await localStore.dispatch(logout());
 
       expect(spyLogout).toBeCalledTimes(1);
-      expect(localStore.getActions()).toEqual<(AuthAction | UsersAction | ErrorAction)[]>([
+      expect(localStore.getActions()).toEqual<
+        (AuthAction | UsersAction | ErrorAction)[]
+      >([
         SET_UPDATING_TRUE_ACTION,
         ...expectedActions,
-        SET_UPDATING_FALSE_ACTION
+        SET_UPDATING_FALSE_ACTION,
       ]);
     }
   });

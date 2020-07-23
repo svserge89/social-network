@@ -13,26 +13,33 @@ import {
   UNFOLLOW,
   UsersAction,
   UsersState,
-  Relation
+  Relation,
 } from './types';
 
-const changeFollowed = (state: UsersState,
-                        {payload: {userId}}: SetFollowAction | SetUnfollowAction,
-                        followed: boolean): UsersState => ({
+const changeFollowed = (
+  state: UsersState,
+  {payload: {userId}}: SetFollowAction | SetUnfollowAction,
+  followed: boolean
+): UsersState => ({
   ...state,
-  users: state.users.map(user => user.id !== userId ? user : {...user, followed})
+  users: state.users.map((user) =>
+    user.id !== userId ? user : {...user, followed}
+  ),
 });
 
 const changeData = (state: UsersState, {payload}: UsersAction): UsersState => ({
   ...state,
-  ...payload
+  ...payload,
 });
 
-const changeFollowing = (state: UsersState, {payload: {userId, status}}: SetFollowingAction): UsersState => ({
+const changeFollowing = (
+  state: UsersState,
+  {payload: {userId, status}}: SetFollowingAction
+): UsersState => ({
   ...state,
-  following: (
-    status ? [...state.following, userId] : state.following.filter(item => item !== userId)
-  )
+  following: status
+    ? [...state.following, userId]
+    : state.following.filter((item) => item !== userId),
 });
 
 const initialState: UsersState = {
@@ -44,7 +51,7 @@ const initialState: UsersState = {
   following: [],
   available: [5, 10, 25, 50],
   relation: Relation.ALL,
-  filter: ''
+  filter: '',
 };
 
 const usersReducer = (state = initialState, action: UsersAction) => {

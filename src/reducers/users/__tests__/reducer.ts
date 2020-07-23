@@ -23,7 +23,7 @@ import {
   STATE_WITH_SIZE,
   STATE_WITH_USERS,
   STATE_WITH_USERS_AND_TOTAL,
-  STATE_WITH_USERS_FOLLOWED
+  STATE_WITH_USERS_FOLLOWED,
 } from '../__fixtures__/data';
 
 describe('users reducer', () => {
@@ -35,15 +35,21 @@ describe('users reducer', () => {
   });
 
   it('should handle FOLLOW', () => {
-    testReducer(STATE_WITH_USERS_FOLLOWED, SET_FOLLOW_ACTION, {...STATE_WITH_USERS});
+    testReducer(STATE_WITH_USERS_FOLLOWED, SET_FOLLOW_ACTION, {
+      ...STATE_WITH_USERS,
+    });
   });
 
   it('should handle UNFOLLOW', () => {
-    testReducer(STATE_WITH_USERS, SET_UNFOLLOW_ACTION, {...STATE_WITH_USERS_FOLLOWED});
+    testReducer(STATE_WITH_USERS, SET_UNFOLLOW_ACTION, {
+      ...STATE_WITH_USERS_FOLLOWED,
+    });
   });
 
   it('should handle SET_USERS', () => {
-    testReducer(STATE_WITH_USERS_AND_TOTAL, SET_USERS_ACTION, {...INITIAL_STATE});
+    testReducer(STATE_WITH_USERS_AND_TOTAL, SET_USERS_ACTION, {
+      ...INITIAL_STATE,
+    });
   });
 
   it('should handle SET_PAGE', () => {
@@ -55,12 +61,18 @@ describe('users reducer', () => {
   });
 
   it('should handle SET_FETCHING', () => {
-    testReducer(STATE_WITH_FETCHING_TRUE, SET_FETCHING_TRUE_ACTION, {...INITIAL_STATE});
-    testReducer(INITIAL_STATE, SET_FETCHING_FALSE_ACTION, {...STATE_WITH_FETCHING_TRUE});
+    testReducer(STATE_WITH_FETCHING_TRUE, SET_FETCHING_TRUE_ACTION, {
+      ...INITIAL_STATE,
+    });
+    testReducer(INITIAL_STATE, SET_FETCHING_FALSE_ACTION, {
+      ...STATE_WITH_FETCHING_TRUE,
+    });
   });
 
   it('should handle SET_RELATION', () => {
-    testReducer(STATE_WITH_RELATION_FRIENDS, SET_RELATION_FRIENDS_ACTION, {...INITIAL_STATE});
+    testReducer(STATE_WITH_RELATION_FRIENDS, SET_RELATION_FRIENDS_ACTION, {
+      ...INITIAL_STATE,
+    });
   });
 
   it('should handle SET_FILTER', () => {
@@ -68,12 +80,20 @@ describe('users reducer', () => {
   });
 
   it('should handle SET_FOLLOWING', () => {
-    testReducer(STATE_WITH_FOLLOWING_USER_ID, SET_FOLLOWING_TRUE_ACTION, {...STATE_WITH_FOLLOWING});
-    testReducer(STATE_WITH_FOLLOWING, SET_FOLLOWING_FALSE_ACTION, {...STATE_WITH_FOLLOWING_USER_ID});
+    testReducer(STATE_WITH_FOLLOWING_USER_ID, SET_FOLLOWING_TRUE_ACTION, {
+      ...STATE_WITH_FOLLOWING,
+    });
+    testReducer(STATE_WITH_FOLLOWING, SET_FOLLOWING_FALSE_ACTION, {
+      ...STATE_WITH_FOLLOWING_USER_ID,
+    });
   });
 });
 
-function testReducer(expected: UsersState, action: UsersAction, initialState: UsersState): void {
+function testReducer(
+  expected: UsersState,
+  action: UsersAction,
+  initialState: UsersState
+): void {
   const result = usersReducer(initialState, action);
 
   expect(result).toEqual(expected);

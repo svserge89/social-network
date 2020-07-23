@@ -18,7 +18,7 @@ const Login: React.FC = () => {
   const handleLogin = useCallback(
     async (loginData: LoginData): Promise<any> => {
       try {
-        await dispatch(login(loginData))
+        await dispatch(login(loginData));
       } catch (error) {
         return error;
       }
@@ -26,15 +26,19 @@ const Login: React.FC = () => {
     [dispatch]
   );
 
-  if (authenticated) return (<Redirect to={PROFILE}/>);
+  if (authenticated) {
+    return <Redirect to={PROFILE} />;
+  }
 
   return (
     <Row className="mt-3">
       <Col className="col-12 px-0">
         <Card>
-          <Card.Header><h5>Login</h5></Card.Header>
+          <Card.Header>
+            <h5>Login</h5>
+          </Card.Header>
           <Card.Body>
-            <LoginForm onSubmit={handleLogin} captcha={captcha}/>
+            <LoginForm onSubmit={handleLogin} captcha={captcha} />
           </Card.Body>
         </Card>
       </Col>

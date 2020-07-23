@@ -6,16 +6,24 @@ import ButtonLoader from '../ButtonLoader/ButtonLoader';
 import ButtonWithIcon from '../ButtonWithIcon/ButtonWithIcon';
 
 const FollowButton: React.FC<FollowButtonProps> = ({
-                                                     followed,
-                                                     follow,
-                                                     unfollow,
-                                                     following = false
-                                                   }) => {
-  if (following) return (<ButtonLoader/>);
+  followed,
+  follow,
+  unfollow,
+  following = false,
+}) => {
+  if (following) {
+    return <ButtonLoader />;
+  }
 
-  return followed
-    ? (<ButtonWithIcon variant="danger" icon={faHeartBroken} onClick={unfollow}>Unfollow</ButtonWithIcon>)
-    : (<ButtonWithIcon variant="success" icon={faHeart} onClick={follow}>Follow</ButtonWithIcon>);
+  return followed ? (
+    <ButtonWithIcon variant="danger" icon={faHeartBroken} onClick={unfollow}>
+      Unfollow
+    </ButtonWithIcon>
+  ) : (
+    <ButtonWithIcon variant="success" icon={faHeart} onClick={follow}>
+      Follow
+    </ButtonWithIcon>
+  );
 };
 
 export default FollowButton;

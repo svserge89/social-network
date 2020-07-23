@@ -6,20 +6,24 @@ import InputField from '../../../common/InputField/InputField';
 import {PasswordInputProps} from './types';
 import {compose} from '../../../../utils/validators';
 
-const PasswordInput: React.FC<PasswordInputProps> = ({name, validators, disabled = false}) => (
+const PasswordInput: React.FC<PasswordInputProps> = ({
+  name,
+  validators,
+  disabled = false,
+}) => (
   <Form.Group>
     <Form.Label column={false}>Password</Form.Label>
     <Field name={name} validate={compose(validators)}>
-      {
-        ({input, meta}) => (
-          <InputField input={input}
-                      meta={meta}
-                      placeholder="Password"
-                      autoComplete="off"
-                      type="password"
-                      disabled={disabled}/>
-        )
-      }
+      {({input, meta}) => (
+        <InputField
+          input={input}
+          meta={meta}
+          placeholder="Password"
+          autoComplete="off"
+          type="password"
+          disabled={disabled}
+        />
+      )}
     </Field>
   </Form.Group>
 );

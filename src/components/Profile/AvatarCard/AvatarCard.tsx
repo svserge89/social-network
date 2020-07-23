@@ -32,7 +32,9 @@ const AvatarCard: React.FC<AvatarCardProps> = ({editable = false}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!editable && authenticated) dispatch(getFollowed());
+    if (!editable && authenticated) {
+      dispatch(getFollowed());
+    }
   }, [editable, authenticated, dispatch]);
 
   const imageUrl = photo || avatar;
@@ -54,36 +56,58 @@ const AvatarCard: React.FC<AvatarCardProps> = ({editable = false}) => {
 
         fileReader.readAsDataURL(target.files[0]);
       }
-    }, [setShowModal]);
-
-  const handleCloseModal = useCallback(() => setShowModal(false), [setShowModal]);
-
-  const showImage = (): JSX.Element => (
-    fetching
-      ? (<div className={cn(style.avatar, 'pt-3')}><ComponentLoader/></div>)
-      : (<Image rounded={true} src={imageUrl} className={style.avatar}/>)
+    },
+    [setShowModal]
   );
+
+  const handleCloseModal = useCallback(() => setShowModal(false), [
+    setShowModal,
+  ]);
+
+  const showImage = (): JSX.Element =>
+    fetching ? (
+      <div className={cn(style.avatar, 'pt-3')}>
+        <ComponentLoader />
+      </div>
+    ) : (
+      <Image rounded={true} src={imageUrl} className={style.avatar} />
+    );
 
   const showButtonToolbar = (): JSX.Element | '' => {
-    if (editable) return (<UploadImageButton onChange={handleSelectImage} fetching={fetching}/>);
-    else if (authenticated) return (<FollowButton followed={followed!}
-                                                  follow={handleFollow}
-                                                  unfollow={handleUnfollow}
-                                                  following={following}/>);
-    else return '';
+    if (editable) {
+      return (
+        <UploadImageButton onChange={handleSelectImage} fetching={fetching} />
+      );
+    } else if (authenticated) {
+      return (
+        <FollowButton
+          followed={followed!}
+          follow={handleFollow}
+          unfollow={handleUnfollow}
+          following={following}
+        />
+      );
+    } else {
+      return '';
+    }
   };
 
-  const showCropImageModal = (): JSX.Element | '' => (
-    editable ? (<CropImageModal show={showModal} imageUrl={fileUrl} handleClose={handleCloseModal}/>) : ''
-  );
+  const showCropImageModal = (): JSX.Element | '' =>
+    editable ? (
+      <CropImageModal
+        show={showModal}
+        imageUrl={fileUrl}
+        handleClose={handleCloseModal}
+      />
+    ) : (
+      ''
+    );
 
   return (
     <>
       {showCropImageModal()}
       <Card className="mb-auto flex-shrink-0 flex-grow-0 bg-light p-1">
-        <Card.Title className="mb-0">
-          {showImage()}
-        </Card.Title>
+        <Card.Title className="mb-0">{showImage()}</Card.Title>
         <Card.Body className="d-flex px-0 pb-0 pt-1 justify-content-center">
           {showButtonToolbar()}
         </Card.Body>

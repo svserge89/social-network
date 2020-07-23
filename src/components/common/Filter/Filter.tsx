@@ -5,20 +5,33 @@ import {faSearch, faUndo} from '@fortawesome/free-solid-svg-icons';
 import {FilterProps} from './types';
 import ButtonWithIcon from '../ButtonWithIcon/ButtonWithIcon';
 
-const Filter: React.FC<FilterProps> = ({filter, setFilter, fetching = false}) => {
+const Filter: React.FC<FilterProps> = ({
+  filter,
+  setFilter,
+  fetching = false,
+}) => {
   const [value, setValue] = useState(filter);
 
-  const changeValueHandler = useCallback(({target: {value}}: React.ChangeEvent<HTMLInputElement>) => (
-    setValue(value.trim())
-  ), [setValue]);
+  const changeValueHandler = useCallback(
+    ({target: {value}}: React.ChangeEvent<HTMLInputElement>) =>
+      setValue(value.trim()),
+    [setValue]
+  );
 
   const filterHandler = useCallback(() => {
-    if (value !== filter) setFilter(value);
+    if (value !== filter) {
+      setFilter(value);
+    }
   }, [value, setFilter, filter]);
 
-  const keyDownHandler = useCallback(({key}: React.KeyboardEvent<HTMLInputElement>) => {
-    if (key === 'Enter') filterHandler();
-  }, [filterHandler]);
+  const keyDownHandler = useCallback(
+    ({key}: React.KeyboardEvent<HTMLInputElement>) => {
+      if (key === 'Enter') {
+        filterHandler();
+      }
+    },
+    [filterHandler]
+  );
 
   const cleanHandler = useCallback(() => {
     setValue('');
@@ -30,10 +43,12 @@ const Filter: React.FC<FilterProps> = ({filter, setFilter, fetching = false}) =>
   return (
     <InputGroup className="flex-fill">
       <InputGroup.Prepend>
-        <ButtonWithIcon variant="outline-secondary"
-                        onClick={filterHandler}
-                        icon={faSearch}
-                        disabled={fetching || !isFilterAvailable}>
+        <ButtonWithIcon
+          variant="outline-secondary"
+          onClick={filterHandler}
+          icon={faSearch}
+          disabled={fetching || !isFilterAvailable}
+        >
           Filter
         </ButtonWithIcon>
       </InputGroup.Prepend>
@@ -45,10 +60,12 @@ const Filter: React.FC<FilterProps> = ({filter, setFilter, fetching = false}) =>
         disabled={fetching}
       />
       <InputGroup.Append>
-        <ButtonWithIcon variant="outline-secondary"
-                        onClick={cleanHandler}
-                        icon={faUndo}
-                        disabled={fetching || !filter}>
+        <ButtonWithIcon
+          variant="outline-secondary"
+          onClick={cleanHandler}
+          icon={faUndo}
+          disabled={fetching || !filter}
+        >
           Clean
         </ButtonWithIcon>
       </InputGroup.Append>

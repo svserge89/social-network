@@ -7,7 +7,13 @@ import ButtonWithIcon from '../../common/ButtonWithIcon/ButtonWithIcon';
 
 const LoginLink: React.FC<LoginLinkProps> = ({path, disabled = false}) => (
   <LinkContainer to={path}>
-    <ButtonWithIcon variant="outline-light" icon={faSignInAlt} disabled={disabled}>Login</ButtonWithIcon>
+    <ButtonWithIcon
+      variant="outline-light"
+      icon={faSignInAlt}
+      disabled={disabled}
+    >
+      Login
+    </ButtonWithIcon>
   </LinkContainer>
 );
 

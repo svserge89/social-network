@@ -8,7 +8,7 @@ import {
   setRelation,
   setSize,
   setUnfollow,
-  setUsers
+  setUsers,
 } from '../action-creators';
 import {
   FILTER,
@@ -27,7 +27,7 @@ import {
   SIZE,
   TOTAL,
   USER_ID,
-  USERS
+  USERS,
 } from '../__fixtures__/data';
 
 describe('users action creators', () => {
@@ -57,12 +57,18 @@ describe('users action creators', () => {
   });
 
   it('should create an action to set following', () => {
-    expect(setFollowing(true, USER_ID)).toEqual<UsersAction>(SET_FOLLOWING_TRUE_ACTION);
-    expect(setFollowing(false, USER_ID)).toEqual<UsersAction>(SET_FOLLOWING_FALSE_ACTION);
+    expect(setFollowing(true, USER_ID)).toEqual<UsersAction>(
+      SET_FOLLOWING_TRUE_ACTION
+    );
+    expect(setFollowing(false, USER_ID)).toEqual<UsersAction>(
+      SET_FOLLOWING_FALSE_ACTION
+    );
   });
 
   it('should create an action to set relation', () => {
-    expect(setRelation(Relation.FRIENDS)).toEqual<UsersAction>(SET_RELATION_FRIENDS_ACTION);
+    expect(setRelation(Relation.FRIENDS)).toEqual<UsersAction>(
+      SET_RELATION_FRIENDS_ACTION
+    );
   });
 
   it('should create an action to set filter', () => {

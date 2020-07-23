@@ -1,3 +1,3 @@
 export type AvatarCardProps = {
-  editable?: boolean
-}
+  editable?: boolean;
+};

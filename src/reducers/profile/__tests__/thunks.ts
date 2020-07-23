@@ -13,7 +13,7 @@ import {
   unfollow,
   updatePhoto,
   updateProfile,
-  updateStatus
+  updateStatus,
 } from '../thunks';
 import {ErrorAction} from '../../error/types';
 import {ProfileAction} from '../types';
@@ -50,13 +50,13 @@ import {
   SUCCESS_UPDATE_PHOTO_RESPONSE,
   SUCCESS_UPDATE_PROFILE_RESPONSE,
   SUCCESS_UPDATE_STATUS_RESPONSE,
-  USER_ID
+  USER_ID,
 } from '../__fixtures__/data';
 import {
   ERROR_RESPONSE,
   FORM_ERROR_EXCEPTION,
   SET_ERROR_ACTION,
-  SET_ERROR_STATUS_ACTION
+  SET_ERROR_STATUS_ACTION,
 } from '../../error/__fixtures__/data';
 
 const mockStore = configureMockStore<Partial<RootState>, DispatchExts>([thunk]);
@@ -84,7 +84,9 @@ describe('profile thunk actions', () => {
       await testGetProfile(SET_ERROR_ACTION);
     });
 
-    async function testGetProfile(expectedAction: ProfileAction | ErrorAction): Promise<void> {
+    async function testGetProfile(
+      expectedAction: ProfileAction | ErrorAction
+    ): Promise<void> {
       await store.dispatch(getProfile(USER_ID));
 
       expect(spyGet).toBeCalledTimes(1);
@@ -92,7 +94,7 @@ describe('profile thunk actions', () => {
       expect(store.getActions()).toEqual<(ProfileAction | ErrorAction)[]>([
         SET_FETCHING_TRUE_ACTION,
         expectedAction,
-        SET_FETCHING_FALSE_ACTION
+        SET_FETCHING_FALSE_ACTION,
       ]);
     }
   });
@@ -115,26 +117,33 @@ describe('profile thunk actions', () => {
       await testUpdateProfile([SET_ERROR_ACTION]);
     });
 
-    async function testUpdateProfile(expectedActions: (ProfileAction | ErrorAction)[],
-                                     expectError: boolean = false): Promise<void> {
+    async function testUpdateProfile(
+      expectedActions: (ProfileAction | ErrorAction)[],
+      expectError: boolean = false
+    ): Promise<void> {
       let thrownError;
 
       try {
         await store.dispatch(updateProfile(PROFILE));
       } catch (error) {
-        if (expectError) thrownError = error;
-        else throw error;
+        if (expectError) {
+          thrownError = error;
+        } else {
+          throw error;
+        }
       }
 
       expect(spyUpdate).toBeCalledTimes(1);
       expect(spyUpdate).toBeCalledWith(PROFILE);
 
-      if (expectError) expect(thrownError).toEqual(FORM_ERROR_EXCEPTION);
+      if (expectError) {
+        expect(thrownError).toEqual(FORM_ERROR_EXCEPTION);
+      }
 
       expect(store.getActions()).toEqual<(ProfileAction | ErrorAction)[]>([
         SET_UPDATING_TRUE_ACTION,
         ...expectedActions,
-        SET_UPDATING_FALSE_ACTION
+        SET_UPDATING_FALSE_ACTION,
       ]);
     }
   });
@@ -143,7 +152,9 @@ describe('profile thunk actions', () => {
     it('should dispatch action', () => {
       store.dispatch(cleanProfile());
 
-      expect(store.getActions()).toEqual<ProfileAction[]>([SET_PROFILE_EMPTY_ACTION]);
+      expect(store.getActions()).toEqual<ProfileAction[]>([
+        SET_PROFILE_EMPTY_ACTION,
+      ]);
     });
   });
 
@@ -160,7 +171,9 @@ describe('profile thunk actions', () => {
       await testGetStatus(SET_ERROR_ACTION);
     });
 
-    async function testGetStatus(expectedAction: ProfileAction | ErrorAction): Promise<void> {
+    async function testGetStatus(
+      expectedAction: ProfileAction | ErrorAction
+    ): Promise<void> {
       await store.dispatch(getStatus(USER_ID));
 
       expect(spyGetStatus).toBeCalledTimes(1);
@@ -168,7 +181,7 @@ describe('profile thunk actions', () => {
       expect(store.getActions()).toEqual<(ProfileAction | ErrorAction)[]>([
         SET_FETCHING_STATUS_TRUE_ACTION,
         expectedAction,
-        SET_FETCHING_STATUS_FALSE_ACTION
+        SET_FETCHING_STATUS_FALSE_ACTION,
       ]);
     }
   });
@@ -191,7 +204,9 @@ describe('profile thunk actions', () => {
       await testUpdateStatus(SET_ERROR_ACTION);
     });
 
-    async function testUpdateStatus(expectedAction: ProfileAction | ErrorAction): Promise<void> {
+    async function testUpdateStatus(
+      expectedAction: ProfileAction | ErrorAction
+    ): Promise<void> {
       await store.dispatch(updateStatus(STATUS));
 
       expect(spyUpdateStatus).toBeCalledTimes(1);
@@ -199,7 +214,7 @@ describe('profile thunk actions', () => {
       expect(store.getActions()).toEqual<(ProfileAction | ErrorAction)[]>([
         SET_FETCHING_STATUS_TRUE_ACTION,
         expectedAction,
-        SET_FETCHING_STATUS_FALSE_ACTION
+        SET_FETCHING_STATUS_FALSE_ACTION,
       ]);
     }
   });
@@ -222,7 +237,9 @@ describe('profile thunk actions', () => {
       await testUpdatePhoto(SET_ERROR_ACTION);
     });
 
-    async function testUpdatePhoto(expectedAction: ProfileAction | ErrorAction): Promise<void> {
+    async function testUpdatePhoto(
+      expectedAction: ProfileAction | ErrorAction
+    ): Promise<void> {
       await store.dispatch(updatePhoto(PHOTO));
 
       expect(spyUpdatePhoto).toBeCalledTimes(1);
@@ -230,7 +247,7 @@ describe('profile thunk actions', () => {
       expect(store.getActions()).toEqual<(ProfileAction | ErrorAction)[]>([
         SET_FETCHING_PHOTO_TRUE_ACTION,
         expectedAction,
-        SET_FETCHING_PHOTO_FALSE_ACTION
+        SET_FETCHING_PHOTO_FALSE_ACTION,
       ]);
     }
   });
@@ -248,15 +265,19 @@ describe('profile thunk actions', () => {
       await testGetFollowed(SET_ERROR_ACTION);
     });
 
-    async function testGetFollowed(expectedAction: ProfileAction | ErrorAction): Promise<void> {
+    async function testGetFollowed(
+      expectedAction: ProfileAction | ErrorAction
+    ): Promise<void> {
       await storeWithProfile.dispatch(getFollowed());
 
       expect(spyGet).toBeCalledTimes(1);
       expect(spyGet).toBeCalledWith(USER_ID);
-      expect(storeWithProfile.getActions()).toEqual<(ProfileAction | ErrorAction)[]>([
+      expect(storeWithProfile.getActions()).toEqual<
+        (ProfileAction | ErrorAction)[]
+      >([
         SET_FOLLOWING_TRUE_ACTION,
         expectedAction,
-        SET_FOLLOWING_FALSE_ACTION
+        SET_FOLLOWING_FALSE_ACTION,
       ]);
     }
   });
@@ -279,12 +300,16 @@ describe('profile thunk actions', () => {
       await testFollow(SET_ERROR_ACTION);
     });
 
-    async function testFollow(expectedAction: ProfileAction | ErrorAction): Promise<void> {
+    async function testFollow(
+      expectedAction: ProfileAction | ErrorAction
+    ): Promise<void> {
       await storeWithProfile.dispatch(follow());
 
       expect(spyFollow).toBeCalledTimes(1);
       expect(spyFollow).toBeCalledWith(USER_ID);
-      expect(storeWithProfile.getActions()).toEqual<(ProfileAction | ErrorAction)[]>([
+      expect(storeWithProfile.getActions()).toEqual<
+        (ProfileAction | ErrorAction)[]
+      >([
         SET_FOLLOWING_TRUE_ACTION,
         expectedAction,
         SET_FOLLOWING_FALSE_ACTION,
@@ -310,15 +335,19 @@ describe('profile thunk actions', () => {
       await testUnfollow(SET_ERROR_ACTION);
     });
 
-    async function testUnfollow(expectedAction: ProfileAction | ErrorAction): Promise<void> {
+    async function testUnfollow(
+      expectedAction: ProfileAction | ErrorAction
+    ): Promise<void> {
       await storeWithProfile.dispatch(unfollow());
 
       expect(spyUnFollow).toBeCalledTimes(1);
       expect(spyUnFollow).toBeCalledWith(USER_ID);
-      expect(storeWithProfile.getActions()).toEqual<(ProfileAction | ErrorAction)[]>([
+      expect(storeWithProfile.getActions()).toEqual<
+        (ProfileAction | ErrorAction)[]
+      >([
         SET_FOLLOWING_TRUE_ACTION,
         expectedAction,
-        SET_FOLLOWING_FALSE_ACTION
+        SET_FOLLOWING_FALSE_ACTION,
       ]);
     }
   });

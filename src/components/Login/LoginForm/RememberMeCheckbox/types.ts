@@ -1,4 +1,4 @@
 export type RememberMeCheckboxProps = {
-  name: string
-  disabled?: boolean
-}
+  name: string;
+  disabled?: boolean;
+};

@@ -1,6 +1,11 @@
 import {ErrorAction, ErrorState} from '../types';
 import errorReducer from '../reducer';
-import {EMPTY_ACTION, INITIAL_STATE, SET_ERROR_ACTION, STATE_WITH_ERROR} from '../__fixtures__/data';
+import {
+  EMPTY_ACTION,
+  INITIAL_STATE,
+  SET_ERROR_ACTION,
+  STATE_WITH_ERROR,
+} from '../__fixtures__/data';
 
 describe('error reducer', () => {
   it('should return the initial state', () => {
@@ -15,7 +20,11 @@ describe('error reducer', () => {
   });
 });
 
-function testReducer(expected: ErrorState, action: ErrorAction, initialState: ErrorState): void {
+function testReducer(
+  expected: ErrorState,
+  action: ErrorAction,
+  initialState: ErrorState
+): void {
   const result = errorReducer(initialState, action);
 
   expect(result).toEqual(expected);

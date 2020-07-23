@@ -9,25 +9,27 @@ import {FullNameInputProps} from './types';
 import {compose} from '../../../../../utils/validators';
 
 const FullNameInput: React.FC<FullNameInputProps> = ({
-                                                       name,
-                                                       validators,
-                                                       disabled = false
-                                                     }) => (
+  name,
+  validators,
+  disabled = false,
+}) => (
   <Form.Group>
     <Form.Label column={false}>
-      <h5><ComponentWithIcon icon={faUserEdit}>Full Name</ComponentWithIcon></h5>
+      <h5>
+        <ComponentWithIcon icon={faUserEdit}>Full Name</ComponentWithIcon>
+      </h5>
     </Form.Label>
     <Field name={name} validate={compose(validators)}>
-      {
-        ({input, meta}) => (
-          <InputField input={input}
-                      meta={meta}
-                      placeholder="Enter full name"
-                      autoComplete="on"
-                      type="text"
-                      disabled={disabled}/>
-        )
-      }
+      {({input, meta}) => (
+        <InputField
+          input={input}
+          meta={meta}
+          placeholder="Enter full name"
+          autoComplete="on"
+          type="text"
+          disabled={disabled}
+        />
+      )}
     </Field>
   </Form.Group>
 );

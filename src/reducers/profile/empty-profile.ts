@@ -13,10 +13,10 @@ const emptyProfile: Profile = {
     twitter: null,
     website: null,
     youtube: null,
-    mainLink: null
+    mainLink: null,
   },
   photos: {small: null, large: null},
-  aboutMe: ''
+  aboutMe: '',
 };
 
 export default emptyProfile;

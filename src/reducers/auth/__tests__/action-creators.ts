@@ -1,5 +1,10 @@
 import {AuthAction} from '../types';
-import {setCaptcha, setCurrentUser, setFetching, setUpdating} from '../action-creators';
+import {
+  setCaptcha,
+  setCurrentUser,
+  setFetching,
+  setUpdating,
+} from '../action-creators';
 import {
   CAPTCHA_URL,
   EMAIL,
@@ -10,12 +15,14 @@ import {
   SET_FETCHING_TRUE_ACTION,
   SET_UPDATING_FALSE_ACTION,
   SET_UPDATING_TRUE_ACTION,
-  USER_ID
+  USER_ID,
 } from '../__fixtures__/data';
 
 describe('auth action creators', () => {
   it('should create an action to set current user', () => {
-    expect(setCurrentUser(USER_ID, EMAIL, LOGIN)).toEqual<AuthAction>(SET_CURRENT_USER_ACTION);
+    expect(setCurrentUser(USER_ID, EMAIL, LOGIN)).toEqual<AuthAction>(
+      SET_CURRENT_USER_ACTION
+    );
   });
 
   it('should create an action to set captcha', () => {

@@ -4,10 +4,13 @@ import {
   SET_CAPTCHA,
   SET_CURRENT_USER,
   SET_FETCHING,
-  SET_UPDATING
+  SET_UPDATING,
 } from './types';
 
-const changeData = (state: AuthState, {payload}: AuthAction): AuthState => ({...state, ...payload});
+const changeData = (state: AuthState, {payload}: AuthAction): AuthState => ({
+  ...state,
+  ...payload,
+});
 
 const initialState: AuthState = {
   userId: null,
@@ -15,7 +18,7 @@ const initialState: AuthState = {
   login: null,
   fetching: false,
   updating: false,
-  captcha: null
+  captcha: null,
 };
 
 const authReducer = (state = initialState, action: AuthAction): AuthState => {

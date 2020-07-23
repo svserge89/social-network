@@ -5,7 +5,12 @@ import {GetUsersResponse, UsersRequestParams} from './types';
 const USERS = '/users';
 
 const usersAPI = {
-  get: (count: number, page: number, relation: Relation = Relation.ALL, filter: string = '') => {
+  get: (
+    count: number,
+    page: number,
+    relation: Relation = Relation.ALL,
+    filter: string = ''
+  ) => {
     const params: UsersRequestParams = {count, page};
 
     switch (relation) {
@@ -17,10 +22,14 @@ const usersAPI = {
         break;
     }
 
-    if (filter) params.term = filter;
+    if (filter) {
+      params.term = filter;
+    }
 
-    return instance.get<GetUsersResponse>(USERS, {params}).then(responseData);
-  }
+    return instance
+      .get<GetUsersResponse>(USERS, {params})
+      .then(responseData);
+  },
 };
 
 export default usersAPI;

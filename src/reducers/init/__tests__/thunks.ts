@@ -6,7 +6,10 @@ import {RootState} from '../../../store/types';
 import {initialization} from '../thunks';
 import {AuthAction} from '../../auth/types';
 import {ErrorAction} from '../../error/types';
-import {SET_CURRENT_USER_ACTION, SUCCESS_GET_CURRENT_USER_RESPONSE} from '../../auth/__fixtures__/data';
+import {
+  SET_CURRENT_USER_ACTION,
+  SUCCESS_GET_CURRENT_USER_RESPONSE,
+} from '../../auth/__fixtures__/data';
 import {ROOT_STATE, SET_INITIALIZED_TRUE_ACTION} from '../__fixtures__/data';
 import {ERROR_RESPONSE, SET_ERROR_ACTION} from '../../error/__fixtures__/data';
 import {DispatchExts} from '../__fixtures__/types';
@@ -34,7 +37,9 @@ describe('init thunk actions', () => {
       await testInitialization(SET_ERROR_ACTION);
     });
 
-    async function testInitialization(expectedAction: AuthAction | ErrorAction): Promise<void> {
+    async function testInitialization(
+      expectedAction: AuthAction | ErrorAction
+    ): Promise<void> {
       await store.dispatch(initialization());
 
       const actions = store.getActions();

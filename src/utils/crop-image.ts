@@ -5,19 +5,26 @@ const createImage = (url: string) =>
     const image = new Image();
 
     image.addEventListener('load', () => resolve(image));
-    image.addEventListener('error', error => reject(error));
+    image.addEventListener('error', (error) => reject(error));
     image.setAttribute('crossOrigin', 'anonymous');
     image.src = url;
   });
 
-const getRadianAngle = (degreeValue: number): number => (degreeValue * Math.PI) / 180;
+const getRadianAngle = (degreeValue: number): number =>
+  (degreeValue * Math.PI) / 180;
 
-const getCroppedImg = async (imageSrc: string, pixelCrop: Area, rotation = 0) => {
+const getCroppedImg = async (
+  imageSrc: string,
+  pixelCrop: Area,
+  rotation = 0
+) => {
   const image = await createImage(imageSrc);
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 
-  if (!ctx) throw new Error('Can\'t create 2D canvas context');
+  if (!ctx) {
+    throw new Error("Can't create 2D canvas context");
+  }
 
   const maxSize = Math.max(image.width, image.height);
   const safeArea = 2 * ((maxSize / 2) * Math.sqrt(2));
@@ -47,9 +54,12 @@ const getCroppedImg = async (imageSrc: string, pixelCrop: Area, rotation = 0) =>
   );
 
   return new Promise<File>((resolve, reject) => {
-    canvas.toBlob(blob => {
-      if (blob) resolve(new File([blob], 'image.jpg'));
-      else reject(new Error('Can\'t convert canvas to blob'));
+    canvas.toBlob((blob) => {
+      if (blob) {
+        resolve(new File([blob], 'image.jpg'));
+      } else {
+        reject(new Error("Can't convert canvas to blob"));
+      }
     });
   });
 };

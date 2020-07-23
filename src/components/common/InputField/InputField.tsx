@@ -4,13 +4,13 @@ import {Form} from 'react-bootstrap';
 import {InputFieldProps} from './types';
 
 const InputField: React.FC<InputFieldProps> = ({
-                                                 input,
-                                                 placeholder,
-                                                 disabled,
-                                                 autoComplete,
-                                                 type,
-                                                 meta: {touched, error, submitError}
-                                               }) => (
+  input,
+  placeholder,
+  disabled,
+  autoComplete,
+  type,
+  meta: {touched, error, submitError},
+}) => (
   <>
     <Form.Control
       {...input}
@@ -18,8 +18,11 @@ const InputField: React.FC<InputFieldProps> = ({
       disabled={disabled}
       placeholder={placeholder}
       isInvalid={touched && (error || submitError)}
-      autoComplete={autoComplete}/>
-    <Form.Control.Feedback type="invalid">{error || submitError}</Form.Control.Feedback>
+      autoComplete={autoComplete}
+    />
+    <Form.Control.Feedback type="invalid">
+      {error || submitError}
+    </Form.Control.Feedback>
   </>
 );
 

@@ -10,15 +10,21 @@ import {
   SET_PROFILE,
   SET_STATUS,
   SET_UPDATING,
-  SetPhotoAction
+  SetPhotoAction,
 } from './types';
 import emptyProfile from './empty-profile';
 
-const changeData = (state: ProfileState, {payload}: ProfileAction): ProfileState => ({...state, ...payload});
+const changeData = (
+  state: ProfileState,
+  {payload}: ProfileAction
+): ProfileState => ({...state, ...payload});
 
-const changePhoto = (state: ProfileState, {payload: {photos}}: SetPhotoAction): ProfileState => ({
+const changePhoto = (
+  state: ProfileState,
+  {payload: {photos}}: SetPhotoAction
+): ProfileState => ({
   ...state,
-  profile: {...state.profile, photos}
+  profile: {...state.profile, photos},
 });
 
 const initialState: ProfileState = {
@@ -31,7 +37,7 @@ const initialState: ProfileState = {
     ['instagram', 'Instagram'],
     ['youtube', 'Youtube'],
     ['website', 'Web Site'],
-    ['mainLink', 'Main Link']
+    ['mainLink', 'Main Link'],
   ]),
   fetching: false,
   fetchingStatus: false,
@@ -39,10 +45,13 @@ const initialState: ProfileState = {
   updating: false,
   status: null,
   followed: false,
-  following: false
+  following: false,
 };
 
-const profileReducer = (state = initialState, action: ProfileAction): ProfileState => {
+const profileReducer = (
+  state = initialState,
+  action: ProfileAction
+): ProfileState => {
   switch (action.type) {
     case SET_PROFILE:
     case SET_STATUS:

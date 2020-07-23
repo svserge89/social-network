@@ -8,9 +8,7 @@ import {LOGIN, PROFILE} from '../../utils/routes';
 const Home: React.FC = () => {
   const authenticated = useSelector(selectAuthenticated);
 
-  return (
-    <Redirect to={authenticated ? PROFILE : LOGIN}/>
-  );
+  return <Redirect to={authenticated ? PROFILE : LOGIN} />;
 };
 
 export default Home;

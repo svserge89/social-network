@@ -7,7 +7,7 @@ import {selectInitialized} from './selectors/init';
 import {
   selectErrorCode,
   selectErrorDescription,
-  selectIsError
+  selectIsError,
 } from './selectors/error';
 import {HOME, LOGIN, PROFILE, USERS} from './utils/routes';
 import Layout from './components/Layout/Layout';
@@ -33,31 +33,33 @@ const App: React.FC = () => {
     dispatch(initialization());
   }, [dispatch]);
 
-  if (!initialized && !isError) return (<PageLoader/>);
+  if (!initialized && !isError) {
+    return <PageLoader />;
+  }
 
   const showComponent = () => {
-    if (isError) return (<Error code={errorCode} description={errorDescription}/>);
+    if (isError) {
+      return <Error code={errorCode} description={errorDescription} />;
+    }
 
     return (
       <Switch>
-        <Route exact path={HOME} component={Home}/>
-        <Route path={`${PROFILE}/:userId?`} component={Profile}/>
-        <Route exact path={USERS} component={Users}/>
-        <Route exact path={LOGIN} component={Login}/>
-        <Route component={NotMatch}/>
+        <Route exact path={HOME} component={Home} />
+        <Route path={`${PROFILE}/:userId?`} component={Profile} />
+        <Route exact path={USERS} component={Users} />
+        <Route exact path={LOGIN} component={Login} />
+        <Route component={NotMatch} />
       </Switch>
     );
   };
 
   return (
     <>
-      <Header/>
+      <Header />
       <Layout className="flex-fill">
-        <div className="px-2">
-          {showComponent()}
-        </div>
+        <div className="px-2">{showComponent()}</div>
       </Layout>
-      <Footer/>
+      <Footer />
     </>
   );
 };

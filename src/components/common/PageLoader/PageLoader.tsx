@@ -1,7 +1,7 @@
 import React from 'react';
 import {Spinner, Container, Row} from 'react-bootstrap';
 
-import style from './PageLoader.module.css'
+import style from './PageLoader.module.css';
 
 const PageLoader: React.FC = () => (
   <div className={style.container}>

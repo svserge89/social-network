@@ -1,3 +1,3 @@
 export type InfoCardProps = {
-  editable?: boolean
-}
+  editable?: boolean;
+};
