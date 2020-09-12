@@ -66,18 +66,18 @@ describe('auth thunk actions', () => {
 
     it('should dispatch actions when error result code', async () => {
       spyGetCurrentUser.mockResolvedValue(ERROR_GET_CURRENT_USER_RESPONSE);
-      await testGetCurrentUser(SET_ERROR_STATUS_ACTION);
+      await testGetCurrentUser();
     });
 
     async function testGetCurrentUser(
-      expectedAction: AuthAction | ErrorAction
+      ...expectedActions: (AuthAction | ErrorAction)[]
     ): Promise<void> {
       await store.dispatch(getCurrentUser());
 
       expect(spyGetCurrentUser).toBeCalledTimes(1);
       expect(store.getActions()).toEqual<(AuthAction | ErrorAction)[]>([
         SET_FETCHING_TRUE_ACTION,
-        expectedAction,
+        ...expectedActions,
         SET_FETCHING_FALSE_ACTION,
       ]);
     }

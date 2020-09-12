@@ -19,11 +19,9 @@ export const getCurrentUser = (): AuthAsyncThunkAction => async (dispatch) => {
   dispatch(setFetching(true));
 
   try {
-    const {resultCode, messages, data} = await authAPI.getCurrentUser();
+    const {resultCode, data} = await authAPI.getCurrentUser();
 
-    if (resultCode !== ResultCode.SUCCESS) {
-      handleServerError(dispatch, messages);
-    } else {
+    if (resultCode === ResultCode.SUCCESS) {
       dispatch(setCurrentUser(data!.id, data!.email, data!.login));
     }
   } catch (error) {
