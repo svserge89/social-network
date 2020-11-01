@@ -1,18 +1,19 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Row, Col} from 'react-bootstrap';
+import {StringParam, useQueryParam} from 'use-query-params';
+import {Col, Row} from 'react-bootstrap';
 
 import {
-  getUsers,
   cleanUsers,
   follow,
+  getUsers,
   unfollow,
 } from '../../reducers/users/thunks';
 import {
   setFilter,
   setPage,
-  setSize,
   setRelation,
+  setSize,
 } from '../../reducers/users/action-creators';
 import {
   selectAvailable,
@@ -20,16 +21,17 @@ import {
   selectFilter,
   selectFollowing,
   selectPage,
+  selectRelation,
   selectSize,
   selectTotal,
   selectUsers,
-  selectRelation,
 } from '../../selectors/users';
 import {selectAuthenticated, selectUserId} from '../../selectors/auth';
 import UserCard from './UserCard/UserCard';
 import PageNavToolbar from '../common/PageNavToolbar/PageNavToolbar';
 import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
 import FilterToolbar from './FilterToolbar/FilterToolbar';
+import {Relation} from '../../reducers/users/types';
 
 const Users: React.FC = () => {
   const currentUserId = useSelector(selectUserId);
@@ -46,9 +48,69 @@ const Users: React.FC = () => {
 
   const dispatch = useDispatch();
 
+  const [pageParam, setPageParam] = useQueryParam('page', StringParam);
+  const [sizeParam, setSizeParam] = useQueryParam('size', StringParam);
+  const [filterParam, setFilterParam] = useQueryParam('filter', StringParam);
+  const [relationParam, setRelationParam] = useQueryParam(
+    'relation',
+    StringParam
+  );
+
+  const [firstRendering, setFirstRendering] = useState(true);
+
   useEffect(() => {
+    dispatch(setFilter(filterParam || ''));
+  }, [dispatch, filterParam]);
+
+  useEffect(() => {
+    if (relationParam && Object.keys(Relation).includes(relationParam)) {
+      dispatch(setRelation(+relationParam!));
+    } else {
+      dispatch(setRelation(Relation.ALL));
+    }
+  }, [dispatch, relationParam]);
+
+  useEffect(() => {
+    if (sizeParam && available.includes(sizeParam)) {
+      dispatch(setSize(+sizeParam));
+    } else {
+      dispatch(setSize(+available[0]));
+    }
+    // eslint-disable-next-line
+  }, [dispatch, sizeParam]);
+
+  useEffect(() => {
+    if (pageParam && +pageParam > 0 && Number.isInteger(+pageParam)) {
+      dispatch(setPage(+pageParam));
+    } else {
+      dispatch(setPage(1));
+    }
+  }, [dispatch, pageParam]);
+
+  useEffect(() => {
+    if (firstRendering) {
+      setFirstRendering(false);
+
+      return;
+    }
+
     dispatch(getUsers(page, size, relation, filter));
-  }, [dispatch, page, size, relation, filter]);
+    setPageParam(page + '', 'replaceIn');
+
+    if (!filter) {
+      setFilterParam(undefined, 'replaceIn');
+    }
+  }, [
+    dispatch,
+    page,
+    size,
+    relation,
+    filter,
+    firstRendering,
+    setFirstRendering,
+    setPageParam,
+    setFilterParam,
+  ]);
 
   useEffect(
     () => () => {
@@ -70,22 +132,36 @@ const Users: React.FC = () => {
     dispatch,
   ]);
 
-  const setPageHandler = useCallback((page) => dispatch(setPage(page)), [
-    dispatch,
-  ]);
+  const setPageHandler = useCallback(
+    (page: number) => {
+      setPageParam(page + '', 'pushIn');
+    },
+    [setPageParam]
+  );
 
-  const setSizeHandler = useCallback((size) => dispatch(setSize(size)), [
-    dispatch,
-  ]);
+  const setSizeHandler = useCallback(
+    (size: number) => {
+      setSizeParam(size + '');
+    },
+    [setSizeParam]
+  );
 
   const setRelationHandler = useCallback(
-    (relation) => dispatch(setRelation(relation)),
-    [dispatch]
+    (relation: Relation) => {
+      setRelationParam(relation + '');
+    },
+    [setRelationParam]
   );
 
   const setFilterHandler = useCallback(
-    (filter) => dispatch(setFilter(filter)),
-    [dispatch]
+    (filter) => {
+      setFilterParam(filter);
+
+      if (!filter) {
+        dispatch(setFilter(''));
+      }
+    },
+    [dispatch, setFilterParam]
   );
 
   const showUserCards = (): JSX.Element | JSX.Element[] => {

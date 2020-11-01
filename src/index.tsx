@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRouter, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
+import {QueryParamProvider} from 'use-query-params';
 
 import * as serviceWorker from './serviceWorker';
 import store from './store/redux-store';
@@ -11,9 +12,11 @@ import './index.css';
 
 ReactDOM.render(
   <BrowserRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <QueryParamProvider ReactRouterRoute={Route}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </QueryParamProvider>
   </BrowserRouter>,
   document.getElementById('root')
 );

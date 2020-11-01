@@ -4,12 +4,15 @@ import {handleError, handleServerError} from '../../utils/error-handler';
 import {ResultCode} from '../../utils/response-codes';
 import {
   setFetching,
+  setFilter,
   setFollow,
   setFollowing,
+  setRelation,
+  setSize,
   setUnfollow,
   setUsers,
 } from './action-creators';
-import {UsersAsyncThunkAction, UsersThunkAction, Relation} from './types';
+import {Relation, UsersAsyncThunkAction, UsersThunkAction} from './types';
 
 export const getUsers = (
   page: number,
@@ -39,8 +42,12 @@ export const getUsers = (
   }
 };
 
-export const cleanUsers = (): UsersThunkAction => (dispatch) =>
+export const cleanUsers = (): UsersThunkAction => (dispatch) => {
   dispatch(setUsers([], 0));
+  dispatch(setSize(5));
+  dispatch(setFilter(''));
+  dispatch(setRelation(Relation.ALL));
+};
 
 export const follow = (userId: number): UsersAsyncThunkAction => async (
   dispatch

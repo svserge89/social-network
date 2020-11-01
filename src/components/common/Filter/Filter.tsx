@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {FormControl, InputGroup} from 'react-bootstrap';
 import {faSearch, faUndo} from '@fortawesome/free-solid-svg-icons';
 
@@ -11,6 +11,10 @@ const Filter: React.FC<FilterProps> = ({
   fetching = false,
 }) => {
   const [value, setValue] = useState(filter);
+
+  useEffect(() => {
+    setValue(filter);
+  }, [filter, setValue]);
 
   const changeValueHandler = useCallback(
     ({target: {value}}: React.ChangeEvent<HTMLInputElement>) =>

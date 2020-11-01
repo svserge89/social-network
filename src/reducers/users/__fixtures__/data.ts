@@ -157,6 +157,10 @@ export const SET_FILTER_ACTION: UsersAction = {
   type: SET_FILTER,
   payload: {filter: FILTER, page: 1},
 };
+export const SET_FILTER_EMPTY_ACTION: UsersAction = {
+  type: SET_FILTER,
+  payload: {filter: INITIAL_STATE.filter, page: 1},
+};
 export const SET_PAGE_ACTION: UsersAction = {
   type: SET_PAGE,
   payload: {page: PAGE},
@@ -164,6 +168,10 @@ export const SET_PAGE_ACTION: UsersAction = {
 export const SET_SIZE_ACTION: UsersAction = {
   type: SET_SIZE,
   payload: {size: SIZE, page: 1},
+};
+export const SET_SIZE_EMPTY_ACTION: UsersAction = {
+  type: SET_SIZE,
+  payload: {size: INITIAL_STATE.size, page: 1},
 };
 export const SET_FETCHING_TRUE_ACTION: UsersAction = {
   type: SET_FETCHING,
