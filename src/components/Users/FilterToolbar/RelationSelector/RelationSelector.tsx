@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserFriends} from '@fortawesome/free-solid-svg-icons';
 
 import {RelationSelectorProps} from './types';
-import {Relation} from '../../../../reducers/users/types';
+import {Relation} from '../../../../hooks/types';
 
 const RelationSelector: React.FC<RelationSelectorProps> = ({
   relation,

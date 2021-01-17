@@ -5,8 +5,9 @@ import usersAPI from '../../../api/users';
 import followAPI from '../../../api/follow';
 import {RootState} from '../../../store/types';
 import {cleanUsers, follow, getUsers, unfollow} from '../thunks';
-import {Relation, UsersAction} from '../types';
+import {UsersAction} from '../types';
 import {ErrorAction} from '../../error/types';
+import {Relation} from '../../../hooks/types';
 import {DispatchExts} from '../__fixtures__/types';
 import {
   ERROR_FOLLOW_RESPONSE,
@@ -17,12 +18,9 @@ import {
   ROOT_STATE,
   SET_FETCHING_FALSE_ACTION,
   SET_FETCHING_TRUE_ACTION,
-  SET_FILTER_EMPTY_ACTION,
   SET_FOLLOW_ACTION,
   SET_FOLLOWING_FALSE_ACTION,
   SET_FOLLOWING_TRUE_ACTION,
-  SET_RELATION_ALL_ACTION,
-  SET_SIZE_EMPTY_ACTION,
   SET_UNFOLLOW_ACTION,
   SET_USERS_ACTION,
   SET_USERS_EMPTY_ACTION,
@@ -87,9 +85,6 @@ describe('users thunk actions', () => {
 
       expect(store.getActions()).toEqual<UsersAction[]>([
         SET_USERS_EMPTY_ACTION,
-        SET_SIZE_EMPTY_ACTION,
-        SET_FILTER_EMPTY_ACTION,
-        SET_RELATION_ALL_ACTION,
       ]);
     });
   });

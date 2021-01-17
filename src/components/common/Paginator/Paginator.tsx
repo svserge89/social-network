@@ -1,6 +1,7 @@
 import React, {useCallback} from 'react';
 import {Pagination} from 'react-bootstrap';
 
+import {getPagesCount} from '../../../utils/pagination';
 import {PaginatorProps} from './types';
 
 const Paginator: React.FC<PaginatorProps> = ({
@@ -12,7 +13,7 @@ const Paginator: React.FC<PaginatorProps> = ({
   sideLength = 3,
   size = 'sm',
 }) => {
-  const pagesCount = Math.ceil(totalItems / pageSize) || 1;
+  const pagesCount = getPagesCount(totalItems, pageSize);
 
   const clickHandler = useCallback((page: number) => () => setPage(page), [
     setPage,

@@ -11,9 +11,6 @@ import {handleError, handleServerError} from '../../utils/error-handler';
 import {LoginData} from '../../models/types';
 import {parseMessages} from '../../utils/error-parser';
 import {AuthAsyncThunkAction} from './types';
-import {setRelation} from '../users/action-creators';
-import {Relation} from '../users/types';
-import {selectRelation} from '../../selectors/users';
 
 export const getCurrentUser = (): AuthAsyncThunkAction => async (dispatch) => {
   dispatch(setFetching(true));
@@ -79,10 +76,7 @@ export const login = ({
   }
 };
 
-export const logout = (): AuthAsyncThunkAction => async (
-  dispatch,
-  getState
-) => {
+export const logout = (): AuthAsyncThunkAction => async (dispatch) => {
   dispatch(setUpdating(true));
 
   try {
@@ -96,10 +90,6 @@ export const logout = (): AuthAsyncThunkAction => async (
   } catch (error) {
     handleError(dispatch, error);
   } finally {
-    if (selectRelation(getState()) !== Relation.ALL) {
-      dispatch(setRelation(Relation.ALL));
-    }
-
     dispatch(setUpdating(false));
   }
 };

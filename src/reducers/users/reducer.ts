@@ -1,19 +1,14 @@
 import {
   FOLLOW,
   SET_FETCHING,
-  SET_FILTER,
   SET_FOLLOWING,
-  SET_PAGE,
-  SET_SIZE,
   SET_USERS,
-  SET_RELATION,
   SetFollowAction,
   SetFollowingAction,
   SetUnfollowAction,
   UNFOLLOW,
   UsersAction,
   UsersState,
-  Relation,
 } from './types';
 
 const changeFollowed = (
@@ -44,14 +39,10 @@ const changeFollowing = (
 
 const initialState: UsersState = {
   users: [],
-  size: 5,
   total: 0,
-  page: 1,
   fetching: false,
   following: [],
   available: [5, 10, 25, 50],
-  relation: Relation.ALL,
-  filter: '',
 };
 
 const usersReducer = (state = initialState, action: UsersAction) => {
@@ -61,11 +52,7 @@ const usersReducer = (state = initialState, action: UsersAction) => {
     case UNFOLLOW:
       return changeFollowed(state, action, false);
     case SET_USERS:
-    case SET_PAGE:
-    case SET_SIZE:
     case SET_FETCHING:
-    case SET_RELATION:
-    case SET_FILTER:
       return changeData(state, action);
     case SET_FOLLOWING:
       return changeFollowing(state, action);

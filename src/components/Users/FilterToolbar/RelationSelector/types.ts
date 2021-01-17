@@ -1,4 +1,4 @@
-import {Relation} from '../../../../reducers/users/types';
+import {Relation} from '../../../../hooks/types';
 
 export type RelationSelectorProps = {
   relation: Relation;

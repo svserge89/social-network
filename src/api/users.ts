@@ -1,5 +1,5 @@
 import instance, {responseData} from './base';
-import {Relation} from '../reducers/users/types';
+import {Relation} from '../hooks/types';
 import {GetUsersResponse, UsersRequestParams} from './types';
 
 const USERS = '/users';

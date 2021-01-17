@@ -1,7 +1,6 @@
 import {ThunkAction} from 'redux-thunk';
 
 import {RootState} from '../../store/types';
-import {SetRelationAction} from '../users/types';
 
 export const SET_CURRENT_USER = 'social-network/auth/SET-CURRENT-USER';
 export const SET_CAPTCHA = 'social-network/auth/SET-CAPTCHA';
@@ -32,8 +31,7 @@ export type AuthAction =
   | SetCurrentUserAction
   | SetCaptchaAction
   | SetFetchingAction
-  | SetUpdatingAction
-  | SetRelationAction;
+  | SetUpdatingAction;
 
 export type AuthAsyncThunkAction = ThunkAction<
   Promise<void>,

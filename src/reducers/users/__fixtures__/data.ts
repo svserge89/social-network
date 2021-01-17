@@ -8,13 +8,8 @@ import {
 } from '../../../api/types';
 import {
   FOLLOW,
-  Relation,
   SET_FETCHING,
-  SET_FILTER,
   SET_FOLLOWING,
-  SET_PAGE,
-  SET_RELATION,
-  SET_SIZE,
   SET_USERS,
   UNFOLLOW,
   UsersAction,
@@ -50,22 +45,18 @@ export const USERS_WITH_FOLLOWED = USERS.map((user) =>
   user.id === USER_ID ? {...user, followed: true} : user
 );
 export const TOTAL = 42;
+export const FOLLOWING = [100, 200, 300, 400];
+export const FOLLOWING_WITH_USER_ID = [100, 200, 300, 400, USER_ID];
 export const PAGE = 42;
 export const SIZE = 42;
 export const FILTER = 'test filter';
-export const FOLLOWING = [100, 200, 300, 400];
-export const FOLLOWING_WITH_USER_ID = [100, 200, 300, 400, USER_ID];
 
 export const INITIAL_STATE: UsersState = {
   users: [],
-  size: 5,
   total: 0,
-  page: 1,
   fetching: false,
   following: [],
   available: [5, 10, 25, 50],
-  relation: Relation.ALL,
-  filter: '',
 };
 export const STATE_WITH_USERS: UsersState = {
   ...INITIAL_STATE,
@@ -79,25 +70,9 @@ export const STATE_WITH_USERS_AND_TOTAL: UsersState = {
   ...STATE_WITH_USERS,
   total: TOTAL,
 };
-export const STATE_WITH_PAGE: UsersState = {...INITIAL_STATE, page: PAGE};
-export const STATE_WITH_SIZE: UsersState = {
-  ...INITIAL_STATE,
-  size: SIZE,
-  page: 1,
-};
 export const STATE_WITH_FETCHING_TRUE: UsersState = {
   ...INITIAL_STATE,
   fetching: true,
-};
-export const STATE_WITH_RELATION_FRIENDS: UsersState = {
-  ...INITIAL_STATE,
-  relation: Relation.FRIENDS,
-  page: 1,
-};
-export const STATE_WITH_FILTER: UsersState = {
-  ...INITIAL_STATE,
-  filter: FILTER,
-  page: 1,
 };
 export const STATE_WITH_FOLLOWING: UsersState = {
   ...INITIAL_STATE,
@@ -144,34 +119,6 @@ export const SET_USERS_ACTION: UsersAction = {
 export const SET_USERS_EMPTY_ACTION: UsersAction = {
   type: SET_USERS,
   payload: {users: [], total: 0},
-};
-export const SET_RELATION_ALL_ACTION: UsersAction = {
-  type: SET_RELATION,
-  payload: {relation: Relation.ALL, page: 1},
-};
-export const SET_RELATION_FRIENDS_ACTION: UsersAction = {
-  type: SET_RELATION,
-  payload: {relation: Relation.FRIENDS, page: 1},
-};
-export const SET_FILTER_ACTION: UsersAction = {
-  type: SET_FILTER,
-  payload: {filter: FILTER, page: 1},
-};
-export const SET_FILTER_EMPTY_ACTION: UsersAction = {
-  type: SET_FILTER,
-  payload: {filter: INITIAL_STATE.filter, page: 1},
-};
-export const SET_PAGE_ACTION: UsersAction = {
-  type: SET_PAGE,
-  payload: {page: PAGE},
-};
-export const SET_SIZE_ACTION: UsersAction = {
-  type: SET_SIZE,
-  payload: {size: SIZE, page: 1},
-};
-export const SET_SIZE_EMPTY_ACTION: UsersAction = {
-  type: SET_SIZE,
-  payload: {size: INITIAL_STATE.size, page: 1},
 };
 export const SET_FETCHING_TRUE_ACTION: UsersAction = {
   type: SET_FETCHING,

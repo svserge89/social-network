@@ -6,7 +6,7 @@ import {
   SET_FETCHING,
   SET_UPDATING,
 } from '../types';
-import {Relation, UsersState} from '../../users/types';
+import {UsersState} from '../../users/types';
 import {RootState} from '../../../store/types';
 import {CaptchaResultCode, ResultCode} from '../../../utils/response-codes';
 import {
@@ -54,11 +54,7 @@ export const STATE_WITH_UPDATING_TRUE: AuthState = {
 
 export const ROOT_STATE: Partial<RootState> = {
   auth: {...INITIAL_STATE},
-  users: {relation: Relation.ALL} as UsersState,
-};
-export const ROOT_STATE_WITH_RELATION_FRIENDS: Partial<RootState> = {
-  ...ROOT_STATE,
-  users: {...ROOT_STATE.users, relation: Relation.FRIENDS} as UsersState,
+  users: {} as UsersState,
 };
 
 export const SUCCESS_GET_CURRENT_USER_RESPONSE: GetCurrentUserResponse = {

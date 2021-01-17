@@ -18,7 +18,6 @@ import {
   LOGIN_PARAM,
   PASSWORD,
   ROOT_STATE,
-  ROOT_STATE_WITH_RELATION_FRIENDS,
   SET_CAPTCHA_ACTION,
   SET_CAPTCHA_EMPTY_ACTION,
   SET_CURRENT_USER_ACTION,
@@ -38,7 +37,6 @@ import {
   SET_ERROR_ACTION,
   SET_ERROR_STATUS_ACTION,
 } from '../../error/__fixtures__/data';
-import {SET_RELATION_ALL_ACTION} from '../../users/__fixtures__/data';
 import {DispatchExts} from '../__fixtures__/types';
 
 const mockStore = configureMockStore<Partial<RootState>, DispatchExts>([thunk]);
@@ -190,16 +188,6 @@ describe('auth thunk actions', () => {
     it('should dispatch actions when success response', async () => {
       spyLogout.mockResolvedValue(SUCCESS_LOGOUT_RESPONSE);
       await testLogout([SET_CURRENT_USER_EMPTY_ACTION]);
-    });
-
-    it('should dispatch actions when success response and relation not set to all', async () => {
-      const store = mockStore(ROOT_STATE_WITH_RELATION_FRIENDS);
-
-      spyLogout.mockResolvedValue(SUCCESS_LOGOUT_RESPONSE);
-      await testLogout(
-        [SET_CURRENT_USER_EMPTY_ACTION, SET_RELATION_ALL_ACTION],
-        store
-      );
     });
 
     it('should dispatch actions when error result code', async () => {
