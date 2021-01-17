@@ -1,7 +1,9 @@
+import {useEffect} from 'react';
 import {NumberParam, StringParam, useQueryParams} from 'use-query-params';
 import {useSelector} from 'react-redux';
 
 import {selectAvailable, selectTotal} from '../selectors/users';
+import {selectAuthenticated} from '../selectors/auth';
 import {
   DEFAULT_FILTER,
   DEFAULT_PAGE,
@@ -21,9 +23,11 @@ export const useUsersQueryParams = () => {
   });
   const available = useSelector(selectAvailable);
   const total = useSelector(selectTotal);
+  const authenticated = useSelector(selectAuthenticated);
 
   const size: number | undefined =
     query.size && available.includes(query.size) ? query.size : undefined;
+
   const page: number | undefined =
     query.page &&
     Number.isInteger(query.page) &&
@@ -35,33 +39,39 @@ export const useUsersQueryParams = () => {
     )
       ? query.page
       : undefined;
+
   const relation: Relation | undefined =
-    query.relation && Object.values(Relation).includes(query.relation)
+    authenticated &&
+    query.relation &&
+    Object.values(Relation).includes(query.relation)
       ? query.relation
       : undefined;
+
   const filter: string | undefined = query.filter ?? undefined;
 
-  const fixedQuery: UsersQueryParams = {};
+  useEffect(() => {
+    const fixedQuery: UsersQueryParams = {};
 
-  if ((page || query.page) && page !== query.page) {
-    fixedQuery.page = page;
-  }
+    if ((page || query.page) && page !== query.page) {
+      fixedQuery.page = page;
+    }
 
-  if ((size || query.size) && size !== query.size) {
-    fixedQuery.size = size;
-  }
+    if ((size || query.size) && size !== query.size) {
+      fixedQuery.size = size;
+    }
 
-  if ((relation || query.relation) && relation !== query.relation) {
-    fixedQuery.relation = relation;
-  }
+    if ((relation || query.relation) && relation !== query.relation) {
+      fixedQuery.relation = relation;
+    }
 
-  if ((filter?.length || query.filter?.length) && filter !== query.filter) {
-    fixedQuery.filter = filter;
-  }
+    if ((filter?.length || query.filter?.length) && filter !== query.filter) {
+      fixedQuery.filter = filter;
+    }
 
-  if (Object.values(fixedQuery).length) {
-    setQuery(fixedQuery, 'replaceIn');
-  }
+    if (Object.values(fixedQuery).length) {
+      setQuery(fixedQuery, 'replaceIn');
+    }
+  }, [setQuery, query, filter, page, relation, size]);
 
   const setPage = (page: number) => {
     setQuery({page: page === DEFAULT_PAGE ? undefined : page}, 'pushIn');
