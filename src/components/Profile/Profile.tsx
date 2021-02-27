@@ -15,12 +15,13 @@ import {LOGIN} from '../../utils/routes';
 import AvatarCard from './AvatarCard/AvatarCard';
 import InfoCard from './InfoCard/InfoCard';
 import ComponentLoader from '../common/ComponentLoader/ComponentLoader';
+import {UserIdParams} from './types';
 
 const Profile: React.FC = () => {
   const currentUserId = useSelector(selectCurrentUserId);
   const userId = useSelector(selectUserId);
   const fetching = useSelector(selectFetching);
-  const {userId: userIdParam} = useParams();
+  const {userId: userIdParam} = useParams<UserIdParams>();
 
   const dispatch = useDispatch();
 
