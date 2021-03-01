@@ -9,7 +9,7 @@ import {
   selectErrorDescription,
   selectIsError,
 } from './selectors/error';
-import {HOME, LOGIN, PROFILE, USERS} from './utils/routes';
+import {CHAT, HOME, LOGIN, PROFILE, USERS} from './utils/routes';
 import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
 import NotMatch from './components/NotMatch/NotMatch';
@@ -18,6 +18,7 @@ import Users from './components/Users/Users';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import Footer from './components/Footer/Footer';
+import Chat from './components/Chat/Chat';
 import Error from './components/Error/Error';
 import PageLoader from './components/common/PageLoader/PageLoader';
 
@@ -47,6 +48,7 @@ const App: React.FC = () => {
         <Route exact path={HOME} component={Home} />
         <Route path={`${PROFILE}/:userId?`} component={Profile} />
         <Route exact path={USERS} component={Users} />
+        <Route exact path={CHAT} component={Chat} />
         <Route exact path={LOGIN} component={Login} />
         <Route component={NotMatch} />
       </Switch>
@@ -56,9 +58,7 @@ const App: React.FC = () => {
   return (
     <>
       <Header />
-      <Layout className="flex-fill">
-        <div className="px-2">{showComponent()}</div>
-      </Layout>
+      <Layout className="flex-fill px-4 py-0 my-0">{showComponent()}</Layout>
       <Footer />
     </>
   );

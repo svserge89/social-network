@@ -10,7 +10,7 @@ import {
   selectLogin,
 } from '../../selectors/auth';
 import {selectIsError} from '../../selectors/error';
-import {HOME, LOGIN, PROFILE, USERS} from '../../utils/routes';
+import {CHAT, HOME, LOGIN, PROFILE, USERS} from '../../utils/routes';
 import LoginLink from './LoginLink/LoginLink';
 import UserDropdown from './UserDropdown/UserDropdown';
 import Layout from '../Layout/Layout';
@@ -39,6 +39,17 @@ const Header: React.FC = () => {
       <LoginLink path={LOGIN} disabled={isError} />
     );
 
+  const showPrivateLink = (to: string, label: string): JSX.Element | '' =>
+    authenticated ? (
+      <LinkContainer to={to}>
+        <Nav.Link active={false} disabled={isError}>
+          {label}
+        </Nav.Link>
+      </LinkContainer>
+    ) : (
+      ''
+    );
+
   return (
     <Navbar bg="primary" variant="dark" className="p-0">
       <Layout className="bg-primary p-2">
@@ -48,16 +59,13 @@ const Header: React.FC = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <LinkContainer to={PROFILE}>
-              <Nav.Link active={false} disabled={isError}>
-                Profile
-              </Nav.Link>
-            </LinkContainer>
+            {showPrivateLink(PROFILE, 'Profile')}
             <LinkContainer to={USERS}>
               <Nav.Link active={false} disabled={isError}>
                 Users
               </Nav.Link>
             </LinkContainer>
+            {showPrivateLink(CHAT, 'Chat')}
           </Nav>
           <Nav>{showLogin()}</Nav>
         </Navbar.Collapse>

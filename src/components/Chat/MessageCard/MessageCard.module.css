@@ -1,0 +1,16 @@
+.image {
+    width: 60px;
+    height: 60px;
+}
+
+.card {
+    width: 560px;
+}
+
+.card:not(:first-of-type) {
+    margin-top: 0.25rem;
+}
+
+.subtitle {
+    font-size: 0.9rem !important;
+}

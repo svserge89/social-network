@@ -9,7 +9,7 @@ const ComponentWithIcon: React.FC<ComponentWithIconProps> = ({
 }) => (
   <>
     <FontAwesomeIcon icon={icon} />
-    &nbsp;{children}
+    {children && <>&nbsp;{children}</>}
   </>
 );
 

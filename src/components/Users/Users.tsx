@@ -107,7 +107,7 @@ const Users: React.FC = () => {
     if (!users.length) {
       return (
         <h4 className="d-flex justify-content-center text-secondary">
-          Not found...
+          No users...
         </h4>
       );
     }
