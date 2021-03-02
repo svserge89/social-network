@@ -30,4 +30,4 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
   );
 };
 
-export default UserDropdown;
+export default React.memo(UserDropdown);

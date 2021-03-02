@@ -27,4 +27,4 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
   </>
 );
 
-export default TextAreaField;
+export default React.memo(TextAreaField);

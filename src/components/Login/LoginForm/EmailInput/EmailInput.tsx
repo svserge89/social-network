@@ -31,4 +31,4 @@ const EmailInput: React.FC<EmailInputProps> = ({
   </Form.Group>
 );
 
-export default EmailInput;
+export default React.memo(EmailInput);

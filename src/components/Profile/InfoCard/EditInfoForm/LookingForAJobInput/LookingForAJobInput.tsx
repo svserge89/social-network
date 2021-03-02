@@ -52,4 +52,4 @@ const LookingForAJobInput: React.FC<LookingForAJobInputProps> = ({
   );
 };
 
-export default LookingForAJobInput;
+export default React.memo(LookingForAJobInput);

@@ -17,4 +17,4 @@ const LoginLink: React.FC<LoginLinkProps> = ({path, disabled = false}) => (
   </LinkContainer>
 );
 
-export default LoginLink;
+export default React.memo(LoginLink);

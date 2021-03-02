@@ -34,4 +34,4 @@ const FullNameInput: React.FC<FullNameInputProps> = ({
   </Form.Group>
 );
 
-export default FullNameInput;
+export default React.memo(FullNameInput);

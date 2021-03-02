@@ -43,4 +43,4 @@ const ContactList: React.FC<ContactListProps> = ({contacts, labels}) => {
   return <Container className="px-0 mb-3">{showList()}</Container>;
 };
 
-export default ContactList;
+export default React.memo(ContactList);

@@ -114,4 +114,4 @@ const EditInfoForm: React.FC<EditInfoFormProps> = ({
   );
 };
 
-export default EditInfoForm;
+export default React.memo(EditInfoForm);

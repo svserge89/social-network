@@ -23,4 +23,4 @@ const ButtonLoader: React.FC<ButtonLoaderProps> = ({
   </Button>
 );
 
-export default ButtonLoader;
+export default React.memo(ButtonLoader);

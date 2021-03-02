@@ -35,4 +35,4 @@ const PageSizeSelector: React.FC<PageSizeSelectorProps> = ({
   );
 };
 
-export default PageSizeSelector;
+export default React.memo(PageSizeSelector);

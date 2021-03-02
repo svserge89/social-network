@@ -22,4 +22,4 @@ const RememberMeCheckbox: React.FC<RememberMeCheckboxProps> = ({
   </Form.Group>
 );
 
-export default RememberMeCheckbox;
+export default React.memo(RememberMeCheckbox);

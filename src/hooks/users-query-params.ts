@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useCallback, useEffect} from 'react';
 import {NumberParam, StringParam, useQueryParams} from 'use-query-params';
 import {useSelector} from 'react-redux';
 
@@ -73,36 +73,51 @@ export const useUsersQueryParams = () => {
     }
   }, [setQuery, query, filter, page, relation, size]);
 
-  const setPage = (page: number) => {
-    setQuery({page: page === DEFAULT_PAGE ? undefined : page}, 'pushIn');
-  };
+  const setPage = useCallback(
+    (page: number) => {
+      setQuery({page: page === DEFAULT_PAGE ? undefined : page}, 'pushIn');
+    },
+    [setQuery]
+  );
 
-  const setSize = (size: number) => {
-    setQuery(
-      {
-        page: undefined,
-        size: size === available[DEFAULT_SIZE_INDEX] ? undefined : size,
-      },
-      'pushIn'
-    );
-  };
+  const setSize = useCallback(
+    (size: number) => {
+      setQuery(
+        {
+          page: undefined,
+          size: size === available[DEFAULT_SIZE_INDEX] ? undefined : size,
+        },
+        'pushIn'
+      );
+    },
+    [available, setQuery]
+  );
 
-  const setRelation = (relation: Relation) => {
-    setQuery(
-      {
-        page: undefined,
-        relation: relation === DEFAULT_RELATION ? undefined : relation,
-      },
-      'pushIn'
-    );
-  };
+  const setRelation = useCallback(
+    (relation: Relation) => {
+      setQuery(
+        {
+          page: undefined,
+          relation: relation === DEFAULT_RELATION ? undefined : relation,
+        },
+        'pushIn'
+      );
+    },
+    [setQuery]
+  );
 
-  const setFilter = (filter: string) => {
-    setQuery(
-      {page: undefined, filter: filter === DEFAULT_FILTER ? undefined : filter},
-      'pushIn'
-    );
-  };
+  const setFilter = useCallback(
+    (filter: string) => {
+      setQuery(
+        {
+          page: undefined,
+          filter: filter === DEFAULT_FILTER ? undefined : filter,
+        },
+        'pushIn'
+      );
+    },
+    [setQuery]
+  );
 
   return {
     page: page ?? DEFAULT_PAGE,

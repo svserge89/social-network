@@ -99,4 +99,4 @@ const Paginator: React.FC<PaginatorProps> = ({
   );
 };
 
-export default Paginator;
+export default React.memo(Paginator);

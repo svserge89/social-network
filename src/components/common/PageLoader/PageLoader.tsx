@@ -16,4 +16,4 @@ const PageLoader: React.FC = () => (
   </div>
 );
 
-export default PageLoader;
+export default React.memo(PageLoader);

@@ -46,4 +46,4 @@ const PageNavToolbar: React.FC<PageNavToolbarProps> = ({
   );
 };
 
-export default PageNavToolbar;
+export default React.memo(PageNavToolbar);

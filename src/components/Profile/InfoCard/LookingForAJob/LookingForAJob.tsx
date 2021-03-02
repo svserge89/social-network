@@ -36,4 +36,4 @@ const LookingForAJob: React.FC<LookingForAJobProps> = ({
   );
 };
 
-export default LookingForAJob;
+export default React.memo(LookingForAJob);

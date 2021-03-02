@@ -34,4 +34,4 @@ const UploadImageButton: React.FC<UploadImageButtonProps> = ({
   );
 };
 
-export default UploadImageButton;
+export default React.memo(UploadImageButton);

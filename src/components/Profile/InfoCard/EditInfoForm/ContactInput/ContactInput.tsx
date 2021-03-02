@@ -36,4 +36,4 @@ const ContactInput: React.FC<ContactInputProps> = ({
   </Form.Group>
 );
 
-export default ContactInput;
+export default React.memo(ContactInput);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {FormControl} from 'react-bootstrap';
 import cn from 'classnames';
 import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
@@ -17,23 +17,24 @@ const MessageToolbar: React.FC<MessageToolbarProps> = ({
 }) => {
   const {value, setValue, onChange} = useInput<HTMLTextAreaElement>();
 
-  const handleSendMessage = () => {
+  const handleSendMessage = useCallback(() => {
     if (!value.trim()) {
       return;
     }
 
-    onSendMessage(value.trim());
+    onSendMessage(value);
     setValue('');
-  };
+  }, [value, onSendMessage, setValue]);
 
-  const handleAltEnterKeyPress = (
-    event: React.KeyboardEvent<HTMLTextAreaElement>
-  ) => {
-    if (event.code === 'Enter' && event.shiftKey) {
-      event.preventDefault();
-      handleSendMessage();
-    }
-  };
+  const handleAltEnterKeyPress = useCallback(
+    (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (event.code === 'Enter' && event.shiftKey) {
+        event.preventDefault();
+        handleSendMessage();
+      }
+    },
+    [handleSendMessage]
+  );
 
   const showButton = (): JSX.Element =>
     loading ? (

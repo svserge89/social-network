@@ -17,13 +17,12 @@ const Status: React.FC<StatusProps> = ({
 
   const editStatusHandler = useCallback(() => editable && setEditMode(true), [
     editable,
-    setEditMode,
   ]);
 
   const changeStatusHandler = useCallback(
     ({target: {value}}: React.ChangeEvent<HTMLInputElement>) =>
       setLocalStatus(value),
-    [setLocalStatus]
+    []
   );
 
   const updateStatusHandler = useCallback(() => {
@@ -32,7 +31,7 @@ const Status: React.FC<StatusProps> = ({
     }
 
     setEditMode(false);
-  }, [localStatus, status, setStatus, setEditMode]);
+  }, [localStatus, status, setStatus]);
 
   const keyDownHandler = useCallback(
     ({key}: React.KeyboardEvent<HTMLInputElement>) => {
@@ -82,4 +81,4 @@ const Status: React.FC<StatusProps> = ({
   );
 };
 
-export default Status;
+export default React.memo(Status);

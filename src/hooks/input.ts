@@ -1,13 +1,13 @@
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useCallback, useState} from 'react';
 
 export const useInput = <
   TargetType extends HTMLInputElement | HTMLTextAreaElement
 >() => {
   const [value, setValue] = useState<string>('');
 
-  const onChange = (event: ChangeEvent<TargetType>) => {
+  const onChange = useCallback((event: ChangeEvent<TargetType>) => {
     setValue(event.target.value);
-  };
+  }, []);
 
   return {
     value,

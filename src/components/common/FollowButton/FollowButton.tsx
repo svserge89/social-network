@@ -26,4 +26,4 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   );
 };
 
-export default FollowButton;
+export default React.memo(FollowButton);

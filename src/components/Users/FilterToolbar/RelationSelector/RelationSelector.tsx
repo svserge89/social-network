@@ -38,4 +38,4 @@ const RelationSelector: React.FC<RelationSelectorProps> = ({
   );
 };
 
-export default RelationSelector;
+export default React.memo(RelationSelector);

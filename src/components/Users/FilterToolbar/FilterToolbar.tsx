@@ -32,4 +32,4 @@ const FilterToolbar: React.FC<FilterToolbarProps> = ({
   );
 };
 
-export default FilterToolbar;
+export default React.memo(FilterToolbar);

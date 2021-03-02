@@ -25,4 +25,4 @@ const ComponentLoader: React.FC<ComponentLoaderProps> = ({
   );
 };
 
-export default ComponentLoader;
+export default React.memo(ComponentLoader);

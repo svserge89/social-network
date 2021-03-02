@@ -31,4 +31,4 @@ const CaptchaInput: React.FC<CaptchaInputProps> = ({
   </Form.Group>
 );
 
-export default CaptchaInput;
+export default React.memo(CaptchaInput);

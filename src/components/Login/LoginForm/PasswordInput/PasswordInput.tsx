@@ -28,4 +28,4 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   </Form.Group>
 );
 
-export default PasswordInput;
+export default React.memo(PasswordInput);

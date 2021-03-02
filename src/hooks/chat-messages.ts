@@ -29,9 +29,8 @@ export const useChatMessages = () => {
   const {lastJsonMessage, sendMessage, readyState} = useWebSocket(
     CHAT_WEB_SOCKET_URL!,
     {
+      reconnectAttempts: Number.MAX_SAFE_INTEGER,
       shouldReconnect: () => true,
-      share: true,
-      retryOnError: true,
     }
   );
 

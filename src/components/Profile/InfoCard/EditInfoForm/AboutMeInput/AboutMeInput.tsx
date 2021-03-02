@@ -33,4 +33,4 @@ const AboutMeInput: React.FC<AboutMeInputProps> = ({
   </Form.Group>
 );
 
-export default AboutMeInput;
+export default React.memo(AboutMeInput);

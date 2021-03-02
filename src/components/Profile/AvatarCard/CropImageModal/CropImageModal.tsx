@@ -102,4 +102,4 @@ const CropImageModal: React.FC<CropImageModalProps> = ({
   );
 };
 
-export default CropImageModal;
+export default React.memo(CropImageModal);
