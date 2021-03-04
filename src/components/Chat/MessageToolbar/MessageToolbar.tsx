@@ -28,11 +28,13 @@ const MessageToolbar: React.FC<MessageToolbarProps> = ({
   const handleAltEnterKeyPress = useCallback(
     (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
       if (event.code === 'Enter' && event.shiftKey) {
-        event.preventDefault();
-        handleSendMessage();
+        if (!disabled) {
+          event.preventDefault();
+          handleSendMessage();
+        }
       }
     },
-    [handleSendMessage]
+    [handleSendMessage, disabled]
   );
 
   const showButton = (): JSX.Element =>
@@ -44,6 +46,7 @@ const MessageToolbar: React.FC<MessageToolbarProps> = ({
         title="Send message"
         disabled={disabled || !value.trim()}
         onClick={handleSendMessage}
+        variant="success"
       />
     );
 
@@ -56,7 +59,6 @@ const MessageToolbar: React.FC<MessageToolbarProps> = ({
         value={value}
         onChange={onChange}
         placeholder="Input your message..."
-        disabled={disabled}
         onKeyPress={handleAltEnterKeyPress}
       />
       {showButton()}
