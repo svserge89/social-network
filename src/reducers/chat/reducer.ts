@@ -6,8 +6,8 @@ import {
   REPLACE_MESSAGES,
   ReplaceMessagesAction,
   SET_CONNECTED,
-  SET_LOADING,
   SET_MESSAGES,
+  SET_WS_ERROR,
   SetMessagesAction,
 } from './types';
 import {getMessagesLengthFilter} from '../../utils/chat';
@@ -32,15 +32,15 @@ const replaceMessages = (
 const initialState: ChatState = {
   messages: [],
   connected: false,
-  loading: false,
+  wsError: false,
 };
 
 const chatReducer = (state = initialState, action: ChatAction) => {
   switch (action.type) {
     case SET_MESSAGES:
       return changeMessages(state, action);
-    case SET_LOADING:
     case SET_CONNECTED:
+    case SET_WS_ERROR:
     case CLEAR_MESSAGES:
       return changeData(state, action);
     case REPLACE_MESSAGES:

@@ -2,3 +2,7 @@
     height: calc(100vh - 112px);
     min-height: 400px;
 }
+
+.heightWithAlert {
+    height: calc(100vh - 146px - 0.25rem);
+}

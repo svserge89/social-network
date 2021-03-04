@@ -1,6 +1,9 @@
+import {ThunkAction} from 'redux-thunk';
+import {RootState} from '../../store/types';
+
 export const SET_MESSAGES = 'social-network/chat/SET-MESSAGES';
 export const SET_CONNECTED = 'social-network/chat/SET-CONNECTED';
-export const SET_LOADING = 'social-network/chat/SET-LOADING';
+export const SET_WS_ERROR = 'social-network/chat/SET-ERROR';
 export const CLEAR_MESSAGES = 'social-network/chat/CLEAR-MESSAGES';
 export const REPLACE_MESSAGES = 'social-network/chat/REPLACE-MESSAGES';
 
@@ -16,17 +19,10 @@ export type SetConnectedAction = {
   payload: {connected: boolean};
 };
 
-export type SetLoadingAction = {
-  type: typeof SET_LOADING;
-  payload: {loading: boolean};
-};
-
 export type ClearMessagesAction = {
   type: typeof CLEAR_MESSAGES;
   payload: {
     messages: [];
-    connected: false;
-    loading: false;
   };
 };
 
@@ -37,12 +33,21 @@ export type ReplaceMessagesAction = {
   };
 };
 
+export type SetWsErrorAction = {
+  type: typeof SET_WS_ERROR;
+  payload: {
+    wsError: boolean;
+  };
+};
+
 export type ChatAction =
   | SetMessagesAction
   | SetConnectedAction
-  | SetLoadingAction
   | ClearMessagesAction
-  | ReplaceMessagesAction;
+  | ReplaceMessagesAction
+  | SetWsErrorAction;
+
+export type ChatThunkAction = ThunkAction<void, RootState, unknown, ChatAction>;
 
 export type ChatMessage = {
   id?: string;
@@ -55,5 +60,5 @@ export type ChatMessage = {
 export type ChatState = {
   messages: ChatMessage[];
   connected: boolean;
-  loading: boolean;
+  wsError: boolean;
 };

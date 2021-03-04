@@ -13,7 +13,6 @@ import style from './MessageToolbar.module.css';
 const MessageToolbar: React.FC<MessageToolbarProps> = ({
   onSendMessage,
   disabled = false,
-  loading = false,
 }) => {
   const {value, setValue, onChange} = useInput<HTMLTextAreaElement>();
 
@@ -37,7 +36,7 @@ const MessageToolbar: React.FC<MessageToolbarProps> = ({
   );
 
   const showButton = (): JSX.Element =>
-    loading ? (
+    disabled ? (
       <ButtonLoader noLabel={true} />
     ) : (
       <ButtonWithIcon

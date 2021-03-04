@@ -5,11 +5,11 @@ import {
   REPLACE_MESSAGES,
   ReplaceMessagesAction,
   SET_CONNECTED,
-  SET_LOADING,
   SET_MESSAGES,
+  SET_WS_ERROR,
   SetConnectedAction,
-  SetLoadingAction,
   SetMessagesAction,
+  SetWsErrorAction,
 } from './types';
 
 export const setMessages = (messages: ChatMessage[]): SetMessagesAction => ({
@@ -22,14 +22,14 @@ export const setConnected = (connected: boolean): SetConnectedAction => ({
   payload: {connected},
 });
 
-export const setLoading = (loading: boolean): SetLoadingAction => ({
-  type: SET_LOADING,
-  payload: {loading},
+export const setWsError = (wsError: boolean): SetWsErrorAction => ({
+  type: SET_WS_ERROR,
+  payload: {wsError},
 });
 
 export const clearMessages = (): ClearMessagesAction => ({
   type: CLEAR_MESSAGES,
-  payload: {messages: [], loading: false, connected: false},
+  payload: {messages: []},
 });
 
 export const replaceMessages = (

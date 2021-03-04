@@ -6,4 +6,4 @@ export const selectMessages = ({chat}: RootState): ChatMessage[] =>
 
 export const selectConnected = ({chat}: RootState): boolean => chat.connected;
 
-export const selectLoading = ({chat}: RootState): boolean => chat.loading;
+export const selectWsError = ({chat}: RootState): boolean => chat.wsError;

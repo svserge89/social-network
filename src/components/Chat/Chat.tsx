@@ -1,6 +1,6 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
-import {Card, Row} from 'react-bootstrap';
+import {Alert, Card, Row} from 'react-bootstrap';
 import {useSelector} from 'react-redux';
 import cn from 'classnames';
 
@@ -16,12 +16,21 @@ import style from './Chat.module.css';
 const Chat: React.FC = () => {
   const currentUserId = useSelector(selectUserId);
 
-  const {messages, loading, connected, sendMessage} = useChatMessages();
+  const {messages, connected, wsError, sendMessage} = useChatMessages();
   const {anchorRef, onScroll} = useAutoScroll<HTMLDivElement>([messages]);
 
   if (!currentUserId) {
     return <Redirect to={LOGIN} />;
   }
+
+  const showAlert = (): JSX.Element | '' =>
+    wsError ? (
+      <Alert variant="danger" className="col-12 mb-0 mt-3 px-3 py-1">
+        Something went wrong! Check your internet connection...
+      </Alert>
+    ) : (
+      ''
+    );
 
   const showMessages = (): JSX.Element =>
     messages.length ? (
@@ -43,7 +52,14 @@ const Chat: React.FC = () => {
 
   return (
     <Row>
-      <Card className={cn('col-12', 'mt-3', 'p-0', style.chat)}>
+      {showAlert()}
+      <Card
+        className={cn('col-12', 'p-0', style.chat, {
+          'mt-3': !wsError,
+          'mt-1': wsError,
+          [style.heightWithAlert]: wsError,
+        })}
+      >
         <Card.Body
           className="overflow-auto d-flex flex-column p-3 bg-secondary"
           onScroll={onScroll}
@@ -52,11 +68,7 @@ const Chat: React.FC = () => {
           <div ref={anchorRef}></div>
         </Card.Body>
         <Card.Footer className="px-3 py-2">
-          <MessageToolbar
-            onSendMessage={sendMessage}
-            disabled={loading || !connected}
-            loading={loading}
-          />
+          <MessageToolbar onSendMessage={sendMessage} disabled={!connected} />
         </Card.Footer>
       </Card>
     </Row>
