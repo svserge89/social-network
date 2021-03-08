@@ -36,6 +36,7 @@ export default class SocketWrapper {
     clearInterval(this.interval);
 
     this.websocket?.close();
+    this.removeEventListeners();
   }
 
   public addEventListener(type: EventType, listener: EventListener) {
@@ -97,6 +98,7 @@ export default class SocketWrapper {
       const interval = setInterval(() => {
         if (this.websocket?.readyState === WebSocket.CLOSED) {
           clearInterval(interval);
+          this.removeEventListeners();
           this.connect();
         }
       }, this.options.reconnectDelay ?? RECONNECT_DELAY);
@@ -111,6 +113,13 @@ export default class SocketWrapper {
     this.websocket.addEventListener('message', this.messageListener);
     this.websocket.addEventListener('close', this.closeListener);
     this.websocket.addEventListener('error', this.errorListener);
+  }
+
+  private removeEventListeners() {
+    this.websocket?.removeEventListener('open', this.openListener);
+    this.websocket?.removeEventListener('message', this.messageListener);
+    this.websocket?.removeEventListener('close', this.closeListener);
+    this.websocket?.removeEventListener('error', this.errorListener);
   }
 
   private openListener = (event: SocketEvent) => {
@@ -129,11 +138,6 @@ export default class SocketWrapper {
     this.closeListeners.forEach((listener) => {
       listener(event);
     });
-
-    this.websocket?.removeEventListener('open', this.openListener);
-    this.websocket?.removeEventListener('message', this.messageListener);
-    this.websocket?.removeEventListener('close', this.closeListener);
-    this.websocket?.removeEventListener('error', this.errorListener);
   };
 
   private errorListener = (event: SocketEvent) => {

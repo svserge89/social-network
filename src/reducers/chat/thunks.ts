@@ -40,7 +40,7 @@ export const connect = (): ChatThunkAction => (dispatch, getState) => {
     chatApi.subscribe('close', () => {
       dispatch(setConnected(false));
     });
-    chatApi.subscribe('error', () => {
+    chatApi.subscribe('error', (error) => {
       dispatch(setWsError(true));
     });
   } catch (error) {
@@ -52,6 +52,7 @@ export const disconnect = (): ChatThunkAction => (dispatch) => {
   try {
     chatApi.disconnect();
     dispatch(clearMessages());
+    dispatch(setConnected(false));
   } catch (error) {
     handleError(dispatch, error);
   }
