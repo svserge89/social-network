@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {FormControl, InputGroup} from 'react-bootstrap';
+import {FormSelect, InputGroup} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserFriends} from '@fortawesome/free-solid-svg-icons';
 
@@ -18,14 +18,11 @@ const RelationSelector: React.FC<RelationSelectorProps> = ({
   );
 
   return (
-    <InputGroup className="ml-3">
-      <InputGroup.Prepend>
-        <InputGroup.Text>
-          <FontAwesomeIcon icon={faUserFriends} />
-        </InputGroup.Text>
-      </InputGroup.Prepend>
-      <FormControl
-        as="select"
+    <InputGroup className="ms-3">
+      <InputGroup.Text>
+        <FontAwesomeIcon icon={faUserFriends} />
+      </InputGroup.Text>
+      <FormSelect
         value={relation}
         onChange={relationHandler}
         disabled={fetching}
@@ -33,7 +30,7 @@ const RelationSelector: React.FC<RelationSelectorProps> = ({
         <option value={Relation.ALL}>All</option>
         <option value={Relation.FRIENDS}>Friends</option>
         <option value={Relation.NOT_FRIENDS}>Not friends</option>
-      </FormControl>
+      </FormSelect>
     </InputGroup>
   );
 };

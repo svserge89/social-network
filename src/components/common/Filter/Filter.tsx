@@ -46,16 +46,14 @@ const Filter: React.FC<FilterProps> = ({
 
   return (
     <InputGroup className="flex-fill">
-      <InputGroup.Prepend>
-        <ButtonWithIcon
-          variant="outline-secondary"
-          onClick={filterHandler}
-          icon={faSearch}
-          disabled={fetching || !isFilterAvailable}
-        >
-          Filter
-        </ButtonWithIcon>
-      </InputGroup.Prepend>
+      <ButtonWithIcon
+        variant="outline-secondary"
+        onClick={filterHandler}
+        icon={faSearch}
+        disabled={fetching || !isFilterAvailable}
+      >
+        Filter
+      </ButtonWithIcon>
       <FormControl
         placeholder="Filter by user name..."
         value={value}
@@ -63,16 +61,14 @@ const Filter: React.FC<FilterProps> = ({
         onKeyDown={keyDownHandler}
         disabled={fetching}
       />
-      <InputGroup.Append>
-        <ButtonWithIcon
-          variant="outline-secondary"
-          onClick={cleanHandler}
-          icon={faUndo}
-          disabled={fetching || !filter}
-        >
-          Clean
-        </ButtonWithIcon>
-      </InputGroup.Append>
+      <ButtonWithIcon
+        variant="outline-secondary"
+        onClick={cleanHandler}
+        icon={faUndo}
+        disabled={fetching || !filter}
+      >
+        Clean
+      </ButtonWithIcon>
     </InputGroup>
   );
 };

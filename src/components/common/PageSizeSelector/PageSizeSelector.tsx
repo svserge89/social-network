@@ -20,17 +20,10 @@ const PageSizeSelector: React.FC<PageSizeSelectorProps> = ({
 
   return (
     <InputGroup size={size}>
-      <InputGroup.Prepend>
-        <InputGroup.Text>Page size</InputGroup.Text>
-      </InputGroup.Prepend>
-      <Form.Control
-        onChange={changeHandler}
-        as="select"
-        value={current}
-        disabled={disabled}
-      >
+      <InputGroup.Text>Page size</InputGroup.Text>
+      <Form.Select onChange={changeHandler} value={current} disabled={disabled}>
         {showOptions()}
-      </Form.Control>
+      </Form.Select>
     </InputGroup>
   );
 };

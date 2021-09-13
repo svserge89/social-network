@@ -58,7 +58,7 @@ const Header: React.FC = () => {
         </LinkContainer>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto">
+          <Nav className="me-auto">
             {showPrivateLink(PROFILE, 'Profile')}
             <LinkContainer to={USERS}>
               <Nav.Link active={false} disabled={isError}>

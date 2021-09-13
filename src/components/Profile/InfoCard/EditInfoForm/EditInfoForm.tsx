@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {Form as FinalForm} from 'react-final-form';
+import {withTypes} from 'react-final-form';
 import {useSelector} from 'react-redux';
 import {Form, Card, ButtonToolbar, ButtonGroup, Alert} from 'react-bootstrap';
 import {
@@ -19,6 +19,9 @@ import ComponentWithIcon from '../../../common/ComponentWithIcon/ComponentWithIc
 import {selectProfile} from '../../../../selectors/profile';
 import {EditInfoFormProps} from './types';
 import resolveBrandIcon from '../../../../utils/resolve-brand-icon';
+import {Profile} from '../../../../models/types';
+
+const {Form: FinalForm} = withTypes<Profile>();
 
 const EditInfoForm: React.FC<EditInfoFormProps> = ({
   onSubmit,
@@ -65,7 +68,7 @@ const EditInfoForm: React.FC<EditInfoFormProps> = ({
           <Card.Text as="div">
             <FullNameInput name="fullName" disabled={submitting} />
           </Card.Text>
-          <Card.Text as="div">
+          <Card.Text as="div" className="mt-3">
             <Form.Label column={false}>
               <h5>
                 <ComponentWithIcon icon={faAddressCard}>
@@ -83,10 +86,10 @@ const EditInfoForm: React.FC<EditInfoFormProps> = ({
               disabled={submitting}
             />
           </Card.Text>
-          <Card.Text as="div">
+          <Card.Text as="div" className="mt-3">
             <AboutMeInput name="aboutMe" disabled={submitting} />
           </Card.Text>
-          <ButtonToolbar className="justify-content-between">
+          <ButtonToolbar className="justify-content-between mt-3">
             {showSaveButton(submitting, pristine)}
             <ButtonGroup>
               <ButtonWithIcon

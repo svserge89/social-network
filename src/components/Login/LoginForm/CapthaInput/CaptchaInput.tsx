@@ -13,7 +13,7 @@ const CaptchaInput: React.FC<CaptchaInputProps> = ({
   disabled = false,
 }) => (
   <Form.Group>
-    <Form.Label column={false}>
+    <Form.Label column={false} className="my-3 d-flex justify-content-center">
       <Image src={url} thumbnail />
     </Form.Label>
     <Field name={name} validate={compose(validators)}>

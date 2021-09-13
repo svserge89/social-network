@@ -38,43 +38,40 @@ export const getCaptcha = (): AuthAsyncThunkAction => async (dispatch) => {
   }
 };
 
-export const login = ({
-  email,
-  password,
-  rememberMe,
-  captcha,
-}: LoginData): AuthAsyncThunkAction => async (dispatch) => {
-  dispatch(setUpdating(true));
+export const login =
+  ({email, password, rememberMe, captcha}: LoginData): AuthAsyncThunkAction =>
+  async (dispatch) => {
+    dispatch(setUpdating(true));
 
-  try {
-    const {resultCode, messages} = await authAPI.login(
-      email,
-      password,
-      rememberMe,
-      captcha
-    );
+    try {
+      const {resultCode, messages} = await authAPI.login(
+        email,
+        password,
+        rememberMe,
+        captcha
+      );
 
-    switch (resultCode) {
-      case ResultCode.SUCCESS:
-        await dispatch(getCurrentUser());
-        dispatch(setCaptcha());
-        break;
-      case CaptchaResultCode.CAPTCHA_REQUIRED:
-        await dispatch(getCaptcha());
-      // eslint-disable-next-line no-fallthrough
-      case ResultCode.ERROR:
-        throw parseMessages(messages);
+      switch (resultCode) {
+        case ResultCode.SUCCESS:
+          await dispatch(getCurrentUser());
+          dispatch(setCaptcha());
+          break;
+        case CaptchaResultCode.CAPTCHA_REQUIRED:
+          await dispatch(getCaptcha());
+        // eslint-disable-next-line no-fallthrough
+        case ResultCode.ERROR:
+          throw parseMessages(messages);
+      }
+    } catch (error) {
+      if ((error as any).submissionError) {
+        throw error;
+      }
+
+      handleError(dispatch, error);
+    } finally {
+      dispatch(setUpdating(false));
     }
-  } catch (error) {
-    if (error.submissionError) {
-      throw error;
-    }
-
-    handleError(dispatch, error);
-  } finally {
-    dispatch(setUpdating(false));
-  }
-};
+  };
 
 export const logout = (): AuthAsyncThunkAction => async (dispatch) => {
   dispatch(setUpdating(true));

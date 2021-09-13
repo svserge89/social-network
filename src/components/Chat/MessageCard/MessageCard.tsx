@@ -33,10 +33,10 @@ const MessageCard: React.FC<MessageCardProps> = ({
         </LinkContainer>
         <Card.Body
           className={cn('flex-shrink-2', 'text-wrap', 'text-truncate', 'py-1', {
-            'pl-0': !left,
-            'pl-2': left,
-            'pr-0': left,
-            'pr-2': !left,
+            'ps-0': !left,
+            'ps-2': left,
+            'pe-0': left,
+            'pe-2': !left,
           })}
         >
           <Card.Text>{text}</Card.Text>

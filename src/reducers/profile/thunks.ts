@@ -19,164 +19,158 @@ import emptyProfile from './empty-profile';
 import {ProfileAsyncThunkAction, ProfileThunkAction} from './types';
 import {selectUserId} from '../../selectors/profile';
 
-export const getProfile = (userId: number): ProfileAsyncThunkAction => async (
-  dispatch
-) => {
-  dispatch(setFetching(true));
+export const getProfile =
+  (userId: number): ProfileAsyncThunkAction =>
+  async (dispatch) => {
+    dispatch(setFetching(true));
 
-  try {
-    const profile = await profileAPI.get(userId);
+    try {
+      const profile = await profileAPI.get(userId);
 
-    dispatch(setProfile(profile));
-  } catch (error) {
-    handleError(dispatch, error);
-  } finally {
-    dispatch(setFetching(false));
-  }
-};
-
-export const updateProfile = (
-  profile: Profile
-): ProfileAsyncThunkAction => async (dispatch) => {
-  dispatch(setUpdating(true));
-
-  try {
-    const {resultCode, messages} = await profileAPI.update(profile);
-
-    if (resultCode !== ResultCode.SUCCESS) {
-      throw parseMessages(messages);
+      dispatch(setProfile(profile));
+    } catch (error) {
+      handleError(dispatch, error);
+    } finally {
+      dispatch(setFetching(false));
     }
+  };
 
-    await dispatch(setProfile(profile));
-  } catch (error) {
-    if (error.submissionError) {
-      throw error;
+export const updateProfile =
+  (profile: Profile): ProfileAsyncThunkAction =>
+  async (dispatch) => {
+    dispatch(setUpdating(true));
+
+    try {
+      const {resultCode, messages} = await profileAPI.update(profile);
+
+      if (resultCode !== ResultCode.SUCCESS) {
+        throw parseMessages(messages);
+      }
+
+      await dispatch(setProfile(profile));
+    } catch (error) {
+      if ((error as any).submissionError) {
+        throw error;
+      }
+
+      handleError(dispatch, error);
+    } finally {
+      dispatch(setUpdating(false));
     }
-
-    handleError(dispatch, error);
-  } finally {
-    dispatch(setUpdating(false));
-  }
-};
+  };
 
 export const cleanProfile = (): ProfileThunkAction => (dispatch) =>
   dispatch(setProfile({...emptyProfile}));
 
-export const getStatus = (userId: number): ProfileAsyncThunkAction => async (
-  dispatch
-) => {
-  dispatch(setFetchingStatus(true));
+export const getStatus =
+  (userId: number): ProfileAsyncThunkAction =>
+  async (dispatch) => {
+    dispatch(setFetchingStatus(true));
 
-  try {
-    const status = await profileAPI.getStatus(userId);
+    try {
+      const status = await profileAPI.getStatus(userId);
 
-    dispatch(setStatus(status));
-  } catch (error) {
-    handleError(dispatch, error);
-  } finally {
-    dispatch(setFetchingStatus(false));
-  }
-};
-
-export const updateStatus = (status: string): ProfileAsyncThunkAction => async (
-  dispatch
-) => {
-  dispatch(setFetchingStatus(true));
-
-  try {
-    const {resultCode, messages} = await profileAPI.updateStatus(status);
-
-    if (resultCode !== ResultCode.SUCCESS) {
-      handleServerError(dispatch, messages);
-    } else {
       dispatch(setStatus(status));
+    } catch (error) {
+      handleError(dispatch, error);
+    } finally {
+      dispatch(setFetchingStatus(false));
     }
-  } catch (error) {
-    handleError(dispatch, error);
-  } finally {
-    dispatch(setFetchingStatus(false));
-  }
-};
+  };
 
-export const updatePhoto = (image: File): ProfileAsyncThunkAction => async (
-  dispatch
-) => {
-  dispatch(setFetchingPhoto(true));
+export const updateStatus =
+  (status: string): ProfileAsyncThunkAction =>
+  async (dispatch) => {
+    dispatch(setFetchingStatus(true));
 
-  try {
-    const {resultCode, data, messages} = await profileAPI.updatePhoto(image);
+    try {
+      const {resultCode, messages} = await profileAPI.updateStatus(status);
 
-    if (resultCode !== ResultCode.SUCCESS) {
-      handleServerError(dispatch, messages);
-    } else {
-      dispatch(setPhoto(data!.photos));
+      if (resultCode !== ResultCode.SUCCESS) {
+        handleServerError(dispatch, messages);
+      } else {
+        dispatch(setStatus(status));
+      }
+    } catch (error) {
+      handleError(dispatch, error);
+    } finally {
+      dispatch(setFetchingStatus(false));
     }
-  } catch (error) {
-    handleError(dispatch, error);
-  } finally {
-    dispatch(setFetchingPhoto(false));
-  }
-};
+  };
 
-export const getFollowed = (): ProfileAsyncThunkAction => async (
-  dispatch,
-  getState
-) => {
-  dispatch(setFollowing(true));
+export const updatePhoto =
+  (image: File): ProfileAsyncThunkAction =>
+  async (dispatch) => {
+    dispatch(setFetchingPhoto(true));
 
-  try {
-    const followed = await followAPI.get(selectUserId(getState()));
+    try {
+      const {resultCode, data, messages} = await profileAPI.updatePhoto(image);
 
-    dispatch(setFollowed(followed));
-  } catch (error) {
-    handleError(dispatch, error);
-  } finally {
-    dispatch(setFollowing(false));
-  }
-};
-
-export const follow = (): ProfileAsyncThunkAction => async (
-  dispatch,
-  getState
-) => {
-  dispatch(setFollowing(true));
-
-  try {
-    const {resultCode, messages} = await followAPI.follow(
-      selectUserId(getState())
-    );
-
-    if (resultCode !== ResultCode.SUCCESS) {
-      handleServerError(dispatch, messages);
-    } else {
-      dispatch(setFollowed(true));
+      if (resultCode !== ResultCode.SUCCESS) {
+        handleServerError(dispatch, messages);
+      } else {
+        dispatch(setPhoto(data!.photos));
+      }
+    } catch (error) {
+      handleError(dispatch, error);
+    } finally {
+      dispatch(setFetchingPhoto(false));
     }
-  } catch (error) {
-    handleError(dispatch, error);
-  } finally {
-    dispatch(setFollowing(false));
-  }
-};
+  };
 
-export const unfollow = (): ProfileAsyncThunkAction => async (
-  dispatch,
-  getState
-) => {
-  dispatch(setFollowing(true));
+export const getFollowed =
+  (): ProfileAsyncThunkAction => async (dispatch, getState) => {
+    dispatch(setFollowing(true));
 
-  try {
-    const {resultCode, messages} = await followAPI.unFollow(
-      selectUserId(getState())
-    );
+    try {
+      const followed = await followAPI.get(selectUserId(getState()));
 
-    if (resultCode !== ResultCode.SUCCESS) {
-      handleServerError(dispatch, messages);
-    } else {
-      dispatch(setFollowed(false));
+      dispatch(setFollowed(followed));
+    } catch (error) {
+      handleError(dispatch, error);
+    } finally {
+      dispatch(setFollowing(false));
     }
-  } catch (error) {
-    handleError(dispatch, error);
-  } finally {
-    dispatch(setFollowing(false));
-  }
-};
+  };
+
+export const follow =
+  (): ProfileAsyncThunkAction => async (dispatch, getState) => {
+    dispatch(setFollowing(true));
+
+    try {
+      const {resultCode, messages} = await followAPI.follow(
+        selectUserId(getState())
+      );
+
+      if (resultCode !== ResultCode.SUCCESS) {
+        handleServerError(dispatch, messages);
+      } else {
+        dispatch(setFollowed(true));
+      }
+    } catch (error) {
+      handleError(dispatch, error);
+    } finally {
+      dispatch(setFollowing(false));
+    }
+  };
+
+export const unfollow =
+  (): ProfileAsyncThunkAction => async (dispatch, getState) => {
+    dispatch(setFollowing(true));
+
+    try {
+      const {resultCode, messages} = await followAPI.unFollow(
+        selectUserId(getState())
+      );
+
+      if (resultCode !== ResultCode.SUCCESS) {
+        handleServerError(dispatch, messages);
+      } else {
+        dispatch(setFollowed(false));
+      }
+    } catch (error) {
+      handleError(dispatch, error);
+    } finally {
+      dispatch(setFollowing(false));
+    }
+  };

@@ -12,7 +12,9 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   disabled = false,
 }) => (
   <Form.Group>
-    <Form.Label column={false}>Password</Form.Label>
+    <Form.Label column={false} className="mt-2">
+      Password
+    </Form.Label>
     <Field name={name} validate={compose(validators)}>
       {({input, meta}) => (
         <InputField

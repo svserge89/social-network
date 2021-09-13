@@ -67,7 +67,7 @@ const LoginForm: React.FC<LoginFormProps> = ({onSubmit, captcha}) => {
           />
           <RememberMeCheckbox name="rememberMe" disabled={submitting} />
           {showCaptcha(submitting)}
-          <ButtonToolbar className="justify-content-between">
+          <ButtonToolbar className="justify-content-between mt-3">
             {showLogInButton(submitting, pristine)}
             <ButtonWithIcon
               variant="warning"

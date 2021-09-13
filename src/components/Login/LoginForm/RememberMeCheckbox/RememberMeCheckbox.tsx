@@ -14,6 +14,7 @@ const RememberMeCheckbox: React.FC<RememberMeCheckboxProps> = ({
         <Form.Check
           type="checkbox"
           label="Remember me"
+          className="mt-3"
           name={name}
           disabled={disabled}
         />

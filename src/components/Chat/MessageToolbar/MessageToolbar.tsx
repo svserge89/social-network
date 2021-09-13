@@ -55,7 +55,7 @@ const MessageToolbar: React.FC<MessageToolbarProps> = ({
       <FormControl
         as="textarea"
         rows={2}
-        className={cn('mr-2', style.messageField)}
+        className={cn('me-2', style.messageField)}
         value={value}
         onChange={onChange}
         placeholder="Input your message..."

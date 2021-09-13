@@ -65,7 +65,7 @@ const Chat: React.FC = () => {
           onScroll={onScroll}
         >
           {showMessages()}
-          <div ref={anchorRef}></div>
+          <div ref={anchorRef} />
         </Card.Body>
         <Card.Footer className="px-3 py-2">
           <MessageToolbar onSendMessage={sendMessage} disabled={!connected} />

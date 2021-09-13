@@ -8,8 +8,10 @@ const ERROR_CODE = 400;
 
 export const handleError = (
   dispatch: Dispatch<ErrorAction>,
-  {response}: AxiosError
+  error: unknown
 ) => {
+  const {response} = error as AxiosError;
+
   if (response) {
     dispatch(setError(response.status, response.data.message));
   } else {

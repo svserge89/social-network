@@ -105,7 +105,7 @@ const InfoCard: React.FC<InfoCardProps> = ({editable = false}) => {
     );
 
   return (
-    <Card className="ml-3 flex-shrink-1 flex-grow-1">
+    <Card className="ms-3 flex-shrink-1 flex-grow-1">
       <Card.Header>
         <Card.Title
           className="font-weight-bold text-nowrap text-truncate"

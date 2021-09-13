@@ -29,7 +29,7 @@ export const parseMessages = <T extends SubmissionErrors>(messages: string[]) =>
 
     return {
       ...prev,
-      [field]: {...prev[field], [subField]: match[MESSAGE]},
+      [field]: {...prev![field], [subField]: match[MESSAGE]},
       ...submissionError,
     };
   }, {} as T);

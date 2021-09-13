@@ -17,7 +17,7 @@ const ButtonLoader: React.FC<ButtonLoaderProps> = ({
       role="status"
       aria-hidden="true"
     />
-    <span className={cn('text-white', {'ml-1': !noLabel})}>
+    <span className={cn('text-white', {'ms-1': !noLabel})}>
       {noLabel ? '' : 'Loading...'}
     </span>
   </Button>

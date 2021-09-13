@@ -10,17 +10,17 @@ const ComponentLoader: React.FC<ComponentLoaderProps> = ({
 }) => {
   const showLabel: () => JSX.Element = () =>
     size === 'sm' ? (
-      <strong className="text-secondary mr-1">Loading...</strong>
+      <strong className="text-secondary ms-1">Loading...</strong>
     ) : (
-      <h4 className="text-secondary mr-2">Loading...</h4>
+      <h4 className="text-secondary ms-2">Loading...</h4>
     );
 
   return (
     <div className={cn('d-flex', {'justify-content-center': center})}>
-      {showLabel()}
       <Spinner size={size} animation="border" role="status" variant="secondary">
-        <span className="sr-only">Loading...</span>
+        <span className="visually-hidden">Loading...</span>
       </Spinner>
+      {showLabel()}
     </div>
   );
 };
