@@ -11,13 +11,15 @@ import App from './App';
 import './index.css';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <QueryParamProvider ReactRouterRoute={Route}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </QueryParamProvider>
-  </BrowserRouter>,
+  <React.StrictMode>
+    <BrowserRouter>
+      <QueryParamProvider ReactRouterRoute={Route}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </QueryParamProvider>
+    </BrowserRouter>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
