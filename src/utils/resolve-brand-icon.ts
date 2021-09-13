@@ -7,7 +7,7 @@ import {
   faInstagram,
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
-import {faLink} from '@fortawesome/free-solid-svg-icons';
+import {faLink, faBlog} from '@fortawesome/free-solid-svg-icons';
 
 const iconMap = new Map<string, IconDefinition>([
   ['github', faGithub],
@@ -16,6 +16,7 @@ const iconMap = new Map<string, IconDefinition>([
   ['twitter', faTwitter],
   ['instagram', faInstagram],
   ['youtube', faYoutube],
+  ['website', faBlog],
 ]);
 
 const resolveBrandIcon = (name: string): IconDefinition =>
