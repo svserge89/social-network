@@ -35,7 +35,11 @@ const EditInfoForm: React.FC<EditInfoFormProps> = ({
         key={key}
         label={value}
         icon={resolveBrandIcon(key)}
-        placeholder={`Enter ${value} profile link`}
+        placeholder={`Enter ${
+          key === 'website' || key === 'mainLink'
+            ? value
+            : value + ' profile link'
+        }`}
         name={`contacts.${key}`}
         disabled={updating}
       />
